@@ -148,7 +148,7 @@ curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/profile/a
 
 This API helps you to store a new address.
 
-## Create/Update address properties ##
+### Create/Update address properties ###
 
 | Attribute             | Type    | Description                                       |
 |-----------------------|---------|---------------------------------------------------|
