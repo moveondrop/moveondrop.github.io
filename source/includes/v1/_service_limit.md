@@ -17,6 +17,7 @@ This API helps you to retrieve the service limit.
 	</div>
 </div>
 
+### Response ###
 
 ### ServiceLimits ###
 
@@ -37,7 +38,7 @@ This API helps you to retrieve the service limit.
 | `available_limit`   | integer | Indicates the remaining quota for this service limit.      |
 
 ### Example ###
-```
+
 {
   "id": 1,
   "user_id": 7950,
@@ -50,10 +51,9 @@ This API helps you to retrieve the service limit.
   "last_avail_time": "2022-05-18 14:54:54",
   "available_limit": 262
 }
-```
 
-There is a limit on the amount of product a customer can fetch from inventory, according to this service limit.
-It is still possible for customers to fetch 262 products.
+According to the above service limit, there is a limitation on the amount of products a customer can fetch from inventory.
+Customers can still fetch 262 products.
 
 
 > Example of retrieving service limit
