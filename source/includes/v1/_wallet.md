@@ -3,7 +3,7 @@
 The Wallet API allows you to retrieve personal wallet information.
 
 
-### Retrieve wallet balance ###
+## Retrieve wallet balance ##
 
 This API helps you to retrieve your personal wallet balance.
 
@@ -18,9 +18,9 @@ This API helps you to retrieve your personal wallet balance.
 </div>
 
 
-## Response ##
+### Response ###
 
-## WalletBalance ##
+### WalletBalance ###
 
 | Attribute      | Type    | Description                                        |
 |----------------|---------|----------------------------------------------------|

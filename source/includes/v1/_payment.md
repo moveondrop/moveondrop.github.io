@@ -4,7 +4,7 @@ The payment API allows you to retrieve available payment gateways
 and gives ability to pay multiple invoices at once.
 
 
-### Retrieve gateways ###
+## Retrieve gateways ##
 
 This API helps you to retrieve available gateways for payment.
 
@@ -18,9 +18,9 @@ This API helps you to retrieve available gateways for payment.
 	</div>
 </div>
 
-## Response ##
+### Response ###
 
-## PaymentGateways ##
+### PaymentGateways ###
 
 | Attribute | Type   | Description            |
 |-----------|--------|------------------------|
@@ -79,7 +79,7 @@ This API helps you to make payment for multiple invoices.
 	</div>
 </div>
 
-## Make payment properties ##
+### Make payment properties ###
 
 | Attribute  | Type    | Description                                  |
 |------------|---------|----------------------------------------------|
