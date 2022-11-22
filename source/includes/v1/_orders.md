@@ -25,19 +25,19 @@ may have a different status from another ByOrderItem in that order.
 
 
 ### Status for BuyOrderItem ###
-- buy-pending: This BuyOrderItem still is in pending state, either customer hasn't paid the `BuyingInvoce` yet or OrderHandler hasn't started working on this item.
-- buy-approved: This indicates, `OrderHandler` reviewed this item and assigned a `BuyingAgent` to it for further processing.
-- buy-processing: This indicates, `BuyingAgent` started working on this OrderItem.
-- buy-reject: Indicates, OrderHandler failed to assign a matching `BuyingAgent` to this OrderItem.
-- buy-purchased: Indicates, `BuyingAgent` successfully purchased this BuyOrderItem.
-- buy-not-purchased: Indicates, `BuyingAgent` failed to purchase this BuyOrderItem.
-- handover-to-shipping: Indicates, `BuyingAgent` successfully handed over this BuyOrderItem to `ShippingAgent`.
-- arrived-at-warehouse: Indicates, the BuyOrderItem successfully arrived at `ShippingAgent` warehouse. At this stage, a corresponding `ShipmentItem` is created at MoveOn end
-- preparing-for-transport: `ShippingAgent` prepared the `ShipmentItem` for transport.
-- handover-to-airline: The `ShipmentItem` is handed over to airline for `Air` shipment if `shipping_type` of chosen warehouse category is `air`.
-- arrived-at-destination-airport: The `ShipmentItem` is arrived at destination airport.
-- customs-released: The `ShipmentItem` get clearance from customs.
-- received-by-moveon: Indicates that, MoveOn received this `ShipmentItem`. Once MoveOn recalculate the weight/quantity for this item, an `ShippingInvoice` get created.
+- **buy-pending**: This BuyOrderItem still is in pending state, either customer hasn't paid the `BuyingInvoce` yet or OrderHandler hasn't started working on this item.
+- **buy-approved**: This indicates, `OrderHandler` reviewed this item and assigned a `BuyingAgent` to it for further processing.
+- **buy-processing**: This indicates, `BuyingAgent` started working on this OrderItem.
+- **buy-reject**: Indicates, OrderHandler failed to assign a matching `BuyingAgent` to this OrderItem.
+- **buy-purchased**: Indicates, `BuyingAgent` successfully purchased this BuyOrderItem.
+- **buy-not-purchased**: Indicates, `BuyingAgent` failed to purchase this BuyOrderItem.
+- **handover-to-shipping**: Indicates, `BuyingAgent` successfully handed over this BuyOrderItem to `ShippingAgent`.
+- **arrived-at-warehouse**: Indicates, the BuyOrderItem successfully arrived at `ShippingAgent` warehouse. At this stage, a corresponding `ShipmentItem` is created at MoveOn end
+- **preparing-for-transport**: `ShippingAgent` prepared the `ShipmentItem` for transport.
+- **handover-to-airline**: The `ShipmentItem` is handed over to airline for `Air` shipment if `shipping_type` of chosen warehouse category is `air`.
+- **arrived-at-destination-airport**: The `ShipmentItem` is arrived at destination airport.
+- **customs-released**: The `ShipmentItem` get clearance from customs.
+- **received-by-moveon**: Indicates that, MoveOn received this `ShipmentItem`. Once MoveOn recalculate the weight/quantity for this item, an `ShippingInvoice` get created.
 
 Once the customer paid the `ShippingInvoice`, he can create delivery request for the `ShipmentItem`.
 
@@ -68,7 +68,7 @@ This API helps you to create a new order.
 
 | Attribute  | Type   | Description      |
 |------------|--------|------------------|
-| `products` | array  | List of products |
+| `products` | array  | List of Product |
 | `address`  | object | address object   |
 
 ### Product ###
@@ -169,7 +169,7 @@ This API helps you to retrieve the orders.
 
 <div class="api-endpoint">
 	<div class="endpoint-data">
-		<i class="label label-post">POST</i>
+		<i class="label label-post">GET</i>
 		<h6>/customer/buy-ship/orders/multiple</h6>
 	</div>
 </div>
@@ -213,4 +213,980 @@ This API helps you to retrieve the orders.
 curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?filters[]=my_order \
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json"
+```
+
+
+> JSON response example:
+
+```json
+{
+  "data": [
+    {
+      "id": 5825,
+      "order_number": "BNV2221585760",
+      "type": "buy-and-ship",
+      "status": "pending",
+      "created_at": "2022-11-21T23:31:14.000000Z",
+      "oauth_client_id": 58,
+      "invoices": [],
+      "buyProducts": [
+        {
+          "id": 7515,
+          "order_id": 5825,
+          "store_id": 1,
+          "offer_id": null,
+          "product_number": "PB112221930007",
+          "title": "Stainless steel oil spoon PP wheat filter oily oil spoon filtering spoon spoon hot pot leakage germ soup separation spoon",
+          "image": "https://cbu01.alicdn.com/img/ibank/O1CN01cSNXlq2N9s8Lu1vr8_!!978309921-0-cib.jpg",
+          "link": "https://detail.1688.com/offer/675196975564.html",
+          "vendor": "1688",
+          "vid": "675196975564",
+          "shipping": {
+            "company": "M*************",
+            "agent_id": 1,
+            "warehouse": "M*************",
+            "warehouse_id": 16,
+            "warehouse_address": "广州市白云区。西槎路同雅东街59号。同德仓A5\nBaiyun District, Guangzhou City. 59 Tong Ya Dong Street, Xicha Road. Tongdecang A5",
+            "shipping_type": "air",
+            "unit_type": "kg",
+            "category": "Laptops",
+            "category_id": 3,
+            "aw_category_id": 6402,
+            "rate": 1400,
+            "commission": 10
+          },
+          "note": null,
+          "meta": null,
+          "aw_cat_id": 6402,
+          "fx": 16,
+          "ag_comm": null,
+          "mv_comm": 16.5,
+          "total": null,
+          "status": "buy-pending",
+          "status_label": "Pending",
+          "itemMetas": [
+            {
+              "id": 68535,
+              "sku_id": "c03be97038ed72ea18ec4dc7be132e36",
+              "buy_order_item_id": 7515,
+              "key": "c03be97038ed72ea18ec4dc7be132e36",
+              "qty": 1,
+              "weight": null,
+              "fx": 16,
+              "price": 10,
+              "productPrice": 160,
+              "meta": {
+                "size": "medium",
+                "color": "Beige"
+              }
+            }
+          ],
+          "issues": [],
+          "campaignTag": null,
+          "charges": [],
+          "is_product_locked": false,
+          "dispute_number": null
+        },
+        {
+          "id": 7516,
+          "order_id": 5825,
+          "store_id": 3,
+          "offer_id": null,
+          "product_number": "PB112221560008",
+          "title": "XIAOMI Mijia Handheld Garment Steamer for Clothes Electric Steam Iron High Quality Portable Traveling Clothes Steamer",
+          "image": "https://ae01.alicdn.com/kf/Hedb73ff2ad254ba3b0d27ae6d6a5a6455/XIAOMI-Mijia-Handheld-Garment-Steamer-for-Clothes-Electric-Steam-Iron-High-Quality-Portable-Traveling-Clothes-Steamer.jpg",
+          "link": "https://www.aliexpress.com/item/1005002952248539.html",
+          "vendor": "aliexpress",
+          "vid": "1005002952248539",
+          "shipping": {
+            "company": "M*************",
+            "agent_id": 1,
+            "warehouse": "M*************",
+            "warehouse_id": 16,
+            "warehouse_address": "广州市白云区。西槎路同雅东街59号。同德仓A5\nBaiyun District, Guangzhou City. 59 Tong Ya Dong Street, Xicha Road. Tongdecang A5",
+            "shipping_type": "air",
+            "unit_type": "kg",
+            "category": "Laptops",
+            "category_id": 3,
+            "aw_category_id": 6402,
+            "rate": 1400,
+            "commission": 10
+          },
+          "note": null,
+          "meta": null,
+          "aw_cat_id": 6402,
+          "fx": 112,
+          "ag_comm": null,
+          "mv_comm": 8,
+          "total": null,
+          "status": "buy-pending",
+          "status_label": "Pending",
+          "itemMetas": [
+            {
+              "id": 68536,
+              "sku_id": "12000026289211983",
+              "buy_order_item_id": 7516,
+              "key": "12000026289211983",
+              "qty": 1,
+              "weight": null,
+              "fx": 112,
+              "price": 20,
+              "productPrice": 2240,
+              "meta": {
+                "Plug Type": "US",
+                "Ships From": "China"
+              }
+            }
+          ],
+          "issues": [],
+          "campaignTag": null,
+          "charges": [],
+          "is_product_locked": false,
+          "dispute_number": null
+        }
+      ],
+      "buyInvoice": [
+        {
+          "id": 3189,
+          "order_id": 5825,
+          "code": "NV22215",
+          "total": 2400,
+          "paid_amount": "10.00",
+          "refunded_amount": 0,
+          "instructions": null,
+          "invoice_to": null,
+          "status": "partial-paid",
+          "paid_at": null,
+          "status_label": "Partial paid",
+          "settled_at": null,
+          "is_overpaid": null,
+          "created_at": "2022-11-21T23:31:14.000000Z"
+        }
+      ],
+      "addresses": {
+        "billing": {
+          "id": 1611,
+          "name": "Test address update",
+          "phone": "0000000000000",
+          "country": "Bangladesh",
+          "district": {
+            "id": 13,
+            "parent_id": null,
+            "slug": "dhaka",
+            "name": "Dhaka",
+            "postal_code": null,
+            "type": "district"
+          },
+          "area": {
+            "id": 199,
+            "parent_id": 13,
+            "slug": "agargoan",
+            "name": "Agargoan",
+            "postal_code": 1216,
+            "type": "area"
+          },
+          "address": "Test address",
+          "postal_code": 1213,
+          "is_default_shipping": 1,
+          "is_default_billing": 1
+        },
+        "shipping": {
+          "id": 1611,
+          "name": "Test address update",
+          "phone": "0000000000000",
+          "country": "Bangladesh",
+          "district": {
+            "id": 13,
+            "parent_id": null,
+            "slug": "dhaka",
+            "name": "Dhaka",
+            "postal_code": null,
+            "type": "district"
+          },
+          "area": {
+            "id": 199,
+            "parent_id": 13,
+            "slug": "agargoan",
+            "name": "Agargoan",
+            "postal_code": 1216,
+            "type": "area"
+          },
+          "address": "Test address",
+          "postal_code": 1213,
+          "is_default_shipping": 1,
+          "is_default_billing": 1
+        }
+      }
+    },
+    {
+      "id": 5824,
+      "order_number": "BNV2221448681",
+      "type": "buy-and-ship",
+      "status": "pending",
+      "created_at": "2022-11-21T16:02:55.000000Z",
+      "oauth_client_id": 58,
+      "invoices": [],
+      "buyProducts": [
+        {
+          "id": 7513,
+          "order_id": 5824,
+          "store_id": 1,
+          "offer_id": null,
+          "product_number": "PB112221830005",
+          "title": "Stainless steel oil spoon PP wheat filter oily oil spoon filtering spoon spoon hot pot leakage germ soup separation spoon",
+          "image": "https://cbu01.alicdn.com/img/ibank/O1CN01cSNXlq2N9s8Lu1vr8_!!978309921-0-cib.jpg",
+          "link": "https://detail.1688.com/offer/675196975564.html",
+          "vendor": "1688",
+          "vid": "675196975564",
+          "shipping": {
+            "company": "M*************",
+            "agent_id": 1,
+            "warehouse": "M*************",
+            "warehouse_id": 16,
+            "warehouse_address": "广州市白云区。西槎路同雅东街59号。同德仓A5\nBaiyun District, Guangzhou City. 59 Tong Ya Dong Street, Xicha Road. Tongdecang A5",
+            "shipping_type": "air",
+            "unit_type": "kg",
+            "category": "Laptops",
+            "category_id": 3,
+            "aw_category_id": 6402,
+            "rate": 1400,
+            "commission": 10
+          },
+          "note": null,
+          "meta": null,
+          "aw_cat_id": 6402,
+          "fx": 16,
+          "ag_comm": null,
+          "mv_comm": 16.5,
+          "total": null,
+          "status": "buy-pending",
+          "status_label": "Pending",
+          "itemMetas": [
+            {
+              "id": 68533,
+              "sku_id": "c03be97038ed72ea18ec4dc7be132e36",
+              "buy_order_item_id": 7513,
+              "key": "c03be97038ed72ea18ec4dc7be132e36",
+              "qty": 1,
+              "weight": null,
+              "fx": 16,
+              "price": 10,
+              "productPrice": 160,
+              "meta": {
+                "size": "medium",
+                "color": "Beige"
+              }
+            }
+          ],
+          "issues": [],
+          "campaignTag": null,
+          "charges": [],
+          "is_product_locked": false,
+          "dispute_number": null
+        },
+        {
+          "id": 7514,
+          "order_id": 5824,
+          "store_id": 3,
+          "offer_id": null,
+          "product_number": "PB112221510006",
+          "title": "XIAOMI Mijia Handheld Garment Steamer for Clothes Electric Steam Iron High Quality Portable Traveling Clothes Steamer",
+          "image": "https://ae01.alicdn.com/kf/Hedb73ff2ad254ba3b0d27ae6d6a5a6455/XIAOMI-Mijia-Handheld-Garment-Steamer-for-Clothes-Electric-Steam-Iron-High-Quality-Portable-Traveling-Clothes-Steamer.jpg",
+          "link": "https://www.aliexpress.com/item/1005002952248539.html",
+          "vendor": "aliexpress",
+          "vid": "1005002952248539",
+          "shipping": {
+            "company": "M*************",
+            "agent_id": 1,
+            "warehouse": "M*************",
+            "warehouse_id": 16,
+            "warehouse_address": "广州市白云区。西槎路同雅东街59号。同德仓A5\nBaiyun District, Guangzhou City. 59 Tong Ya Dong Street, Xicha Road. Tongdecang A5",
+            "shipping_type": "air",
+            "unit_type": "kg",
+            "category": "Laptops",
+            "category_id": 3,
+            "aw_category_id": 6402,
+            "rate": 1400,
+            "commission": 10
+          },
+          "note": null,
+          "meta": null,
+          "aw_cat_id": 6402,
+          "fx": 112,
+          "ag_comm": null,
+          "mv_comm": 8,
+          "total": null,
+          "status": "buy-pending",
+          "status_label": "Pending",
+          "itemMetas": [
+            {
+              "id": 68534,
+              "sku_id": "12000026289211983",
+              "buy_order_item_id": 7514,
+              "key": "12000026289211983",
+              "qty": 1,
+              "weight": null,
+              "fx": 112,
+              "price": 20,
+              "productPrice": 2240,
+              "meta": {
+                "Plug Type": "US",
+                "Ships From": "China"
+              }
+            }
+          ],
+          "issues": [],
+          "campaignTag": null,
+          "charges": [],
+          "is_product_locked": false,
+          "dispute_number": null
+        }
+      ],
+      "buyInvoice": [
+        {
+          "id": 3188,
+          "order_id": 5824,
+          "code": "NV22214",
+          "total": 2400,
+          "paid_amount": 0,
+          "refunded_amount": 0,
+          "instructions": null,
+          "invoice_to": null,
+          "status": "unpaid",
+          "paid_at": null,
+          "status_label": "Unpaid",
+          "settled_at": null,
+          "is_overpaid": null,
+          "created_at": "2022-11-21T16:02:55.000000Z"
+        }
+      ],
+      "addresses": {
+        "billing": {
+          "id": 1606,
+          "name": "abdul korim",
+          "phone": "01712121633",
+          "country": "Bangladesh",
+          "district": {
+            "id": 1,
+            "parent_id": null,
+            "slug": "bagerhat",
+            "name": "Bagerhat",
+            "postal_code": null,
+            "type": "district"
+          },
+          "area": {
+            "id": 65,
+            "parent_id": 1,
+            "slug": "chitalmari",
+            "name": "Chitalmari",
+            "postal_code": 9360,
+            "type": "upazila"
+          },
+          "address": "test",
+          "postal_code": 6700,
+          "is_default_shipping": 0,
+          "is_default_billing": 0
+        },
+        "shipping": {
+          "id": 1606,
+          "name": "abdul korim",
+          "phone": "01712121633",
+          "country": "Bangladesh",
+          "district": {
+            "id": 1,
+            "parent_id": null,
+            "slug": "bagerhat",
+            "name": "Bagerhat",
+            "postal_code": null,
+            "type": "district"
+          },
+          "area": {
+            "id": 65,
+            "parent_id": 1,
+            "slug": "chitalmari",
+            "name": "Chitalmari",
+            "postal_code": 9360,
+            "type": "upazila"
+          },
+          "address": "test",
+          "postal_code": 6700,
+          "is_default_shipping": 0,
+          "is_default_billing": 0
+        }
+      }
+    },
+    {
+      "id": 5823,
+      "order_number": "BNV2221432416",
+      "type": "buy-and-ship",
+      "status": "pending",
+      "created_at": "2022-11-21T16:02:03.000000Z",
+      "oauth_client_id": 58,
+      "invoices": [],
+      "buyProducts": [
+        {
+          "id": 7512,
+          "order_id": 5823,
+          "store_id": 1,
+          "offer_id": null,
+          "product_number": "PB112221940004",
+          "title": "Stainless steel oil spoon PP wheat filter oily oil spoon filtering spoon spoon hot pot leakage germ soup separation spoon",
+          "image": "https://cbu01.alicdn.com/img/ibank/O1CN01cSNXlq2N9s8Lu1vr8_!!978309921-0-cib.jpg",
+          "link": "https://detail.1688.com/offer/675196975564.html",
+          "vendor": "1688",
+          "vid": "675196975564",
+          "shipping": {
+            "company": "M*************",
+            "agent_id": 1,
+            "warehouse": "M*************",
+            "warehouse_id": 16,
+            "warehouse_address": "广州市白云区。西槎路同雅东街59号。同德仓A5\nBaiyun District, Guangzhou City. 59 Tong Ya Dong Street, Xicha Road. Tongdecang A5",
+            "shipping_type": "air",
+            "unit_type": "kg",
+            "category": "Laptops",
+            "category_id": 3,
+            "aw_category_id": 6402,
+            "rate": 1400,
+            "commission": 10
+          },
+          "note": null,
+          "meta": null,
+          "aw_cat_id": 6402,
+          "fx": 16,
+          "ag_comm": null,
+          "mv_comm": 16.5,
+          "total": null,
+          "status": "buy-pending",
+          "status_label": "Pending",
+          "itemMetas": [
+            {
+              "id": 68532,
+              "sku_id": "c03be97038ed72ea18ec4dc7be132e36",
+              "buy_order_item_id": 7512,
+              "key": "c03be97038ed72ea18ec4dc7be132e36",
+              "qty": 1,
+              "weight": null,
+              "fx": 16,
+              "price": 10,
+              "productPrice": 160,
+              "meta": {
+                "size": "medium",
+                "color": "Beige"
+              }
+            }
+          ],
+          "issues": [],
+          "campaignTag": null,
+          "charges": [],
+          "is_product_locked": false,
+          "dispute_number": null
+        }
+      ],
+      "buyInvoice": [],
+      "addresses": {
+        "billing": {
+          "id": 1606,
+          "name": "abdul korim",
+          "phone": "01712121633",
+          "country": "Bangladesh",
+          "district": {
+            "id": 1,
+            "parent_id": null,
+            "slug": "bagerhat",
+            "name": "Bagerhat",
+            "postal_code": null,
+            "type": "district"
+          },
+          "area": {
+            "id": 65,
+            "parent_id": 1,
+            "slug": "chitalmari",
+            "name": "Chitalmari",
+            "postal_code": 9360,
+            "type": "upazila"
+          },
+          "address": "test",
+          "postal_code": 6700,
+          "is_default_shipping": 0,
+          "is_default_billing": 0
+        },
+        "shipping": {
+          "id": 1606,
+          "name": "abdul korim",
+          "phone": "01712121633",
+          "country": "Bangladesh",
+          "district": {
+            "id": 1,
+            "parent_id": null,
+            "slug": "bagerhat",
+            "name": "Bagerhat",
+            "postal_code": null,
+            "type": "district"
+          },
+          "area": {
+            "id": 65,
+            "parent_id": 1,
+            "slug": "chitalmari",
+            "name": "Chitalmari",
+            "postal_code": 9360,
+            "type": "upazila"
+          },
+          "address": "test",
+          "postal_code": 6700,
+          "is_default_shipping": 0,
+          "is_default_billing": 0
+        }
+      }
+    },
+    {
+      "id": 5822,
+      "order_number": "BNV2221132293",
+      "type": "buy-and-ship",
+      "status": "pending",
+      "created_at": "2022-11-21T15:58:14.000000Z",
+      "oauth_client_id": 58,
+      "invoices": [],
+      "buyProducts": [
+        {
+          "id": 7511,
+          "order_id": 5822,
+          "store_id": 1,
+          "offer_id": null,
+          "product_number": "PB112221870003",
+          "title": "Stainless steel oil spoon PP wheat filter oily oil spoon filtering spoon spoon hot pot leakage germ soup separation spoon",
+          "image": "https://cbu01.alicdn.com/img/ibank/O1CN01cSNXlq2N9s8Lu1vr8_!!978309921-0-cib.jpg",
+          "link": "https://detail.1688.com/offer/675196975564.html",
+          "vendor": "1688",
+          "vid": "675196975564",
+          "shipping": {
+            "company": "M*************",
+            "agent_id": 1,
+            "warehouse": "M*************",
+            "warehouse_id": 16,
+            "warehouse_address": "广州市白云区。西槎路同雅东街59号。同德仓A5\nBaiyun District, Guangzhou City. 59 Tong Ya Dong Street, Xicha Road. Tongdecang A5",
+            "shipping_type": "air",
+            "unit_type": "kg",
+            "category": "Laptops",
+            "category_id": 3,
+            "aw_category_id": 6402,
+            "rate": 1400,
+            "commission": 10
+          },
+          "note": null,
+          "meta": null,
+          "aw_cat_id": 6402,
+          "fx": 16,
+          "ag_comm": null,
+          "mv_comm": 16.5,
+          "total": null,
+          "status": "buy-pending",
+          "status_label": "Pending",
+          "itemMetas": [
+            {
+              "id": 68531,
+              "sku_id": "c03be97038ed72ea18ec4dc7be132e36",
+              "buy_order_item_id": 7511,
+              "key": "c03be97038ed72ea18ec4dc7be132e36",
+              "qty": 1,
+              "weight": null,
+              "fx": 16,
+              "price": 10,
+              "productPrice": 160,
+              "meta": {
+                "size": "medium",
+                "color": "Beige"
+              }
+            }
+          ],
+          "issues": [],
+          "campaignTag": null,
+          "charges": [],
+          "is_product_locked": false,
+          "dispute_number": null
+        }
+      ],
+      "buyInvoice": [
+        {
+          "id": 3187,
+          "order_id": 5822,
+          "code": "NV22213",
+          "total": 160,
+          "paid_amount": 0,
+          "refunded_amount": 0,
+          "instructions": null,
+          "invoice_to": null,
+          "status": "unpaid",
+          "paid_at": null,
+          "status_label": "Unpaid",
+          "settled_at": null,
+          "is_overpaid": null,
+          "created_at": "2022-11-21T15:58:14.000000Z"
+        }
+      ],
+      "addresses": {
+        "billing": {
+          "id": 1606,
+          "name": "abdul korim",
+          "phone": "01712121633",
+          "country": "Bangladesh",
+          "district": {
+            "id": 1,
+            "parent_id": null,
+            "slug": "bagerhat",
+            "name": "Bagerhat",
+            "postal_code": null,
+            "type": "district"
+          },
+          "area": {
+            "id": 65,
+            "parent_id": 1,
+            "slug": "chitalmari",
+            "name": "Chitalmari",
+            "postal_code": 9360,
+            "type": "upazila"
+          },
+          "address": "test",
+          "postal_code": 6700,
+          "is_default_shipping": 0,
+          "is_default_billing": 0
+        },
+        "shipping": {
+          "id": 1606,
+          "name": "abdul korim",
+          "phone": "01712121633",
+          "country": "Bangladesh",
+          "district": {
+            "id": 1,
+            "parent_id": null,
+            "slug": "bagerhat",
+            "name": "Bagerhat",
+            "postal_code": null,
+            "type": "district"
+          },
+          "area": {
+            "id": 65,
+            "parent_id": 1,
+            "slug": "chitalmari",
+            "name": "Chitalmari",
+            "postal_code": 9360,
+            "type": "upazila"
+          },
+          "address": "test",
+          "postal_code": 6700,
+          "is_default_shipping": 0,
+          "is_default_billing": 0
+        }
+      }
+    },
+    {
+      "id": 5821,
+      "order_number": "BNV2221760612",
+      "type": "buy-and-ship",
+      "status": "pending",
+      "created_at": "2022-11-21T15:56:20.000000Z",
+      "oauth_client_id": 58,
+      "invoices": [],
+      "buyProducts": [
+        {
+          "id": 7510,
+          "order_id": 5821,
+          "store_id": 1,
+          "offer_id": null,
+          "product_number": "PB112221240002",
+          "title": "Stainless steel oil spoon PP wheat filter oily oil spoon filtering spoon spoon hot pot leakage germ soup separation spoon",
+          "image": "https://cbu01.alicdn.com/img/ibank/O1CN01cSNXlq2N9s8Lu1vr8_!!978309921-0-cib.jpg",
+          "link": "https://detail.1688.com/offer/675196975564.html",
+          "vendor": "1688",
+          "vid": "675196975564",
+          "shipping": {
+            "company": "M*************",
+            "agent_id": 1,
+            "warehouse": "M*************",
+            "warehouse_id": 16,
+            "warehouse_address": "广州市白云区。西槎路同雅东街59号。同德仓A5\nBaiyun District, Guangzhou City. 59 Tong Ya Dong Street, Xicha Road. Tongdecang A5",
+            "shipping_type": "air",
+            "unit_type": "kg",
+            "category": "Laptops",
+            "category_id": 3,
+            "aw_category_id": 6402,
+            "rate": 1400,
+            "commission": 10
+          },
+          "note": null,
+          "meta": null,
+          "aw_cat_id": 6402,
+          "fx": 16,
+          "ag_comm": null,
+          "mv_comm": 16.5,
+          "total": null,
+          "status": "buy-pending",
+          "status_label": "Pending",
+          "itemMetas": [
+            {
+              "id": 68530,
+              "sku_id": "c03be97038ed72ea18ec4dc7be132e36",
+              "buy_order_item_id": 7510,
+              "key": null,
+              "qty": 1,
+              "weight": null,
+              "fx": 16,
+              "price": 10,
+              "productPrice": 160,
+              "meta": {
+                "size": "medium",
+                "color": "Beige"
+              }
+            }
+          ],
+          "issues": [],
+          "campaignTag": null,
+          "charges": [],
+          "is_product_locked": false,
+          "dispute_number": null
+        }
+      ],
+      "buyInvoice": [
+        {
+          "id": 3186,
+          "order_id": 5821,
+          "code": "NV22212",
+          "total": 160,
+          "paid_amount": 0,
+          "refunded_amount": 0,
+          "instructions": null,
+          "invoice_to": null,
+          "status": "unpaid",
+          "paid_at": null,
+          "status_label": "Unpaid",
+          "settled_at": null,
+          "is_overpaid": null,
+          "created_at": "2022-11-21T15:56:20.000000Z"
+        }
+      ],
+      "addresses": {
+        "billing": {
+          "id": 1606,
+          "name": "abdul korim",
+          "phone": "01712121633",
+          "country": "Bangladesh",
+          "district": {
+            "id": 1,
+            "parent_id": null,
+            "slug": "bagerhat",
+            "name": "Bagerhat",
+            "postal_code": null,
+            "type": "district"
+          },
+          "area": {
+            "id": 65,
+            "parent_id": 1,
+            "slug": "chitalmari",
+            "name": "Chitalmari",
+            "postal_code": 9360,
+            "type": "upazila"
+          },
+          "address": "test",
+          "postal_code": 6700,
+          "is_default_shipping": 0,
+          "is_default_billing": 0
+        },
+        "shipping": {
+          "id": 1606,
+          "name": "abdul korim",
+          "phone": "01712121633",
+          "country": "Bangladesh",
+          "district": {
+            "id": 1,
+            "parent_id": null,
+            "slug": "bagerhat",
+            "name": "Bagerhat",
+            "postal_code": null,
+            "type": "district"
+          },
+          "area": {
+            "id": 65,
+            "parent_id": 1,
+            "slug": "chitalmari",
+            "name": "Chitalmari",
+            "postal_code": 9360,
+            "type": "upazila"
+          },
+          "address": "test",
+          "postal_code": 6700,
+          "is_default_shipping": 0,
+          "is_default_billing": 0
+        }
+      }
+    },
+    {
+      "id": 5820,
+      "order_number": "BNV2221848319",
+      "type": "buy-and-ship",
+      "status": "pending",
+      "created_at": "2022-11-21T15:53:54.000000Z",
+      "oauth_client_id": 58,
+      "invoices": [],
+      "buyProducts": [
+        {
+          "id": 7509,
+          "order_id": 5820,
+          "store_id": 1,
+          "offer_id": null,
+          "product_number": "PB11222160001",
+          "title": "Stainless steel oil spoon PP wheat filter oily oil spoon filtering spoon spoon hot pot leakage germ soup separation spoon",
+          "image": "https://cbu01.alicdn.com/img/ibank/O1CN01cSNXlq2N9s8Lu1vr8_!!978309921-0-cib.jpg",
+          "link": "https://detail.1688.com/offer/675196975564.html",
+          "vendor": "1688",
+          "vid": "675196975564",
+          "shipping": {
+            "company": "M*************",
+            "agent_id": 1,
+            "warehouse": "M*************",
+            "warehouse_id": 16,
+            "warehouse_address": "广州市白云区。西槎路同雅东街59号。同德仓A5\nBaiyun District, Guangzhou City. 59 Tong Ya Dong Street, Xicha Road. Tongdecang A5",
+            "shipping_type": "air",
+            "unit_type": "kg",
+            "category": "Laptops",
+            "category_id": 3,
+            "aw_category_id": 6402,
+            "rate": 1400,
+            "commission": 10
+          },
+          "note": null,
+          "meta": null,
+          "aw_cat_id": 6402,
+          "fx": 16,
+          "ag_comm": null,
+          "mv_comm": 16.5,
+          "total": null,
+          "status": "buy-pending",
+          "status_label": "Pending",
+          "itemMetas": [
+            {
+              "id": 68529,
+              "sku_id": "c03be97038ed72ea18ec4dc7be132e36",
+              "buy_order_item_id": 7509,
+              "key": null,
+              "qty": 1,
+              "weight": null,
+              "fx": 16,
+              "price": 10,
+              "productPrice": 160,
+              "meta": []
+            }
+          ],
+          "issues": [],
+          "campaignTag": null,
+          "charges": [],
+          "is_product_locked": false,
+          "dispute_number": null
+        }
+      ],
+      "buyInvoice": [
+        {
+          "id": 3185,
+          "order_id": 5820,
+          "code": "NV22211",
+          "total": 160,
+          "paid_amount": 0,
+          "refunded_amount": 0,
+          "instructions": null,
+          "invoice_to": null,
+          "status": "unpaid",
+          "paid_at": null,
+          "status_label": "Unpaid",
+          "settled_at": null,
+          "is_overpaid": null,
+          "created_at": "2022-11-21T15:53:54.000000Z"
+        }
+      ],
+      "addresses": {
+        "billing": {
+          "id": 1606,
+          "name": "abdul korim",
+          "phone": "01712121633",
+          "country": "Bangladesh",
+          "district": {
+            "id": 1,
+            "parent_id": null,
+            "slug": "bagerhat",
+            "name": "Bagerhat",
+            "postal_code": null,
+            "type": "district"
+          },
+          "area": {
+            "id": 65,
+            "parent_id": 1,
+            "slug": "chitalmari",
+            "name": "Chitalmari",
+            "postal_code": 9360,
+            "type": "upazila"
+          },
+          "address": "test",
+          "postal_code": 6700,
+          "is_default_shipping": 0,
+          "is_default_billing": 0
+        },
+        "shipping": {
+          "id": 1606,
+          "name": "abdul korim",
+          "phone": "01712121633",
+          "country": "Bangladesh",
+          "district": {
+            "id": 1,
+            "parent_id": null,
+            "slug": "bagerhat",
+            "name": "Bagerhat",
+            "postal_code": null,
+            "type": "district"
+          },
+          "area": {
+            "id": 65,
+            "parent_id": 1,
+            "slug": "chitalmari",
+            "name": "Chitalmari",
+            "postal_code": 9360,
+            "type": "upazila"
+          },
+          "address": "test",
+          "postal_code": 6700,
+          "is_default_shipping": 0,
+          "is_default_billing": 0
+        }
+      }
+    }
+  ],
+  "links": {
+    "first": "https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?page=1",
+    "last": "https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?page=1",
+    "prev": null,
+    "next": null
+  },
+  "meta": {
+    "current_page": 1,
+    "from": 1,
+    "last_page": 1,
+    "links": [
+      {
+        "url": null,
+        "label": "&laquo; Previous",
+        "active": false
+      },
+      {
+        "url": "https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?page=1",
+        "label": "1",
+        "active": true
+      },
+      {
+        "url": null,
+        "label": "Next &raquo;",
+        "active": false
+      }
+    ],
+    "path": "https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple",
+    "per_page": 15,
+    "to": 6,
+    "total": 6
+  }
+}
 ```
