@@ -349,28 +349,7 @@
                     <a href="#retrieve-categories" class="toc-h2 toc-link" data-title="Retrieve categories">Retrieve categories</a>
                   </li>
                   <li>
-                    <a href="#http-request" class="toc-h2 toc-link" data-title="HTTP request">HTTP request</a>
-                  </li>
-                  <li>
-                    <a href="#request" class="toc-h2 toc-link" data-title="Request">Request</a>
-                  </li>
-                  <li>
-                    <a href="#response" class="toc-h2 toc-link" data-title="Response">Response</a>
-                  </li>
-                  <li>
-                    <a href="#categories" class="toc-h2 toc-link" data-title="Categories">Categories</a>
-                  </li>
-                  <li>
                     <a href="#get-warehouse-category" class="toc-h2 toc-link" data-title="Get warehouse category">Get warehouse category</a>
-                  </li>
-                  <li>
-                    <a href="#request-2" class="toc-h2 toc-link" data-title="Request">Request</a>
-                  </li>
-                  <li>
-                    <a href="#response-2" class="toc-h2 toc-link" data-title="Response">Response</a>
-                  </li>
-                  <li>
-                    <a href="#warehousecategories" class="toc-h2 toc-link" data-title="WarehouseCategories">WarehouseCategories</a>
                   </li>
               </ul>
           </li>
@@ -1311,7 +1290,7 @@ Customers can still fetch 262 products.</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h1 id='category'>Category</h1>
 <p>The Category API allows you to retrieve categories and associated warehouse categories.</p>
-<h3 id='retrieve-categories'>Retrieve categories</h3>
+<h2 id='retrieve-categories'>Retrieve categories</h2>
 <p>This API helps you to retrieve categories.</p>
 <h3 id='http-request'>HTTP request</h3>
 <div class="api-endpoint">
@@ -1320,7 +1299,7 @@ Customers can still fetch 262 products.</p>
         <h6>/customer/category-search</h6>
     </div>
 </div>
-<h2 id='request'>Request</h2><h3 id='available-query-parameters'>Available query parameters</h3>
+<h3 id='request'>Request</h3><h3 id='available-query-parameters'>Available query parameters</h3>
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -1334,7 +1313,7 @@ Customers can still fetch 262 products.</p>
 <td>Search keyword</td>
 </tr>
 </tbody></table>
-<h2 id='response'>Response</h2><h2 id='categories'>Categories</h2>
+<h3 id='response'>Response</h3><h3 id='categories'>Categories</h3>
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -1364,7 +1343,7 @@ Customers can still fetch 262 products.</p>
 <tr>
 <td><code>parent_id</code></td>
 <td>integer/null</td>
-<td>Parent category id of this category (null if it doesn&#39;t have any parent).</td>
+<td>Parent category id of this category (null if category doesn&#39;t have any parent).</td>
 </tr>
 <tr>
 <td><code>name</code></td>
@@ -1374,7 +1353,7 @@ Customers can still fetch 262 products.</p>
 <tr>
 <td><code>isLast</code></td>
 <td>boolean</td>
-<td>Indicate weather this category have child or not(<code>true</code> if it doesn&#39;t have any child)</td>
+<td>Indicate weather this category have child or not(<code>false</code> if it has children)</td>
 </tr>
 </tbody></table>
 
@@ -1425,7 +1404,7 @@ Customers can still fetch 262 products.</p>
         <h6>/customer/calculate-shipment-cost</h6>
     </div>
 </div>
-<h2 id='request-2'>Request</h2><h3 id='available-query-parameters-2'>Available query parameters</h3>
+<h3 id='request-2'>Request</h3><h3 id='available-query-parameters-2'>Available query parameters</h3>
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -1451,7 +1430,7 @@ Customers can still fetch 262 products.</p>
 <tr>
 <td><code>category_id</code></td>
 <td>integer</td>
-<td>The category for which we want to get warehouse categories</td>
+<td>The category id for which we want to get warehouse categories</td>
 </tr>
 </tbody></table>
 <h4 id='supported-unit_type'>Supported unit_type</h4>
@@ -1468,7 +1447,7 @@ Customers can still fetch 262 products.</p>
 <ul>
 <li>CN</li>
 </ul>
-<h2 id='response-2'>Response</h2><h2 id='warehousecategories'>WarehouseCategories</h2>
+<h3 id='response-2'>Response</h3><h3 id='warehousecategories'>WarehouseCategories</h3>
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -1528,17 +1507,12 @@ Customers can still fetch 262 products.</p>
 <tr>
 <td><code>is_active</code></td>
 <td>bool</td>
-<td>Is this category is active.</td>
+<td>Is this category is active or not.</td>
 </tr>
 <tr>
 <td><code>t_and_c</code></td>
-<td>integer</td>
+<td>string</td>
 <td>Term and conditions for this warehouse category.</td>
-</tr>
-<tr>
-<td><code>commission</code></td>
-<td>decimal</td>
-<td>MoveOn commission for this warehouse category.</td>
 </tr>
 <tr>
 <td><code>categoryPriceSlots</code></td>
