@@ -99,7 +99,7 @@ This API helps you to make payment for multiple invoices.
 - ship-for-me
 
 Type should be `buy-and-ship` if the given invoice is `BuyingInvoice`.
-Otherwise, it will be `ship-for-me` for `ShippingInvoice`
+Otherwise, it will be `ship-for-me` for `ShipmentInvoice`
 
 > Example of paying invoices:
 

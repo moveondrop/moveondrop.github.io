@@ -3,7 +3,7 @@
 The Invoice API allows you to retrieve invoices.
 
 
-### Retrieve buying invoices ###
+## Retrieve buying invoices ##
 
 This API helps you to retrieve buying invoices.
 
@@ -178,7 +178,7 @@ curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/i
 ```
 
 
-### Retrieve shipment invoices ###
+## Retrieve shipment invoices ##
 
 This API helps you to retrieve shipment invoices.
 
