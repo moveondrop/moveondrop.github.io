@@ -1,6 +1,6 @@
 # Store #
 
-The Store API allows you to view store information with rates.
+The Store API allows you to retrieve store information with rates.
 
 
 ## Retrieve stores ##
@@ -19,9 +19,9 @@ This API helps you to retrieve store information.
 
 ## Retrieve store properties ##
 
-| Attribute | Type      | Description                                                                     |
-|-----------|-----------|---------------------------------------------------------------------------------|
-| `data`    | array     | List of stores. See [Order - Meta data properties](#order-meta-data-properties) |
+| Attribute | Type      | Description   |
+|-----------|-----------|---------------|
+| `data`    | array     | List of Store |
 
 ### Store - StoreItem ###
 
@@ -32,9 +32,7 @@ This API helps you to retrieve store information.
 | `vendor_name`      | string  | Name of the vendor.                                               |
 | `storeId`          | string  | Actual storeId (During the order placement, this value is needed) |
 | `url`              | string  | URL of this store                                                 |
-| `totalFx`          | decimal | Total exchange rate for this store                                |
-| `fx`               | decimal | Exchange rate against BDT for this tore.                          |
-| `mvn_commission`   | decimal | Commission of MoveOn for this store.                              |                                      |
+| `totalFx`          | decimal | Total exchange rate for this store                                |                         |                                      |
 | `min_order_amount` | decimal | Minimum order total limit for this store                          |                                      |
 
 > Example of retrieve stores:
@@ -57,8 +55,6 @@ curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/exclusive/
       "storeId": 10,
       "url": "www.1688.com",
       "totalFx": 18.64,
-      "fx": 16,
-      "mvn_commission": 16.5,
       "min_order_amount": "2500.00"
     },
     {
@@ -68,8 +64,6 @@ curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/exclusive/
       "storeId": 4,
       "url": "https://taobao.com",
       "totalFx": 16.4862,
-      "fx": 14.2,
-      "mvn_commission": 16.1,
       "min_order_amount": "500.00"
     },
     {
@@ -79,8 +73,6 @@ curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/exclusive/
       "storeId": 1,
       "url": "https://www.aliexpress.com",
       "totalFx": 120.96000000000001,
-      "fx": 112,
-      "mvn_commission": 8,
       "min_order_amount": "2500.00"
     },
     {
@@ -90,8 +82,6 @@ curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/exclusive/
       "storeId": 11,
       "url": "https://alibaba.com",
       "totalFx": 94.688,
-      "fx": 88,
-      "mvn_commission": 7.6,
       "min_order_amount": "3000.00"
     },
     {
@@ -101,8 +91,6 @@ curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/exclusive/
       "storeId": 12,
       "url": "https://amazon.com",
       "totalFx": 94.1424,
-      "fx": 88,
-      "mvn_commission": 6.98,
       "min_order_amount": null
     },
     {
@@ -112,8 +100,6 @@ curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/exclusive/
       "storeId": 14,
       "url": "https://pingduoduo.com",
       "totalFx": 16.4862,
-      "fx": 14.2,
-      "mvn_commission": 16.1,
       "min_order_amount": null
     },
     {
@@ -123,8 +109,6 @@ curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/exclusive/
       "storeId": 16,
       "url": "https://ebay.com",
       "totalFx": 93.7228,
-      "fx": 86,
-      "mvn_commission": 8.98,
       "min_order_amount": null
     }
   ]

@@ -1,4 +1,4 @@
-# Products #
+# Product #
 
 The products API allows you to retrieve product details and product description.
 
@@ -412,7 +412,7 @@ curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/external/
 
 ## Fetch extended description of a product  ##
 
-This API helps you to retrieve extended description of a product by link.
+This API helps you to retrieve extended description for a product by link.
 
 ### HTTP request ###
 
