@@ -296,19 +296,25 @@
       </span>
     </a>
     <div class="toc-wrapper">
-      <img src="images/logo.png" class="logo" alt="" />
+      <img src="images/logo-9c3afbf3.png" class="logo" alt="" />
         <div class="lang-selector">
               <a href="#" data-language-name="shell">cURL</a>
         </div>
       <ul id="toc" class="toc-list-h1">
           <li>
-            <a href="#servicelimit" class="toc-h1 toc-link" data-title="ServiceLimit">ServiceLimit</a>
+            <a href="#service-limit" class="toc-h1 toc-link" data-title="Service Limit">Service Limit</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#retrieve-service-limit" class="toc-h2 toc-link" data-title="Retrieve service limit">Retrieve service limit</a>
+                    <a href="#retrieve-service-quota-limit" class="toc-h2 toc-link" data-title="Retrieve service quota limit">Retrieve service quota limit</a>
                   </li>
                   <li>
                     <a href="#http-request" class="toc-h2 toc-link" data-title="HTTP request">HTTP request</a>
+                  </li>
+                  <li>
+                    <a href="#response" class="toc-h2 toc-link" data-title="Response">Response</a>
+                  </li>
+                  <li>
+                    <a href="#warehousecategories" class="toc-h2 toc-link" data-title="WarehouseCategories">WarehouseCategories</a>
                   </li>
               </ul>
           </li>
@@ -518,9 +524,9 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id='servicelimit'>ServiceLimit</h1>
-<p>The ServiceLimit API allows you to retrieve the service limits for product&#39;s APIs.</p>
-<h3 id='retrieve-service-limit'>Retrieve service limit</h3>
+        <h1 id='service-limit'>Service Limit</h1>
+<p>The <code>Service Limit</code> API allows you to retrieve the service limits for product&#39;s APIs.</p>
+<h3 id='retrieve-service-quota-limit'>Retrieve service quota limit</h3>
 <p>This API helps you to retrieve the service limit.</p>
 <h3 id='http-request'>HTTP request</h3>
 <div class="api-endpoint">
@@ -529,6 +535,79 @@
         <h6>/customer/service-quota</h6>
     </div>
 </div>
+<h2 id='response'>Response</h2><h2 id='warehousecategories'>WarehouseCategories</h2>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>data</code></td>
+<td>array</td>
+<td>List of ServiceLimit.</td>
+</tr>
+</tbody></table>
+<h3 id='servicelimit'>ServiceLimit</h3>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td>integer</td>
+<td>Id of the service limit.</td>
+</tr>
+<tr>
+<td><code>expired_at</code></td>
+<td>integer</td>
+<td>Expired time for this service limit .</td>
+</tr>
+<tr>
+<td><code>service_type</code></td>
+<td>enum</td>
+<td>Indicates for which service, this limit applicable for.</td>
+</tr>
+<tr>
+<td><code>limitation_type</code></td>
+<td>enum</td>
+<td>Indicates weather customer have limit or not.</td>
+</tr>
+<tr>
+<td><code>interval_type</code></td>
+<td>enum</td>
+<td>Indicates the interval type for this limit.</td>
+</tr>
+<tr>
+<td><code>interval_duration</code></td>
+<td>integer</td>
+<td>Indicates the number of interval this limit is applicable.</td>
+</tr>
+<tr>
+<td><code>available_limit</code></td>
+<td>integer</td>
+<td>Indicates the remaining quota for this service limit.</td>
+</tr>
+</tbody></table>
+<h3 id='example'>Example</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7950</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"oauth_client_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"expired_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-05-18T14:54:54.000000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"service_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inventory-product-fetch"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"limitation_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"have-limit"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"interval_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"year"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"interval_duration"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_avail_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-05-18 14:54:54"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"available_limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">262</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>There is a limit on the amount of product a customer can fetch from inventory, according to this service limit.
+It is still possible for customers to fetch 262 products.</p>
 
 <blockquote>
 <p>Example of retrieving service limit</p>
