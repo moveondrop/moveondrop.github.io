@@ -3,7 +3,7 @@
 The `Service Limit` API allows you to retrieve the service limits for product's APIs.
 
 
-### Retrieve service quota limit ###
+## Retrieve service quota limit ##
 
 This API helps you to retrieve the service limit.
 
@@ -18,9 +18,9 @@ This API helps you to retrieve the service limit.
 </div>
 
 
-## Response ##
+### Response ###
 
-## WarehouseCategories ##
+### ServiceLimits ###
 
 | Attribute | Type  | Description           |
 |-----------|-------|-----------------------|
