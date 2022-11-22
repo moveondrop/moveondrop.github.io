@@ -30,7 +30,7 @@ This API helps you to retrieve store information.
 | `id`               | integer | Id of the store.                                                  |
 | `name`             | string  | Name of the store.                                                |
 | `vendor_name`      | string  | Name of the vendor.                                               |
-| `storeId`          | string  | Actual storeId (During the order placement, this value is needed) |
+| `storeId`          | integer | Actual storeId (During the order placement, this value is needed) |
 | `url`              | string  | URL of this store                                                 |
 | `totalFx`          | decimal | Total exchange rate for this store                                |                         |                                      |
 | `min_order_amount` | decimal | Minimum order total limit for this store                          |                                      |
