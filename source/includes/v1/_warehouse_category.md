@@ -3,7 +3,7 @@
 The Category API allows you to retrieve categories and associated warehouse categories.
 
 
-### Retrieve categories ###
+## Retrieve categories ##
 
 This API helps you to retrieve categories.
 
@@ -17,7 +17,7 @@ This API helps you to retrieve categories.
 	</div>
 </div>
 
-## Request ##
+### Request ###
 
 ### Available query parameters ###
 
@@ -25,9 +25,10 @@ This API helps you to retrieve categories.
 |-----------|--------|----------------|
 | `q`       | string | Search keyword |
 
-## Response ##
 
-## Categories ##
+### Response ###
+
+### Categories ###
 
 | Attribute | Type  | Description           |
 |-----------|-------|-----------------------|
@@ -35,12 +36,12 @@ This API helps you to retrieve categories.
 
 ### CategoryItem ###
 
-| Attribute   | Type         | Description                                                                           |
-|-------------|--------------|---------------------------------------------------------------------------------------|
-| `id`        | integer      | Id of this category.                                                                  |
-| `parent_id` | integer/null | Parent category id of this category (null if it doesn't have any parent).             |
-| `name`      | string       | Name of this category.                                                                |
-| `isLast`    | boolean      | Indicate weather this category have child or not(`true` if it doesn't have any child) |
+| Attribute   | Type         | Description                                                                     |
+|-------------|--------------|---------------------------------------------------------------------------------|
+| `id`        | integer      | Id of this category.                                                            |
+| `parent_id` | integer/null | Parent category id of this category (null if category doesn't have any parent). |
+| `name`      | string       | Name of this category.                                                          |
+| `isLast`    | boolean      | Indicate weather this category have child or not(`false` if it has children)    |
 
 > Example of retrieving categories:
 
@@ -98,16 +99,16 @@ This API helps you to retrieve related warehouse categories for a category.
 	</div>
 </div>
 
-## Request ##
+### Request ###
 
 ### Available query parameters ###
 
-| Attribute       | Type    | Description                                                |
-|-----------------|---------|------------------------------------------------------------|
-| `unit_type`     | enum    | Unit type for shipment                                     |
-| `shipping_type` | enum    | Shipping type for shipment                                 |
-| `p_origin`      | enum    | Product origin country                                     |
-| `category_id`   | integer | The category for which we want to get warehouse categories |
+| Attribute       | Type    | Description                                                   |
+|-----------------|---------|---------------------------------------------------------------|
+| `unit_type`     | enum    | Unit type for shipment                                        |
+| `shipping_type` | enum    | Shipping type for shipment                                    |
+| `p_origin`      | enum    | Product origin country                                        |
+| `category_id`   | integer | The category id for which we want to get warehouse categories |
 
 #### Supported unit_type ####
 - kg
@@ -120,9 +121,9 @@ This API helps you to retrieve related warehouse categories for a category.
 #### Supported p_origin ####
 - CN
 
-## Response ##
+### Response ###
 
-## WarehouseCategories ##
+### WarehouseCategories ###
 
 | Attribute | Type  | Description                    |
 |-----------|-------|--------------------------------|
@@ -139,9 +140,8 @@ This API helps you to retrieve related warehouse categories for a category.
 | `unit_type`           | enum    | Unit type of this warehouse category..                                                                            |
 | `shipping_type`       | enum    | Shipping type of this warehouse category.                                                                         |
 | `is_customs_included` | bool    | Weather custom cost included or not.                                                                              |
-| `is_active`           | bool    | Is this category is active.                                                                                       |
-| `t_and_c`             | integer | Term and conditions for this warehouse category.                                                                  |
-| `commission`          | decimal | MoveOn commission for this warehouse category.                                                                    |
+| `is_active`           | bool    | Is this category is active or not.                                                                                |
+| `t_and_c`             | string  | Term and conditions for this warehouse category.                                                                  |                      |
 | `categoryPriceSlots`  | array   | Price slots for wholesale.                                                                                        |
 
 > Example of retrieving shipping categories:
