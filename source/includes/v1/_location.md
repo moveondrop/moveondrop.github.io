@@ -3,7 +3,7 @@
 The Location API allows you to retrieve locations.
 
 
-### Retrieve all districts ###
+## Retrieve all districts ##
 
 This API helps you to retrieve all the districts.
 
@@ -60,11 +60,11 @@ curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/location \
 ```
 
 
-### Retrieve areas for a district ###
+## Retrieve areas for a district ##
 
 This API helps you to retrieve areas under a district.
 
-## Request ##
+### Request ###
 
 ### Available query parameters ###
 
