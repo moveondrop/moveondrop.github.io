@@ -9,7 +9,7 @@ includes:
 - v1/_introduction
 - v1/_service_limit
 - v1/_location
-- v1/_products
+- v1/_product
 - v1/_stores
 - v1/_warehouse_category
 - v1/_address
