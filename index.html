@@ -388,7 +388,7 @@
               </ul>
           </li>
           <li>
-            <a href="#category" class="toc-h1 toc-link" data-title="Category">Category</a>
+            <a href="#invoice" class="toc-h1 toc-link" data-title="Invoice">Invoice</a>
               <ul class="toc-list-h2">
                   <li>
                     <a href="#retrieve-buying-invoices" class="toc-h2 toc-link" data-title="Retrieve buying invoices">Retrieve buying invoices</a>
@@ -400,22 +400,37 @@
                     <a href="#request" class="toc-h2 toc-link" data-title="Request">Request</a>
                   </li>
                   <li>
+                    <a href="#available-query-parameters" class="toc-h2 toc-link" data-title="Available query parameters">Available query parameters</a>
+                  </li>
+                  <li>
                     <a href="#response" class="toc-h2 toc-link" data-title="Response">Response</a>
                   </li>
                   <li>
                     <a href="#buyinvoices" class="toc-h2 toc-link" data-title="BuyInvoices">BuyInvoices</a>
                   </li>
                   <li>
-                    <a href="#get-warehouse-category" class="toc-h2 toc-link" data-title="Get warehouse category">Get warehouse category</a>
+                    <a href="#buyinvoice" class="toc-h2 toc-link" data-title="BuyInvoice">BuyInvoice</a>
+                  </li>
+                  <li>
+                    <a href="#retrieve-shipment-invoices" class="toc-h2 toc-link" data-title="Retrieve shipment invoices">Retrieve shipment invoices</a>
+                  </li>
+                  <li>
+                    <a href="#http-request-2" class="toc-h2 toc-link" data-title="HTTP request">HTTP request</a>
                   </li>
                   <li>
                     <a href="#request-2" class="toc-h2 toc-link" data-title="Request">Request</a>
                   </li>
                   <li>
+                    <a href="#available-query-parameters-2" class="toc-h2 toc-link" data-title="Available query parameters">Available query parameters</a>
+                  </li>
+                  <li>
                     <a href="#response-2" class="toc-h2 toc-link" data-title="Response">Response</a>
                   </li>
                   <li>
-                    <a href="#warehousecategories" class="toc-h2 toc-link" data-title="WarehouseCategories">WarehouseCategories</a>
+                    <a href="#shipmentinvoice" class="toc-h2 toc-link" data-title="ShipmentInvoice">ShipmentInvoice</a>
+                  </li>
+                  <li>
+                    <a href="#shipmentinvoice-2" class="toc-h2 toc-link" data-title="ShipmentInvoice">ShipmentInvoice</a>
                   </li>
               </ul>
           </li>
@@ -3146,8 +3161,8 @@ may have a different status from another ByOrderItem in that order.</p>
     </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h1 id='category'>Category</h1>
-<p>The Category API allows you to retrieve categories and associated warehouse categories.</p>
+</span></code></pre></div><h1 id='invoice'>Invoice</h1>
+<p>The Invoice API allows you to retrieve invoices.</p>
 <h3 id='retrieve-buying-invoices'>Retrieve buying invoices</h3>
 <p>This API helps you to retrieve buying invoices.</p>
 <h3 id='http-request'>HTTP request</h3>
@@ -3157,7 +3172,7 @@ may have a different status from another ByOrderItem in that order.</p>
         <h6>/customer/buy-ship/invoices</h6>
     </div>
 </div>
-<h2 id='request'>Request</h2><h3 id='available-query-parameters'>Available query parameters</h3>
+<h3 id='request'>Request</h3><h3 id='available-query-parameters'>Available query parameters</h3>
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -3168,15 +3183,15 @@ may have a different status from another ByOrderItem in that order.</p>
 <tr>
 <td><code>page</code></td>
 <td>string</td>
-<td>See paging section</td>
+<td>Page number</td>
 </tr>
 <tr>
 <td><code>per_page</code></td>
 <td>string</td>
-<td>See paging section</td>
+<td>Number of items per page</td>
 </tr>
 </tbody></table>
-<h2 id='response'>Response</h2><h2 id='buyinvoices'>BuyInvoices</h2>
+<h3 id='response'>Response</h3><h3 id='buyinvoices'>BuyInvoices</h3>
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -3366,16 +3381,16 @@ may have a different status from another ByOrderItem in that order.</p>
     </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h2 id='get-warehouse-category'>Get warehouse category</h2>
-<p>This API helps you to retrieve related warehouse categories for a category.</p>
+</span></code></pre></div><h3 id='retrieve-shipment-invoices'>Retrieve shipment invoices</h3>
+<p>This API helps you to retrieve shipment invoices.</p>
 <h3 id='http-request-2'>HTTP request</h3>
 <div class="api-endpoint">
     <div class="endpoint-data">
         <i class="label label-post">GET</i>
-        <h6>/customer/calculate-shipment-cost</h6>
+        <h6>/customer/invoices</h6>
     </div>
 </div>
-<h2 id='request-2'>Request</h2><h3 id='available-query-parameters-2'>Available query parameters</h3>
+<h3 id='request-2'>Request</h3><h3 id='available-query-parameters-2'>Available query parameters</h3>
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -3384,41 +3399,17 @@ may have a different status from another ByOrderItem in that order.</p>
 </tr>
 </thead><tbody>
 <tr>
-<td><code>unit_type</code></td>
-<td>enum</td>
-<td>Unit type for shipment</td>
+<td><code>page</code></td>
+<td>string</td>
+<td>Page number</td>
 </tr>
 <tr>
-<td><code>shipping_type</code></td>
-<td>enum</td>
-<td>Shipping type for shipment</td>
-</tr>
-<tr>
-<td><code>p_origin</code></td>
-<td>enum</td>
-<td>Product origin country</td>
-</tr>
-<tr>
-<td><code>category_id</code></td>
-<td>integer</td>
-<td>The category for which we want to get warehouse categories</td>
+<td><code>per_page</code></td>
+<td>string</td>
+<td>Number of items per page</td>
 </tr>
 </tbody></table>
-<h4 id='supported-unit_type'>Supported unit_type</h4>
-<ul>
-<li>kg</li>
-<li>piece</li>
-</ul>
-<h4 id='supported-shipping_type'>Supported shipping_type</h4>
-<ul>
-<li>air</li>
-<li>ship</li>
-</ul>
-<h4 id='supported-p_origin'>Supported p_origin</h4>
-<ul>
-<li>CN</li>
-</ul>
-<h2 id='response-2'>Response</h2><h2 id='warehousecategories'>WarehouseCategories</h2>
+<h3 id='response-2'>Response</h3><h3 id='shipmentinvoice'>ShipmentInvoice</h3>
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -3429,10 +3420,15 @@ may have a different status from another ByOrderItem in that order.</p>
 <tr>
 <td><code>data</code></td>
 <td>array</td>
-<td>List of WarehouseCategoryItem.</td>
+<td>List of ShipmentInvoice.</td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td>object</td>
+<td>See pagination section for detail.</td>
 </tr>
 </tbody></table>
-<h3 id='warehousecategoryitem'>WarehouseCategoryItem</h3>
+<h3 id='shipmentinvoice-2'>ShipmentInvoice</h3>
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -3443,116 +3439,47 @@ may have a different status from another ByOrderItem in that order.</p>
 <tr>
 <td><code>id</code></td>
 <td>integer</td>
-<td>Id of the warehouse category id(During the order placement, the attribute <code>aw_category_id</code> refers to this value).</td>
+<td>Id of this shipment invoice.</td>
 </tr>
 <tr>
-<td><code>agent_warehouse_id</code></td>
-<td>integer</td>
-<td>Id of the warehouse.</td>
+<td><code>invoice_code</code></td>
+<td>string</td>
+<td>Human readable invoice number.</td>
 </tr>
 <tr>
-<td><code>category_id</code></td>
-<td>integer</td>
-<td>Shipping category id.</td>
-</tr>
-<tr>
-<td><code>rate</code></td>
+<td><code>total</code></td>
 <td>decimal</td>
-<td>Rate of this warehouse category.</td>
+<td>Total payable amount for this invoice</td>
 </tr>
 <tr>
-<td><code>unit_type</code></td>
-<td>enum</td>
-<td>Unit type of this warehouse category..</td>
-</tr>
-<tr>
-<td><code>shipping_type</code></td>
-<td>enum</td>
-<td>Shipping type of this warehouse category.</td>
-</tr>
-<tr>
-<td><code>is_customs_included</code></td>
-<td>bool</td>
-<td>Weather custom cost included or not.</td>
-</tr>
-<tr>
-<td><code>is_active</code></td>
-<td>bool</td>
-<td>Is this category is active.</td>
-</tr>
-<tr>
-<td><code>t_and_c</code></td>
-<td>integer</td>
-<td>Term and conditions for this warehouse category.</td>
-</tr>
-<tr>
-<td><code>commission</code></td>
+<td><code>paid_amount</code></td>
 <td>decimal</td>
-<td>MoveOn commission for this warehouse category.</td>
+<td>Total paid amount for this invoice</td>
 </tr>
 <tr>
-<td><code>categoryPriceSlots</code></td>
-<td>array</td>
-<td>Price slots for wholesale.</td>
+<td><code>refunded_amount</code></td>
+<td>decimal</td>
+<td>Refunded amount for this invoice</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>enum</td>
+<td>Status of this invoice</td>
+</tr>
+<tr>
+<td><code>paid_at</code></td>
+<td>datetime/null</td>
+<td>Payment completion time</td>
 </tr>
 </tbody></table>
 
 <blockquote>
-<p>Example of retrieving shipping categories:</p>
+<p>Example of retrieving shipment invoices:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/calculate-shipment-cost?unit_type<span class="o">=</span>kg&amp;shipping_type<span class="o">=</span>air&amp;category_id<span class="o">=</span>3&amp;p_origin<span class="o">=</span>CN <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/invoices<span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
-</code></pre></div>
-<blockquote>
-<p>JSON response example:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6402</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"agent_warehouse_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"category_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1400</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"unit_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kg"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"shipping_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"air"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"is_customs_included"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"is_active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"t_and_c"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"commission"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"categoryPriceSlots"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3830</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"aw_category_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6402</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"rate_per_unit"</span><span class="p">:</span><span class="w"> </span><span class="mi">1400</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"min_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.00"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"max_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3.00"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"commission"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"warehouse"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M*************"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"广州市白云区。西槎路同雅东街59号。同德仓A5</span><span class="se">\n</span><span class="s2">Baiyun District, Guangzhou City. 59 Tong Ya Dong Street, Xicha Road. Tongdecang A5"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"contact_person"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Md Sakhoat Hosain"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"contact_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"18328558704"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"shipping_mark"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MoveOn2"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1. Please use green woven bag to pack the cartoon or we will charge 15RMB for packing charge.</span><span class="se">\n</span><span class="s2">2. Shipping mark is must. without shipping mark on the box, we will not ship the product.</span><span class="se">\n</span><span class="s2">3. Wrong declaration of items will not be tolerated.</span><span class="se">\n</span><span class="s2">4. Update tracking code on time. Otherwise your products will not be shipped.</span><span class="se">\n</span><span class="s2">5.Shipping Price will be changed If Tax or Freight charge increased.</span><span class="se">\n</span><span class="s2">6. If product is below 3KG then additional 100-150gram will be added to the weight."</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"open_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12:59:53"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"close_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12:59:57"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"company"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M*************"</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nl">"charge_repacking"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"charge_inspection"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"est_sh_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10 - 15 days"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"est_sh_time_from"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"est_sh_time_to"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div><h1 id='wallet'>Wallet</h1>
+</code></pre></div><h1 id='wallet'>Wallet</h1>
 <p>The Wallet API allows you to retrieve personal wallet information.</p>
 <h3 id='retrieve-wallet-balance'>Retrieve wallet balance</h3>
 <p>This API helps you to retrieve your personal wallet balance.</p>
