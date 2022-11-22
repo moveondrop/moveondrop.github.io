@@ -440,15 +440,6 @@
                   <li>
                     <a href="#retrieve-wallet-balance" class="toc-h2 toc-link" data-title="Retrieve wallet balance">Retrieve wallet balance</a>
                   </li>
-                  <li>
-                    <a href="#http-request" class="toc-h2 toc-link" data-title="HTTP request">HTTP request</a>
-                  </li>
-                  <li>
-                    <a href="#response" class="toc-h2 toc-link" data-title="Response">Response</a>
-                  </li>
-                  <li>
-                    <a href="#walletbalance" class="toc-h2 toc-link" data-title="WalletBalance">WalletBalance</a>
-                  </li>
               </ul>
           </li>
           <li>
@@ -458,19 +449,7 @@
                     <a href="#retrieve-gateways" class="toc-h2 toc-link" data-title="Retrieve gateways">Retrieve gateways</a>
                   </li>
                   <li>
-                    <a href="#http-request" class="toc-h2 toc-link" data-title="HTTP request">HTTP request</a>
-                  </li>
-                  <li>
-                    <a href="#response" class="toc-h2 toc-link" data-title="Response">Response</a>
-                  </li>
-                  <li>
-                    <a href="#paymentgateways" class="toc-h2 toc-link" data-title="PaymentGateways">PaymentGateways</a>
-                  </li>
-                  <li>
                     <a href="#pay-invoices" class="toc-h2 toc-link" data-title="Pay invoices">Pay invoices</a>
-                  </li>
-                  <li>
-                    <a href="#make-payment-properties" class="toc-h2 toc-link" data-title="Make payment properties">Make payment properties</a>
                   </li>
               </ul>
           </li>
@@ -3481,7 +3460,7 @@ may have a different status from another ByOrderItem in that order.</p>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 </code></pre></div><h1 id='wallet'>Wallet</h1>
 <p>The Wallet API allows you to retrieve personal wallet information.</p>
-<h3 id='retrieve-wallet-balance'>Retrieve wallet balance</h3>
+<h2 id='retrieve-wallet-balance'>Retrieve wallet balance</h2>
 <p>This API helps you to retrieve your personal wallet balance.</p>
 <h3 id='http-request'>HTTP request</h3>
 <div class="api-endpoint">
@@ -3490,7 +3469,7 @@ may have a different status from another ByOrderItem in that order.</p>
         <h6>/customer/wallet/balance</h6>
     </div>
 </div>
-<h2 id='response'>Response</h2><h2 id='walletbalance'>WalletBalance</h2>
+<h3 id='response'>Response</h3><h3 id='walletbalance'>WalletBalance</h3>
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -3539,7 +3518,7 @@ may have a different status from another ByOrderItem in that order.</p>
 </span></code></pre></div><h1 id='payment'>Payment</h1>
 <p>The payment API allows you to retrieve available payment gateways 
 and gives ability to pay multiple invoices at once.</p>
-<h3 id='retrieve-gateways'>Retrieve gateways</h3>
+<h2 id='retrieve-gateways'>Retrieve gateways</h2>
 <p>This API helps you to retrieve available gateways for payment.</p>
 <h3 id='http-request'>HTTP request</h3>
 <div class="api-endpoint">
@@ -3548,7 +3527,7 @@ and gives ability to pay multiple invoices at once.</p>
         <h6>/payment/gateways</h6>
     </div>
 </div>
-<h2 id='response'>Response</h2><h2 id='paymentgateways'>PaymentGateways</h2>
+<h3 id='response'>Response</h3><h3 id='paymentgateways'>PaymentGateways</h3>
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -3630,7 +3609,7 @@ and gives ability to pay multiple invoices at once.</p>
         <h6>/payment/:gatewayId/pay</h6>
     </div>
 </div>
-<h2 id='make-payment-properties'>Make payment properties</h2>
+<h3 id='make-payment-properties'>Make payment properties</h3>
 <table><thead>
 <tr>
 <th>Attribute</th>
