@@ -1,6 +1,6 @@
-# Category #
+# Invoice #
 
-The Category API allows you to retrieve categories and associated warehouse categories.
+The Invoice API allows you to retrieve invoices.
 
 
 ### Retrieve buying invoices ###
@@ -17,18 +17,18 @@ This API helps you to retrieve buying invoices.
 	</div>
 </div>
 
-## Request ##
+### Request ###
 
 ### Available query parameters ###
 
-| Attribute  | Type   | Description        |
-|------------|--------|--------------------|
-| `page`     | string | See paging section |
-| `per_page` | string | See paging section |
+| Attribute  | Type   | Description              |
+|------------|--------|--------------------------|
+| `page`     | string | Page number              |
+| `per_page` | string | Number of items per page |
 
-## Response ##
+### Response ###
 
-## BuyInvoices ##
+### BuyInvoices ###
 
 | Attribute | Type   | Description                        |
 |-----------|--------|------------------------------------|
@@ -178,120 +178,55 @@ curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/i
 ```
 
 
+### Retrieve shipment invoices ###
 
-## Get warehouse category ##
+This API helps you to retrieve shipment invoices.
 
-This API helps you to retrieve related warehouse categories for a category.
 
 ### HTTP request ###
 
 <div class="api-endpoint">
 	<div class="endpoint-data">
 		<i class="label label-post">GET</i>
-		<h6>/customer/calculate-shipment-cost</h6>
+		<h6>/customer/invoices</h6>
 	</div>
 </div>
 
-## Request ##
+### Request ###
 
 ### Available query parameters ###
 
-| Attribute       | Type    | Description                                                |
-|-----------------|---------|------------------------------------------------------------|
-| `unit_type`     | enum    | Unit type for shipment                                     |
-| `shipping_type` | enum    | Shipping type for shipment                                 |
-| `p_origin`      | enum    | Product origin country                                     |
-| `category_id`   | integer | The category for which we want to get warehouse categories |
+| Attribute  | Type   | Description              |
+|------------|--------|--------------------------|
+| `page`     | string | Page number              |
+| `per_page` | string | Number of items per page |
 
-#### Supported unit_type ####
-- kg
-- piece
+### Response ###
 
-#### Supported shipping_type ####
-- air
-- ship
+### ShipmentInvoice ###
 
-#### Supported p_origin ####
-- CN
+| Attribute | Type   | Description                        |
+|-----------|--------|------------------------------------|
+| `data`    | array  | List of ShipmentInvoice.           |
+| `meta`    | object | See pagination section for detail. |
 
-## Response ##
+### ShipmentInvoice ###
 
-## WarehouseCategories ##
+| Attribute         | Type          | Description                           |
+|-------------------|---------------|---------------------------------------|
+| `id`              | integer       | Id of this shipment invoice.          |
+| `invoice_code`    | string        | Human readable invoice number.        |
+| `total`           | decimal       | Total payable amount for this invoice |
+| `paid_amount`     | decimal       | Total paid amount for this invoice    |
+| `refunded_amount` | decimal       | Refunded amount for this invoice      |
+| `status`          | enum          | Status of this invoice                |
+| `paid_at`         | datetime/null | Payment completion time               |
 
-| Attribute | Type  | Description                    |
-|-----------|-------|--------------------------------|
-| `data`    | array | List of WarehouseCategoryItem. |
 
-### WarehouseCategoryItem ###
-
-| Attribute             | Type    | Description                                                                                                       |
-|-----------------------|---------|-------------------------------------------------------------------------------------------------------------------|
-| `id`                  | integer | Id of the warehouse category id(During the order placement, the attribute `aw_category_id` refers to this value). |
-| `agent_warehouse_id`  | integer | Id of the warehouse.                                                                                              |
-| `category_id`         | integer | Shipping category id.                                                                                             |
-| `rate`                | decimal | Rate of this warehouse category.                                                                                  |
-| `unit_type`           | enum    | Unit type of this warehouse category..                                                                            |
-| `shipping_type`       | enum    | Shipping type of this warehouse category.                                                                         |
-| `is_customs_included` | bool    | Weather custom cost included or not.                                                                              |
-| `is_active`           | bool    | Is this category is active.                                                                                       |
-| `t_and_c`             | integer | Term and conditions for this warehouse category.                                                                  |
-| `commission`          | decimal | MoveOn commission for this warehouse category.                                                                    |
-| `categoryPriceSlots`  | array   | Price slots for wholesale.                                                                                        |
-
-> Example of retrieving shipping categories:
+> Example of retrieving shipment invoices:
 
 ```shell
-curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/calculate-shipment-cost?unit_type=kg&shipping_type=air&category_id=3&p_origin=CN \
+curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/invoices\
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json"
-```
-
-> JSON response example:
-
-```json
-{
-  "data": [
-    {
-      "id": 6402,
-      "agent_warehouse_id": 16,
-      "category_id": 3,
-      "rate": 1400,
-      "unit_type": "kg",
-      "shipping_type": "air",
-      "is_customs_included": false,
-      "is_active": true,
-      "t_and_c": null,
-      "commission": 10,
-      "categoryPriceSlots": [
-        {
-          "id": 3830,
-          "aw_category_id": 6402,
-          "rate_per_unit": 1400,
-          "min_amount": "1.00",
-          "max_amount": "3.00",
-          "commission": null
-        }
-      ],
-      "warehouse": {
-        "id": 16,
-        "name": "M*************",
-        "address": "广州市白云区。西槎路同雅东街59号。同德仓A5\nBaiyun District, Guangzhou City. 59 Tong Ya Dong Street, Xicha Road. Tongdecang A5",
-        "contact_person": "Md Sakhoat Hosain",
-        "contact_number": "18328558704",
-        "shipping_mark": "MoveOn2",
-        "instruction": "1. Please use green woven bag to pack the cartoon or we will charge 15RMB for packing charge.\n2. Shipping mark is must. without shipping mark on the box, we will not ship the product.\n3. Wrong declaration of items will not be tolerated.\n4. Update tracking code on time. Otherwise your products will not be shipped.\n5.Shipping Price will be changed If Tax or Freight charge increased.\n6. If product is below 3KG then additional 100-150gram will be added to the weight.",
-        "open_time": "12:59:53",
-        "close_time": "12:59:57",
-        "company": {
-          "name": "M*************"
-        },
-        "charge_repacking": null,
-        "charge_inspection": null,
-        "est_sh_time": "10 - 15 days",
-        "est_sh_time_from": 10,
-        "est_sh_time_to": 15
-      }
-    }
-  ]
-}
 ```
