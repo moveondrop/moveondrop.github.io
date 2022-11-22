@@ -1,2821 +1,446 @@
 # Products #
 
-The products API allows you to create, view, update, and delete individual, or a batch, of products.
+The products API allows you to retrieve product details and product description.
 
-## Product properties ##
+## Fetch a product ##
 
-| Attribute               | Type      | Description                                                                                                          |
-|-------------------------|-----------|----------------------------------------------------------------------------------------------------------------------|
-| `id`                    | integer   | Unique identifier for the resource. <i class="label label-info">read-only</i>                                        |
-| `name`                  | string    | Product name.                                                                                                        |
-| `slug`                  | string    | Product slug.                                                                                                        |
-| `permalink`             | string    | Product URL. <i class="label label-info">read-only</i>                                                               |
-| `date_created`          | date-time | The date the product was created, in the site's timezone. <i class="label label-info">read-only</i>                  |
-| `date_created_gmt`      | date-time | The date the product was created, as GMT. <i class="label label-info">read-only</i>                                  |
-| `date_modified`         | date-time | The date the product was last modified, in the site's timezone. <i class="label label-info">read-only</i>            |
-| `date_modified_gmt`     | date-time | The date the product was last modified, as GMT. <i class="label label-info">read-only</i>                            |
-| `type`                  | string    | Product type. Options: `simple`, `grouped`, `external` and `variable`. Default is `simple`.                          |
-| `status`                | string    | Product status (post status). Options: `draft`, `pending`, `private` and `publish`. Default is `publish`.            |
-| `featured`              | boolean   | Featured product. Default is `false`.                                                                                |
-| `catalog_visibility`    | string    | Catalog visibility. Options: `visible`, `catalog`, `search` and `hidden`. Default is `visible`.                      |
-| `description`           | string    | Product description.                                                                                                 |
-| `short_description`     | string    | Product short description.                                                                                           |
-| `sku`                   | string    | Unique identifier.                                                                                                   |
-| `price`                 | string    | Current product price. <i class="label label-info">read-only</i>                                                     |
-| `regular_price`         | string    | Product regular price.                                                                                               |
-| `sale_price`            | string    | Product sale price.                                                                                                  |
-| `date_on_sale_from`     | date-time | Start date of sale price, in the site's timezone.                                                                    |
-| `date_on_sale_from_gmt` | date-time | Start date of sale price, as GMT.                                                                                    |
-| `date_on_sale_to`       | date-time | End date of sale price, in the site's timezone.                                                                      |
-| `date_on_sale_to_gmt`   | date-time | End date of sale price, as GMT.                                                                                      |
-| `price_html`            | string    | Price formatted in HTML. <i class="label label-info">read-only</i>                                                   |
-| `on_sale`               | boolean   | Shows if the product is on sale. <i class="label label-info">read-only</i>                                           |
-| `purchasable`           | boolean   | Shows if the product can be bought. <i class="label label-info">read-only</i>                                        |
-| `total_sales`           | integer   | Amount of sales. <i class="label label-info">read-only</i>                                                           |
-| `virtual`               | boolean   | If the product is virtual. Default is `false`.                                                                       |
-| `downloadable`          | boolean   | If the product is downloadable. Default is `false`.                                                                  |
-| `downloads`             | array     | List of downloadable files. See [Product - Downloads properties](#product-downloads-properties)                      |
-| `download_limit`        | integer   | Number of times downloadable files can be downloaded after purchase. Default is `-1`.                                |
-| `download_expiry`       | integer   | Number of days until access to downloadable files expires. Default is `-1`.                                          |
-| `external_url`          | string    | Product external URL. Only for external products.                                                                    |
-| `button_text`           | string    | Product external button text. Only for external products.                                                            |
-| `tax_status`            | string    | Tax status. Options: `taxable`, `shipping` and `none`. Default is `taxable`.                                         |
-| `tax_class`             | string    | Tax class.                                                                                                           |
-| `manage_stock`          | boolean   | Stock management at product level. Default is `false`.                                                               |
-| `stock_quantity`        | integer   | Stock quantity.                                                                                                      |
-| `stock_status`          | string    | Controls the stock status of the product. Options: `instock`, `outofstock`, `onbackorder`. Default is `instock`.     |
-| `backorders`            | string    | If managing stock, this controls if backorders are allowed. Options: `no`, `notify` and `yes`. Default is `no`.      |
-| `backorders_allowed`    | boolean   | Shows if backorders are allowed. <i class="label label-info">read-only</i>                                           |
-| `backordered`           | boolean   | Shows if the product is on backordered. <i class="label label-info">read-only</i>                                    |
-| `sold_individually`     | boolean   | Allow one item to be bought in a single order. Default is `false`.                                                   |
-| `weight`                | string    | Product weight.                                                                                                      |
-| `dimensions`            | object    | Product dimensions. See [Product - Dimensions properties](#product-dimensions-properties)                            |
-| `shipping_required`     | boolean   | Shows if the product need to be shipped. <i class="label label-info">read-only</i>                                   |
-| `shipping_taxable`      | boolean   | Shows whether or not the product shipping is taxable. <i class="label label-info">read-only</i>                      |
-| `shipping_class`        | string    | Shipping class slug.                                                                                                 |
-| `shipping_class_id`     | integer   | Shipping class ID. <i class="label label-info">read-only</i>                                                         |
-| `reviews_allowed`       | boolean   | Allow reviews. Default is `true`.                                                                                    |
-| `average_rating`        | string    | Reviews average rating. <i class="label label-info">read-only</i>                                                    |
-| `rating_count`          | integer   | Amount of reviews that the product have. <i class="label label-info">read-only</i>                                   |
-| `related_ids`           | array     | List of related products IDs. <i class="label label-info">read-only</i>                                              |
-| `upsell_ids`            | array     | List of up-sell products IDs.                                                                                        |
-| `cross_sell_ids`        | array     | List of cross-sell products IDs.                                                                                     |
-| `parent_id`             | integer   | Product parent ID.                                                                                                   |
-| `purchase_note`         | string    | Optional note to send the customer after purchase.                                                                   |
-| `categories`            | array     | List of categories. See [Product - Categories properties](#product-categories-properties)                            |
-| `tags`                  | array     | List of tags. See [Product - Tags properties](#product-tags-properties)                                              |
-| `images`                | array     | List of images. See [Product - Images properties](#product-images-properties)                                        |
-| `attributes`            | array     | List of attributes. See [Product - Attributes properties](#product-attributes-properties)                            |
-| `default_attributes`    | array     | Defaults variation attributes. See [Product - Default attributes properties](#product-default-attributes-properties) |
-| `variations`            | array     | List of variations IDs. <i class="label label-info">read-only</i>                                                    |
-| `grouped_products`      | array     | List of grouped products ID.                                                                                         |
-| `menu_order`            | integer   | Menu order, used to custom sort products.                                                                            |
-| `meta_data`             | array     | Meta data. See [Product - Meta data properties](#product-meta-data-properties)                                       |
-
-### Product - Downloads properties ###
-
-| Attribute | Type   | Description |
-|-----------|--------|-------------|
-| `id`      | string | File ID.    |
-| `name`    | string | File name.  |
-| `file`    | string | File URL.   |
-
-### Product - Dimensions properties ###
-
-| Attribute | Type   | Description     |
-|-----------|--------|-----------------|
-| `length`  | string | Product length. |
-| `width`   | string | Product width.  |
-| `height`  | string | Product height. |
-
-### Product - Categories properties ###
-
-| Attribute | Type    | Description                                              |
-|-----------|---------|----------------------------------------------------------|
-| `id`      | integer | Category ID.                                             |
-| `name`    | string  | Category name. <i class="label label-info">read-only</i> |
-| `slug`    | string  | Category slug. <i class="label label-info">read-only</i> |
-
-### Product - Tags properties ###
-
-| Attribute | Type    | Description                                         |
-|-----------|---------|-----------------------------------------------------|
-| `id`      | integer | Tag ID.                                             |
-| `name`    | string  | Tag name. <i class="label label-info">read-only</i> |
-| `slug`    | string  | Tag slug. <i class="label label-info">read-only</i> |
-
-### Product - Images properties ###
-
-| Attribute           | Type      | Description                                                                                             |
-|---------------------|-----------|---------------------------------------------------------------------------------------------------------|
-| `id`                | integer   | Image ID.                                                                                               |
-| `date_created`      | date-time | The date the image was created, in the site's timezone. <i class="label label-info">read-only</i>       |
-| `date_created_gmt`  | date-time | The date the image was created, as GMT. <i class="label label-info">read-only</i>                       |
-| `date_modified`     | date-time | The date the image was last modified, in the site's timezone. <i class="label label-info">read-only</i> |
-| `date_modified_gmt` | date-time | The date the image was last modified, as GMT. <i class="label label-info">read-only</i>                 |
-| `src`               | string    | Image URL.                                                                                              |
-| `name`              | string    | Image name.                                                                                             |
-| `alt`               | string    | Image alternative text.                                                                                 |
-
-### Product - Attributes properties ###
-
-| Attribute   | Type    | Description                                                                                                       |
-|-------------|---------|-------------------------------------------------------------------------------------------------------------------|
-| `id`        | integer | Attribute ID.                                                                                                     |
-| `name`      | string  | Attribute name.                                                                                                   |
-| `position`  | integer | Attribute position.                                                                                               |
-| `visible`   | boolean | Define if the attribute is visible on the "Additional information" tab in the product's page. Default is `false`. |
-| `variation` | boolean | Define if the attribute can be used as variation. Default is `false`.                                             |
-| `options`   | array   | List of available term names of the attribute.                                                                    |
-
-### Product - Default attributes properties ###
-
-| Attribute | Type    | Description                   |
-|-----------|---------|-------------------------------|
-| `id`      | integer | Attribute ID.                 |
-| `name`    | string  | Attribute name.               |
-| `option`  | string  | Selected attribute term name. |
-
-### Product - Meta data properties ###
-
-| Attribute | Type    | Description                                        |
-|-----------|---------|----------------------------------------------------|
-| `id`      | integer | Meta ID. <i class="label label-info">read-only</i> |
-| `key`     | string  | Meta key.                                          |
-| `value`   | string  | Meta value.                                        |
-
-## Create a product ##
-
-This API helps you to create a new product.
+This API helps you to retrieve product details by link.
 
 ### HTTP request ###
 
 <div class="api-endpoint">
 	<div class="endpoint-data">
 		<i class="label label-post">POST</i>
-		<h6>/wp-json/wc/v3/products</h6>
+		<h6>/customer/external/fetch-product</h6>
 	</div>
 </div>
 
-> Example of how to create a `simple` product:
+
+> Example of retrieving product details:
 
 ```shell
-curl -X POST https://example.com/wp-json/wc/v3/products \
-	-u consumer_key:consumer_secret \
+curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/external/fetch-product \
+	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json" \
 	-d '{
-  "name": "Premium Quality",
-  "type": "simple",
-  "regular_price": "21.99",
-  "description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
-  "short_description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-  "categories": [
-    {
-      "id": 9
-    },
-    {
-      "id": 14
-    }
-  ],
-  "images": [
-    {
-      "src": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_front.jpg"
-    },
-    {
-      "src": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_back.jpg"
-    }
-  ]
+    "url": "https://www.aliexpress.com/item/1005002952248539.html"
 }'
 ```
 
-```javascript
-const data = {
-  name: "Premium Quality",
-  type: "simple",
-  regular_price: "21.99",
-  description: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
-  short_description: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-  categories: [
-    {
-      id: 9
-    },
-    {
-      id: 14
-    }
-  ],
-  images: [
-    {
-      src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_front.jpg"
-    },
-    {
-      src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_back.jpg"
-    }
-  ]
-};
-
-WooCommerce.post("products", data)
-  .then((response) => {
-    console.log(response.data);
-  })
-  .catch((error) => {
-    console.log(error.response.data);
-  });
-```
-
-```php
-<?php
-$data = [
-    'name' => 'Premium Quality',
-    'type' => 'simple',
-    'regular_price' => '21.99',
-    'description' => 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.',
-    'short_description' => 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
-    'categories' => [
-        [
-            'id' => 9
-        ],
-        [
-            'id' => 14
-        ]
-    ],
-    'images' => [
-        [
-            'src' => 'http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_front.jpg'
-        ],
-        [
-            'src' => 'http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_back.jpg'
-        ]
-    ]
-];
-
-print_r($woocommerce->post('products', $data));
-?>
-```
-
-```python
-data = {
-    "name": "Premium Quality",
-    "type": "simple",
-    "regular_price": "21.99",
-    "description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
-    "short_description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-    "categories": [
-        {
-            "id": 9
-        },
-        {
-            "id": 14
-        }
-    ],
-    "images": [
-        {
-            "src": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_front.jpg"
-        },
-        {
-            "src": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_back.jpg"
-        }
-    ]
-}
-
-print(wcapi.post("products", data).json())
-```
-
-```ruby
-data = {
-  name: "Premium Quality",
-  type: "simple",
-  regular_price: "21.99",
-  description: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
-  short_description: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-  categories: [
-    {
-      id: 9
-    },
-    {
-      id: 14
-    }
-  ],
-  images: [
-    {
-      src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_front.jpg"
-    },
-    {
-      src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_back.jpg",
-    }
-  ]
-}
-
-woocommerce.post("products", data).parsed_response
-```
 
 > JSON response example:
 
 ```json
 {
-  "id": 794,
-  "name": "Premium Quality",
-  "slug": "premium-quality-19",
-  "permalink": "https://example.com/product/premium-quality-19/",
-  "date_created": "2017-03-23T17:01:14",
-  "date_created_gmt": "2017-03-23T20:01:14",
-  "date_modified": "2017-03-23T17:01:14",
-  "date_modified_gmt": "2017-03-23T20:01:14",
-  "type": "simple",
-  "status": "publish",
-  "featured": false,
-  "catalog_visibility": "visible",
-  "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
-  "short_description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>\n",
-  "sku": "",
-  "price": "21.99",
-  "regular_price": "21.99",
-  "sale_price": "",
-  "date_on_sale_from": null,
-  "date_on_sale_from_gmt": null,
-  "date_on_sale_to": null,
-  "date_on_sale_to_gmt": null,
-  "price_html": "<span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>21.99</span>",
-  "on_sale": false,
-  "purchasable": true,
-  "total_sales": 0,
-  "virtual": false,
-  "downloadable": false,
-  "downloads": [],
-  "download_limit": -1,
-  "download_expiry": -1,
-  "external_url": "",
-  "button_text": "",
-  "tax_status": "taxable",
-  "tax_class": "",
-  "manage_stock": false,
-  "stock_quantity": null,
-  "stock_status": "instock",
-  "backorders": "no",
-  "backorders_allowed": false,
-  "backordered": false,
-  "sold_individually": false,
-  "weight": "",
-  "dimensions": {
-    "length": "",
-    "width": "",
-    "height": ""
-  },
-  "shipping_required": true,
-  "shipping_taxable": true,
-  "shipping_class": "",
-  "shipping_class_id": 0,
-  "reviews_allowed": true,
-  "average_rating": "0.00",
-  "rating_count": 0,
-  "related_ids": [
-    53,
-    40,
-    56,
-    479,
-    99
-  ],
-  "upsell_ids": [],
-  "cross_sell_ids": [],
-  "parent_id": 0,
-  "purchase_note": "",
-  "categories": [
-    {
-      "id": 9,
-      "name": "Clothing",
-      "slug": "clothing"
-    },
-    {
-      "id": 14,
-      "name": "T-shirts",
-      "slug": "t-shirts"
-    }
-  ],
-  "tags": [],
-  "images": [
-    {
-      "id": 792,
-      "date_created": "2017-03-23T14:01:13",
-      "date_created_gmt": "2017-03-23T20:01:13",
-      "date_modified": "2017-03-23T14:01:13",
-      "date_modified_gmt": "2017-03-23T20:01:13",
-      "src": "https://example.com/wp-content/uploads/2017/03/T_2_front-4.jpg",
-      "name": "",
-      "alt": ""
-    },
-    {
-      "id": 793,
-      "date_created": "2017-03-23T14:01:14",
-      "date_created_gmt": "2017-03-23T20:01:14",
-      "date_modified": "2017-03-23T14:01:14",
-      "date_modified_gmt": "2017-03-23T20:01:14",
-      "src": "https://example.com/wp-content/uploads/2017/03/T_2_back-2.jpg",
-      "name": "",
-      "alt": ""
-    }
-  ],
-  "attributes": [],
-  "default_attributes": [],
-  "variations": [],
-  "grouped_products": [],
-  "menu_order": 0,
-  "meta_data": [],
-  "_links": {
-    "self": [
-      {
-        "href": "https://example.com/wp-json/wc/v3/products/794"
+  "status": "success",
+  "code": 200,
+  "message": "Product has been fetched.",
+  "data": {
+    "id": 4408374,
+    "shop_id": 1,
+    "vid": "1005002952248539",
+    "seller_id": 522242,
+    "vendor": "aliexpress",
+    "title": "XIAOMI Mijia Handheld Garment Steamer for Clothes Electric Steam Iron High Quality Portable Traveling Clothes Steamer",
+    "description": null,
+    "price": {
+      "discount": {
+        "max": 43.63,
+        "min": 25.99
+      },
+      "original": {
+        "max": 54.54,
+        "min": 32.49
       }
-    ],
-    "collection": [
+    },
+    "stock": 1207,
+    "sales": 6079,
+    "link": "https://www.aliexpress.com/item/1005002952248539.html",
+    "image": "https://ae01.alicdn.com/kf/Hedb73ff2ad254ba3b0d27ae6d6a5a6455/XIAOMI-Mijia-Handheld-Garment-Steamer-for-Clothes-Electric-Steam-Iron-High-Quality-Portable-Traveling-Clothes-Steamer.jpg",
+    "meta": {
+      "vendor": "aliexpress",
+      "companyId": 249292525,
+      "categoryId": 64904,
+      "product_id": "1005002952248539",
+      "description_url": "https://aeproductsourcesite.alicdn.com/product/description/pc/v2/en_US/desc.htm?productId=1005002952248539&key=S9c91991033774b91b571e31c48528658I.zip&token=757b28f8463f826b8108399a160a7e22"
+    },
+    "gallery": [
       {
-        "href": "https://example.com/wp-json/wc/v3/products"
-      }
-    ]
-  }
-}
-```
-
-> Example of how to create a `variable` product with global and non-global attributes:
-
-```shell
-curl -X POST https://example.com/wp-json/wc/v3/products \
-	-u consumer_key:consumer_secret \
-	-H "Content-Type: application/json" \
-	-d '{
-  "name": "Ship Your Idea",
-  "type": "variable",
-  "description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
-  "short_description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-  "categories": [
-    {
-      "id": 9
-    },
-    {
-      "id": 14
-    }
-  ],
-  "images": [
-    {
-      "src": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_4_front.jpg"
-    },
-    {
-      "src": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_4_back.jpg"
-    },
-    {
-      "src": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_3_front.jpg"
-    },
-    {
-      "src": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_3_back.jpg"
-    }
-  ],
-  "attributes": [
-    {
-      "id": 6,
-      "position": 0,
-      "visible": false,
-      "variation": true,
-      "options": [
-        "Black",
-        "Green"
-      ]
-    },
-    {
-      "name": "Size",
-      "position": 0,
-      "visible": true,
-      "variation": true,
-      "options": [
-        "S",
-        "M"
-      ]
-    }
-  ],
-  "default_attributes": [
-    {
-      "id": 6,
-      "option": "Black"
-    },
-    {
-      "name": "Size",
-      "option": "S"
-    }
-  ]
-}'
-```
-
-```javascript
-const data = {
-  name: "Ship Your Idea",
-  type: "variable",
-  description: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
-  short_description: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-  categories: [
-    {
-      id: 9
-    },
-    {
-      id: 14
-    }
-  ],
-  images: [
-    {
-      src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_4_front.jpg"
-    },
-    {
-      src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_4_back.jpg"
-    },
-    {
-      src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_3_front.jpg"
-    },
-    {
-      src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_3_back.jpg"
-    }
-  ],
-  attributes: [
-    {
-      id: 6,
-      position: 0,
-      visible: true,
-      variation: true,
-      options: [
-        "Black",
-        "Green"
-      ]
-    },
-    {
-      name: "Size",
-      position: 0,
-      visible: false,
-      variation: true,
-      options: [
-        "S",
-        "M"
-      ]
-    }
-  ],
-  default_attributes: [
-    {
-      id: 6,
-      option: "Black"
-    },
-    {
-      name: "Size",
-      option: "S"
-    }
-  ]
-};
-
-WooCommerce.post("products", data)
-  .then((response) => {
-    console.log(response.data);
-  })
-  .catch((error) => {
-    console.log(error.response.data);
-  });
-```
-
-```php
-<?php
-$data = [
-    'name' => 'Ship Your Idea',
-    'type' => 'variable',
-    'description' => 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.',
-    'short_description' => 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
-    'categories' => [
-        [
-            'id' => 9
-        ],
-        [
-            'id' => 14
-        ]
-    ],
-    'images' => [
-        [
-            'src' => 'http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_4_front.jpg'
-        ],
-        [
-            'src' => 'http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_4_back.jpg'
-        ],
-        [
-            'src' => 'http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_3_front.jpg'
-        ],
-        [
-            'src' => 'http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_3_back.jpg'
-        ]
-    ],
-    'attributes' => [
-        [
-            'id' => 6,
-            'position' => 0,
-            'visible' => false,
-            'variation' => true,
-            'options' => [
-                'Black',
-                'Green'
-            ]
-        ],
-        [
-            'name' => 'Size',
-            'position' => 0,
-            'visible' => true,
-            'variation' => true,
-            'options' => [
-                'S',
-                'M'
-            ]
-        ]
-    ],
-    'default_attributes' => [
-        [
-            'id' => 6,
-            'option' => 'Black'
-        ],
-        [
-            'name' => 'Size',
-            'option' => 'S'
-        ]
-    ]
-];
-
-print_r($woocommerce->post('products', $data));
-?>
-```
-
-```python
-data = {
-    "name": "Ship Your Idea",
-    "type": "variable",
-    "description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
-    "short_description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-    "categories": [
-        {
-            "id": 9
-        },
-        {
-            "id": 14
-        }
-    ],
-    "images": [
-        {
-            "src": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_4_front.jpg"
-        },
-        {
-            "src": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_4_back.jpg"
-        },
-        {
-            "src": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_3_front.jpg"
-        },
-        {
-            "src": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_3_back.jpg"
-        }
-    ],
-    "attributes": [
-        {
-            "id": 6,
-            "position": 0,
-            "visible": False,
-            "variation": True,
-            "options": [
-                "Black",
-                "Green"
-            ]
-        },
-        {
-            "name": "Size",
-            "position": 0,
-            "visible": True,
-            "variation": True,
-            "options": [
-                "S",
-                "M"
-            ]
-        }
-    ],
-    "default_attributes": [
-        {
-            "id": 6,
-            "option": "Black"
-        },
-        {
-            "name": "Size",
-            "option": "S"
-        }
-    ]
-}
-
-print(wcapi.post("products", data).json())
-```
-
-```ruby
-data = {
-  name: "Ship Your Idea",
-  type: "variable",
-  description: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
-  short_description: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-  categories: [
-    {
-      id: 9
-    },
-    {
-      id: 14
-    }
-  ],
-  images: [
-    {
-      src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_4_front.jpg"
-    },
-    {
-      src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_4_back.jpg"
-    },
-    {
-      src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_3_front.jpg"
-    },
-    {
-      src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_3_back.jpg"
-    }
-  ],
-  attributes: [
-    {
-      id: 6,
-      position: 0,
-      visible: false,
-      variation: true,
-      options: [
-        "Black",
-        "Green"
-      ]
-    },
-    {
-      name: "Size",
-      position: 0,
-      visible: true,
-      variation: true,
-      options: [
-        "S",
-        "M"
-      ]
-    }
-  ],
-  default_attributes: [
-    {
-      id: 6,
-      option: "Black"
-    },
-    {
-      name: "Size",
-      option: "S"
-    }
-  ]
-}
-
-woocommerce.post("products", data).parsed_response
-```
-
-> JSON response example:
-
-```json
-{
-  "id": 799,
-  "name": "Ship Your Idea",
-  "slug": "ship-your-idea-22",
-  "permalink": "https://example.com/product/ship-your-idea-22/",
-  "date_created": "2017-03-23T17:03:12",
-  "date_created_gmt": "2017-03-23T20:03:12",
-  "date_modified": "2017-03-23T17:03:12",
-  "date_modified_gmt": "2017-03-23T20:03:12",
-  "type": "variable",
-  "status": "publish",
-  "featured": false,
-  "catalog_visibility": "visible",
-  "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
-  "short_description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>\n",
-  "sku": "",
-  "price": "",
-  "regular_price": "",
-  "sale_price": "",
-  "date_on_sale_from": null,
-  "date_on_sale_from_gmt": null,
-  "date_on_sale_to": null,
-  "date_on_sale_to_gmt": null,
-  "price_html": "",
-  "on_sale": false,
-  "purchasable": false,
-  "total_sales": 0,
-  "virtual": false,
-  "downloadable": false,
-  "downloads": [],
-  "download_limit": -1,
-  "download_expiry": -1,
-  "external_url": "",
-  "button_text": "",
-  "tax_status": "taxable",
-  "tax_class": "",
-  "manage_stock": false,
-  "stock_quantity": null,
-  "stock_status": "instock",
-  "backorders": "no",
-  "backorders_allowed": false,
-  "backordered": false,
-  "sold_individually": false,
-  "weight": "",
-  "dimensions": {
-    "length": "",
-    "width": "",
-    "height": ""
-  },
-  "shipping_required": true,
-  "shipping_taxable": true,
-  "shipping_class": "",
-  "shipping_class_id": 0,
-  "reviews_allowed": true,
-  "average_rating": "0.00",
-  "rating_count": 0,
-  "related_ids": [
-    472,
-    387,
-    19,
-    53,
-    396
-  ],
-  "upsell_ids": [],
-  "cross_sell_ids": [],
-  "parent_id": 0,
-  "purchase_note": "",
-  "categories": [
-    {
-      "id": 9,
-      "name": "Clothing",
-      "slug": "clothing"
-    },
-    {
-      "id": 14,
-      "name": "T-shirts",
-      "slug": "t-shirts"
-    }
-  ],
-  "tags": [],
-  "images": [
-    {
-      "id": 795,
-      "date_created": "2017-03-23T14:03:08",
-      "date_created_gmt": "2017-03-23T20:03:08",
-      "date_modified": "2017-03-23T14:03:08",
-      "date_modified_gmt": "2017-03-23T20:03:08",
-      "src": "https://example.com/wp-content/uploads/2017/03/T_4_front-11.jpg",
-      "name": "",
-      "alt": ""
-    },
-    {
-      "id": 796,
-      "date_created": "2017-03-23T14:03:09",
-      "date_created_gmt": "2017-03-23T20:03:09",
-      "date_modified": "2017-03-23T14:03:09",
-      "date_modified_gmt": "2017-03-23T20:03:09",
-      "src": "https://example.com/wp-content/uploads/2017/03/T_4_back-10.jpg",
-      "name": "",
-      "alt": ""
-    },
-    {
-      "id": 797,
-      "date_created": "2017-03-23T14:03:10",
-      "date_created_gmt": "2017-03-23T20:03:10",
-      "date_modified": "2017-03-23T14:03:10",
-      "date_modified_gmt": "2017-03-23T20:03:10",
-      "src": "https://example.com/wp-content/uploads/2017/03/T_3_front-10.jpg",
-      "name": "",
-      "alt": ""
-    },
-    {
-      "id": 798,
-      "date_created": "2017-03-23T14:03:11",
-      "date_created_gmt": "2017-03-23T20:03:11",
-      "date_modified": "2017-03-23T14:03:11",
-      "date_modified_gmt": "2017-03-23T20:03:11",
-      "src": "https://example.com/wp-content/uploads/2017/03/T_3_back-10.jpg",
-      "name": "",
-      "alt": ""
-    }
-  ],
-  "attributes": [
-    {
-      "id": 6,
-      "name": "Color",
-      "position": 0,
-      "visible": false,
-      "variation": true,
-      "options": [
-        "Black",
-        "Green"
-      ]
-    },
-    {
-      "id": 0,
-      "name": "Size",
-      "position": 0,
-      "visible": true,
-      "variation": true,
-      "options": [
-        "S",
-        "M"
-      ]
-    }
-  ],
-  "default_attributes": [
-    {
-      "id": 6,
-      "name": "Color",
-      "option": "black"
-    },
-    {
-      "id": 0,
-      "name": "Size",
-      "option": "S"
-    }
-  ],
-  "variations": [],
-  "grouped_products": [],
-  "menu_order": 0,
-  "meta_data": [],
-  "_links": {
-    "self": [
-      {
-        "href": "https://example.com/wp-json/wc/v3/products/799"
-      }
-    ],
-    "collection": [
-      {
-        "href": "https://example.com/wp-json/wc/v3/products"
-      }
-    ]
-  }
-}
-```
-
-## Retrieve a product ##
-
-This API lets you retrieve and view a specific product by ID.
-
-### HTTP request ###
-
-<div class="api-endpoint">
-	<div class="endpoint-data">
-		<i class="label label-get">GET</i>
-		<h6>/wp-json/wc/v3/products/&lt;id&gt;</h6>
-	</div>
-</div>
-
-```shell
-curl https://example.com/wp-json/wc/v3/products/794 \
-	-u consumer_key:consumer_secret
-```
-
-```javascript
-WooCommerce.get("products/794")
-  .then((response) => {
-    console.log(response.data);
-  })
-  .catch((error) => {
-    console.log(error.response.data);
-  });
-```
-
-```php
-<?php print_r($woocommerce->get('products/794')); ?>
-```
-
-```python
-print(wcapi.get("products/794").json())
-```
-
-```ruby
-woocommerce.get("products/794").parsed_response
-```
-
-> JSON response example:
-
-```json
-{
-  "id": 794,
-  "name": "Premium Quality",
-  "slug": "premium-quality-19",
-  "permalink": "https://example.com/product/premium-quality-19/",
-  "date_created": "2017-03-23T17:01:14",
-  "date_created_gmt": "2017-03-23T20:01:14",
-  "date_modified": "2017-03-23T17:01:14",
-  "date_modified_gmt": "2017-03-23T20:01:14",
-  "type": "simple",
-  "status": "publish",
-  "featured": false,
-  "catalog_visibility": "visible",
-  "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
-  "short_description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>\n",
-  "sku": "",
-  "price": "21.99",
-  "regular_price": "21.99",
-  "sale_price": "",
-  "date_on_sale_from": null,
-  "date_on_sale_from_gmt": null,
-  "date_on_sale_to": null,
-  "date_on_sale_to_gmt": null,
-  "price_html": "<span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>21.99</span>",
-  "on_sale": false,
-  "purchasable": true,
-  "total_sales": 0,
-  "virtual": false,
-  "downloadable": false,
-  "downloads": [],
-  "download_limit": -1,
-  "download_expiry": -1,
-  "external_url": "",
-  "button_text": "",
-  "tax_status": "taxable",
-  "tax_class": "",
-  "manage_stock": false,
-  "stock_quantity": null,
-  "stock_status": "instock",
-  "backorders": "no",
-  "backorders_allowed": false,
-  "backordered": false,
-  "sold_individually": false,
-  "weight": "",
-  "dimensions": {
-    "length": "",
-    "width": "",
-    "height": ""
-  },
-  "shipping_required": true,
-  "shipping_taxable": true,
-  "shipping_class": "",
-  "shipping_class_id": 0,
-  "reviews_allowed": true,
-  "average_rating": "0.00",
-  "rating_count": 0,
-  "related_ids": [
-    53,
-    40,
-    56,
-    479,
-    99
-  ],
-  "upsell_ids": [],
-  "cross_sell_ids": [],
-  "parent_id": 0,
-  "purchase_note": "",
-  "categories": [
-    {
-      "id": 9,
-      "name": "Clothing",
-      "slug": "clothing"
-    },
-    {
-      "id": 14,
-      "name": "T-shirts",
-      "slug": "t-shirts"
-    }
-  ],
-  "tags": [],
-  "images": [
-    {
-      "id": 792,
-      "date_created": "2017-03-23T14:01:13",
-      "date_created_gmt": "2017-03-23T20:01:13",
-      "date_modified": "2017-03-23T14:01:13",
-      "date_modified_gmt": "2017-03-23T20:01:13",
-      "src": "https://example.com/wp-content/uploads/2017/03/T_2_front-4.jpg",
-      "name": "",
-      "alt": ""
-    },
-    {
-      "id": 793,
-      "date_created": "2017-03-23T14:01:14",
-      "date_created_gmt": "2017-03-23T20:01:14",
-      "date_modified": "2017-03-23T14:01:14",
-      "date_modified_gmt": "2017-03-23T20:01:14",
-      "src": "https://example.com/wp-content/uploads/2017/03/T_2_back-2.jpg",
-      "name": "",
-      "alt": ""
-    }
-  ],
-  "attributes": [],
-  "default_attributes": [],
-  "variations": [],
-  "grouped_products": [],
-  "menu_order": 0,
-  "meta_data": [],
-  "_links": {
-    "self": [
-      {
-        "href": "https://example.com/wp-json/wc/v3/products/794"
-      }
-    ],
-    "collection": [
-      {
-        "href": "https://example.com/wp-json/wc/v3/products"
-      }
-    ]
-  }
-}
-```
-
-## List all products ##
-
-This API helps you to view all the products.
-
-### HTTP request ###
-
-<div class="api-endpoint">
-	<div class="endpoint-data">
-		<i class="label label-get">GET</i>
-		<h6>/wp-json/wc/v3/products</h6>
-	</div>
-</div>
-
-```shell
-curl https://example.com/wp-json/wc/v3/products \
-	-u consumer_key:consumer_secret
-```
-
-```javascript
-WooCommerce.get("products")
-  .then((response) => {
-    console.log(response.data);
-  })
-  .catch((error) => {
-    console.log(error.response.data);
-  });
-```
-
-```php
-<?php print_r($woocommerce->get('products')); ?>
-```
-
-```python
-print(wcapi.get("products").json())
-```
-
-```ruby
-woocommerce.get("products").parsed_response
-```
-
-> JSON response example:
-
-```json
-[
-  {
-    "id": 799,
-    "name": "Ship Your Idea",
-    "slug": "ship-your-idea-22",
-    "permalink": "https://example.com/product/ship-your-idea-22/",
-    "date_created": "2017-03-23T17:03:12",
-    "date_created_gmt": "2017-03-23T20:03:12",
-    "date_modified": "2017-03-23T17:03:12",
-    "date_modified_gmt": "2017-03-23T20:03:12",
-    "type": "variable",
-    "status": "publish",
-    "featured": false,
-    "catalog_visibility": "visible",
-    "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
-    "short_description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>\n",
-    "sku": "",
-    "price": "",
-    "regular_price": "",
-    "sale_price": "",
-    "date_on_sale_from": null,
-    "date_on_sale_from_gmt": null,
-    "date_on_sale_to": null,
-    "date_on_sale_to_gmt": null,
-    "price_html": "",
-    "on_sale": false,
-    "purchasable": false,
-    "total_sales": 0,
-    "virtual": false,
-    "downloadable": false,
-    "downloads": [],
-    "download_limit": -1,
-    "download_expiry": -1,
-    "external_url": "",
-    "button_text": "",
-    "tax_status": "taxable",
-    "tax_class": "",
-    "manage_stock": false,
-    "stock_quantity": null,
-    "stock_status": "instock",
-    "backorders": "no",
-    "backorders_allowed": false,
-    "backordered": false,
-    "sold_individually": false,
-    "weight": "",
-    "dimensions": {
-      "length": "",
-      "width": "",
-      "height": ""
-    },
-    "shipping_required": true,
-    "shipping_taxable": true,
-    "shipping_class": "",
-    "shipping_class_id": 0,
-    "reviews_allowed": true,
-    "average_rating": "0.00",
-    "rating_count": 0,
-    "related_ids": [
-      31,
-      22,
-      369,
-      414,
-      56
-    ],
-    "upsell_ids": [],
-    "cross_sell_ids": [],
-    "parent_id": 0,
-    "purchase_note": "",
-    "categories": [
-      {
-        "id": 9,
-        "name": "Clothing",
-        "slug": "clothing"
+        "url": "https://ae01.alicdn.com/kf/Hedb73ff2ad254ba3b0d27ae6d6a5a6455/XIAOMI-Mijia-Handheld-Garment-Steamer-for-Clothes-Electric-Steam-Iron-High-Quality-Portable-Traveling-Clothes-Steamer.jpg",
+        "thumb": "https://ae01.alicdn.com/kf/Hedb73ff2ad254ba3b0d27ae6d6a5a6455/XIAOMI-Mijia-Handheld-Garment-Steamer-for-Clothes-Electric-Steam-Iron-High-Quality-Portable-Traveling-Clothes-Steamer.jpg_50x50.jpg",
+        "title": null
       },
       {
-        "id": 14,
-        "name": "T-shirts",
-        "slug": "t-shirts"
+        "url": "https://ae01.alicdn.com/kf/H44c1d4eb0b3044bfaad4da560861fbed2/XIAOMI-Mijia-Handheld-Garment-Steamer-for-Clothes-Electric-Steam-Iron-High-Quality-Portable-Traveling-Clothes-Steamer.jpg",
+        "thumb": "https://ae01.alicdn.com/kf/H44c1d4eb0b3044bfaad4da560861fbed2/XIAOMI-Mijia-Handheld-Garment-Steamer-for-Clothes-Electric-Steam-Iron-High-Quality-Portable-Traveling-Clothes-Steamer.jpg_50x50.jpg",
+        "title": null
+      },
+      {
+        "url": "https://ae01.alicdn.com/kf/H386b4cfa0b7b43479fd22ec851a4d8c1P/XIAOMI-Mijia-Handheld-Garment-Steamer-for-Clothes-Electric-Steam-Iron-High-Quality-Portable-Traveling-Clothes-Steamer.jpg",
+        "thumb": "https://ae01.alicdn.com/kf/H386b4cfa0b7b43479fd22ec851a4d8c1P/XIAOMI-Mijia-Handheld-Garment-Steamer-for-Clothes-Electric-Steam-Iron-High-Quality-Portable-Traveling-Clothes-Steamer.jpg_50x50.jpg",
+        "title": null
+      },
+      {
+        "url": "https://ae01.alicdn.com/kf/Hadf8bc907c8349d0be7b46041b54df923/XIAOMI-Mijia-Handheld-Garment-Steamer-for-Clothes-Electric-Steam-Iron-High-Quality-Portable-Traveling-Clothes-Steamer.jpg",
+        "thumb": "https://ae01.alicdn.com/kf/Hadf8bc907c8349d0be7b46041b54df923/XIAOMI-Mijia-Handheld-Garment-Steamer-for-Clothes-Electric-Steam-Iron-High-Quality-Portable-Traveling-Clothes-Steamer.jpg_50x50.jpg",
+        "title": null
+      },
+      {
+        "url": "https://ae01.alicdn.com/kf/H276830446dc341658d597a72e1b2ac0d7/XIAOMI-Mijia-Handheld-Garment-Steamer-for-Clothes-Electric-Steam-Iron-High-Quality-Portable-Traveling-Clothes-Steamer.jpg",
+        "thumb": "https://ae01.alicdn.com/kf/H276830446dc341658d597a72e1b2ac0d7/XIAOMI-Mijia-Handheld-Garment-Steamer-for-Clothes-Electric-Steam-Iron-High-Quality-Portable-Traveling-Clothes-Steamer.jpg_50x50.jpg",
+        "title": null
+      },
+      {
+        "url": "https://ae01.alicdn.com/kf/U0c688e4f6be442f3aa09de2752a42a7ff/XIAOMI-Mijia-Handheld-Garment-Steamer-for-Clothes-Electric-Steam-Iron-High-Quality-Portable-Traveling-Clothes-Steamer.jpg",
+        "thumb": "https://ae01.alicdn.com/kf/U0c688e4f6be442f3aa09de2752a42a7ff/XIAOMI-Mijia-Handheld-Garment-Steamer-for-Clothes-Electric-Steam-Iron-High-Quality-Portable-Traveling-Clothes-Steamer.jpg_50x50.jpg",
+        "title": null
       }
     ],
-    "tags": [],
-    "images": [
-      {
-        "id": 795,
-        "date_created": "2017-03-23T14:03:08",
-        "date_created_gmt": "2017-03-23T20:03:08",
-        "date_modified": "2017-03-23T14:03:08",
-        "date_modified_gmt": "2017-03-23T20:03:08",
-        "src": "https://example.com/wp-content/uploads/2017/03/T_4_front-11.jpg",
-        "name": "",
-        "alt": ""
-      },
-      {
-        "id": 796,
-        "date_created": "2017-03-23T14:03:09",
-        "date_created_gmt": "2017-03-23T20:03:09",
-        "date_modified": "2017-03-23T14:03:09",
-        "date_modified_gmt": "2017-03-23T20:03:09",
-        "src": "https://example.com/wp-content/uploads/2017/03/T_4_back-10.jpg",
-        "name": "",
-        "alt": ""
-      },
-      {
-        "id": 797,
-        "date_created": "2017-03-23T14:03:10",
-        "date_created_gmt": "2017-03-23T20:03:10",
-        "date_modified": "2017-03-23T14:03:10",
-        "date_modified_gmt": "2017-03-23T20:03:10",
-        "src": "https://example.com/wp-content/uploads/2017/03/T_3_front-10.jpg",
-        "name": "",
-        "alt": ""
-      },
-      {
-        "id": 798,
-        "date_created": "2017-03-23T14:03:11",
-        "date_created_gmt": "2017-03-23T20:03:11",
-        "date_modified": "2017-03-23T14:03:11",
-        "date_modified_gmt": "2017-03-23T20:03:11",
-        "src": "https://example.com/wp-content/uploads/2017/03/T_3_back-10.jpg",
-        "name": "",
-        "alt": ""
-      }
+    "ratings": [
+      25,
+      10,
+      17,
+      71,
+      1381
     ],
-    "attributes": [
-      {
-        "id": 6,
-        "name": "Color",
-        "position": 0,
-        "visible": false,
-        "variation": true,
-        "options": [
-          "Black",
-          "Green"
-        ]
-      },
-      {
-        "id": 0,
-        "name": "Size",
-        "position": 0,
-        "visible": true,
-        "variation": true,
-        "options": [
-          "S",
-          "M"
-        ]
-      }
-    ],
-    "default_attributes": [],
-    "variations": [],
-    "grouped_products": [],
-    "menu_order": 0,
-    "meta_data": [],
-    "_links": {
-      "self": [
+    "ratings_count": 1504,
+    "ratings_average": "4.80",
+    "variation": {
+      "skus": [
         {
-          "href": "https://example.com/wp-json/wc/v3/products/799"
+          "id": 12000026289211983,
+          "price": {
+            "offer": 43.63,
+            "actual": 54.54,
+            "preorder": null
+          },
+          "props": "29,201336100,200660849",
+          "stock": {
+            "min": null,
+            "limit": 0,
+            "available": 443
+          }
+        },
+        {
+          "id": 12000026289211984,
+          "price": {
+            "offer": 43.63,
+            "actual": 54.54,
+            "preorder": null
+          },
+          "props": "29,201336100,200660850",
+          "stock": {
+            "min": null,
+            "limit": 0,
+            "available": 764
+          }
+        },
+        {
+          "id": 12000026289211985,
+          "price": {
+            "offer": 28.82,
+            "actual": 36.03,
+            "preorder": null
+          },
+          "props": "29,201336103,200660849",
+          "stock": {
+            "min": null,
+            "limit": 0,
+            "available": 0
+          }
+        },
+        {
+          "id": 12000026289211986,
+          "price": {
+            "offer": 25.99,
+            "actual": 32.49,
+            "preorder": null
+          },
+          "props": "29,201336103,200660850",
+          "stock": {
+            "min": null,
+            "limit": 0,
+            "available": 0
+          }
         }
       ],
-      "collection": [
+      "props": [
         {
-          "href": "https://example.com/wp-json/wc/v3/products"
-        }
-      ]
-    }
-  },
-  {
-    "id": 794,
-    "name": "Premium Quality",
-    "slug": "premium-quality-19",
-    "permalink": "https://example.com/product/premium-quality-19/",
-    "date_created": "2017-03-23T17:01:14",
-    "date_created_gmt": "2017-03-23T20:01:14",
-    "date_modified": "2017-03-23T17:01:14",
-    "date_modified_gmt": "2017-03-23T20:01:14",
-    "type": "simple",
-    "status": "publish",
-    "featured": false,
-    "catalog_visibility": "visible",
-    "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
-    "short_description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>\n",
-    "sku": "",
-    "price": "21.99",
-    "regular_price": "21.99",
-    "sale_price": "",
-    "date_on_sale_from": null,
-    "date_on_sale_from_gmt": null,
-    "date_on_sale_to": null,
-    "date_on_sale_to_gmt": null,
-    "price_html": "<span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>21.99</span>",
-    "on_sale": false,
-    "purchasable": true,
-    "total_sales": 0,
-    "virtual": false,
-    "downloadable": false,
-    "downloads": [],
-    "download_limit": -1,
-    "download_expiry": -1,
-    "external_url": "",
-    "button_text": "",
-    "tax_status": "taxable",
-    "tax_class": "",
-    "manage_stock": false,
-    "stock_quantity": null,
-    "stock_status": "instock",
-    "backorders": "no",
-    "backorders_allowed": false,
-    "backordered": false,
-    "sold_individually": false,
-    "weight": "",
-    "dimensions": {
-      "length": "",
-      "width": "",
-      "height": ""
-    },
-    "shipping_required": true,
-    "shipping_taxable": true,
-    "shipping_class": "",
-    "shipping_class_id": 0,
-    "reviews_allowed": true,
-    "average_rating": "0.00",
-    "rating_count": 0,
-    "related_ids": [
-      463,
-      47,
-      31,
-      387,
-      458
-    ],
-    "upsell_ids": [],
-    "cross_sell_ids": [],
-    "parent_id": 0,
-    "purchase_note": "",
-    "categories": [
-      {
-        "id": 9,
-        "name": "Clothing",
-        "slug": "clothing"
-      },
-      {
-        "id": 14,
-        "name": "T-shirts",
-        "slug": "t-shirts"
-      }
-    ],
-    "tags": [],
-    "images": [
-      {
-        "id": 792,
-        "date_created": "2017-03-23T14:01:13",
-        "date_created_gmt": "2017-03-23T20:01:13",
-        "date_modified": "2017-03-23T14:01:13",
-        "date_modified_gmt": "2017-03-23T20:01:13",
-        "src": "https://example.com/wp-content/uploads/2017/03/T_2_front-4.jpg",
-        "name": "",
-        "alt": ""
-      },
-      {
-        "id": 793,
-        "date_created": "2017-03-23T14:01:14",
-        "date_created_gmt": "2017-03-23T20:01:14",
-        "date_modified": "2017-03-23T14:01:14",
-        "date_modified_gmt": "2017-03-23T20:01:14",
-        "src": "https://example.com/wp-content/uploads/2017/03/T_2_back-2.jpg",
-        "name": "",
-        "alt": ""
-      }
-    ],
-    "attributes": [],
-    "default_attributes": [
-      {
-        "id": 6,
-        "name": "Color",
-        "option": "black"
-      },
-      {
-        "id": 0,
-        "name": "Size",
-        "option": "S"
-      }
-    ],
-    "variations": [],
-    "grouped_products": [],
-    "menu_order": 0,
-    "meta_data": [],
-    "_links": {
-      "self": [
-        {
-          "href": "https://example.com/wp-json/wc/v3/products/794"
-        }
-      ],
-      "collection": [
-        {
-          "href": "https://example.com/wp-json/wc/v3/products"
-        }
-      ]
-    }
-  }
-]
-```
-
-#### Available parameters ####
-
-| Parameter         | Type    | Description                                                                                                                             |
-|-------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| `context`         | string  | Scope under which the request is made; determines fields present in response. Options: `view` and `edit`. Default is `view`.            |
-| `page`            | integer | Current page of the collection. Default is `1`.                                                                                         |
-| `per_page`        | integer | Maximum number of items to be returned in result set. Default is `10`.                                                                  |
-| `search`          | string  | Limit results to those matching a string.                                                                                               |
-| `after`           | string  | Limit response to resources published after a given ISO8601 compliant date.                                                             |
-| `before`          | string  | Limit response to resources published before a given ISO8601 compliant date.                                                            |
-| `modified_after`  | string  | Limit response to resources modified after a given ISO8601 compliant date.                                                              |
-| `modified_before` | string  | Limit response to resources modified after a given ISO8601 compliant date.                                                              |
-| `dates_are_gmt`   | boolean | Whether to consider GMT post dates when limiting response by published or modified date.                                                |
-| `exclude`         | array   | Ensure result set excludes specific IDs.                                                                                                |
-| `include`         | array   | Limit result set to specific ids.                                                                                                       |
-| `offset`          | integer | Offset the result set by a specific number of items.                                                                                    |
-| `order`           | string  | Order sort attribute ascending or descending. Options: `asc` and `desc`. Default is `desc`.                                             |
-| `orderby`         | string  | Sort collection by object attribute. Options: `date`, `id`, `include`, `title`, `slug`, `price`, `popularity` and `rating`. Default is `date`. |
-| `parent`          | array   | Limit result set to those of particular parent IDs.                                                                                     |
-| `parent_exclude`  | array   | Limit result set to all items except those of a particular parent ID.                                                                   |
-| `slug`            | string  | Limit result set to products with a specific slug.                                                                                      |
-| `status`          | string  | Limit result set to products assigned a specific status. Options: `any`, `draft`, `pending`, `private` and `publish`. Default is `any`. |
-| `type`            | string  | Limit result set to products assigned a specific type. Options: `simple`, `grouped`, `external` and `variable`.                         |
-| `sku`             | string  | Limit result set to products with a specific SKU.                                                                                       |
-| `featured`        | boolean | Limit result set to featured products.                                                                                                  |
-| `category`        | string  | Limit result set to products assigned a specific category ID.                                                                           |
-| `tag`             | string  | Limit result set to products assigned a specific tag ID.                                                                                |
-| `shipping_class`  | string  | Limit result set to products assigned a specific shipping class ID.                                                                     |
-| `attribute`       | string  | Limit result set to products with a specific attribute.                                                                                 |
-| `attribute_term`  | string  | Limit result set to products with a specific attribute term ID (required an assigned attribute).                                        |
-| `tax_class`       | string  | Limit result set to products with a specific tax class. Default options: `standard`, `reduced-rate` and `zero-rate`.                    |
-| `on_sale`         | boolean | Limit result set to products on sale.                                                                                                   |
-| `min_price`       | string  | Limit result set to products based on a minimum price.                                                                                  |
-| `max_price`       | string  | Limit result set to products based on a maximum price.                                                                                  |
-| `stock_status`    | string  | Limit result set to products with specified stock status. Options: `instock`, `outofstock` and `onbackorder`.                           |
-
-## Update a product ##
-
-This API lets you make changes to a product.
-
-### HTTP request ###
-
-<div class="api-endpoint">
-	<div class="endpoint-data">
-		<i class="label label-put">PUT</i>
-		<h6>/wp-json/wc/v3/products/&lt;id&gt;</h6>
-	</div>
-</div>
-
-```shell
-curl -X PUT https://example.com/wp-json/wc/v3/products/794 \
-	-u consumer_key:consumer_secret \
-	-H "Content-Type: application/json" \
-	-d '{
-  "regular_price": "24.54"
-}'
-```
-
-```javascript
-const data = {
-  regular_price: "24.54"
-};
-
-WooCommerce.put("products/794", data)
-  .then((response) => {
-    console.log(response.data);
-  })
-  .catch((error) => {
-    console.log(error.response.data);
-  });
-```
-
-```php
-<?php
-$data = [
-    'regular_price' => '24.54'
-];
-
-print_r($woocommerce->put('products/794', $data));
-?>
-```
-
-```python
-data = {
-    "regular_price": "24.54"
-}
-
-print(wcapi.put("products/794", data).json())
-```
-
-```ruby
-data = {
-  regular_price: "24.54"
-}
-
-woocommerce.put("products/794", data).parsed_response
-```
-
-> JSON response example:
-
-```json
-{
-  "id": 794,
-  "name": "Premium Quality",
-  "slug": "premium-quality-19",
-  "permalink": "https://example.com/product/premium-quality-19/",
-  "date_created": "2017-03-23T17:01:14",
-  "date_created_gmt": "2017-03-23T20:01:14",
-  "date_modified": "2017-03-23T17:01:14",
-  "date_modified_gmt": "2017-03-23T20:01:14",
-  "type": "simple",
-  "status": "publish",
-  "featured": false,
-  "catalog_visibility": "visible",
-  "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
-  "short_description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>\n",
-  "sku": "",
-  "price": "24.54",
-  "regular_price": "24.54",
-  "sale_price": "",
-  "date_on_sale_from": null,
-  "date_on_sale_from_gmt": null,
-  "date_on_sale_to": null,
-  "date_on_sale_to_gmt": null,
-  "price_html": "<span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>24.54</span>",
-  "on_sale": false,
-  "purchasable": true,
-  "total_sales": 0,
-  "virtual": false,
-  "downloadable": false,
-  "downloads": [],
-  "download_limit": -1,
-  "download_expiry": -1,
-  "external_url": "",
-  "button_text": "",
-  "tax_status": "taxable",
-  "tax_class": "",
-  "manage_stock": false,
-  "stock_quantity": null,
-  "stock_status": "instock",
-  "backorders": "no",
-  "backorders_allowed": false,
-  "backordered": false,
-  "sold_individually": false,
-  "weight": "",
-  "dimensions": {
-    "length": "",
-    "width": "",
-    "height": ""
-  },
-  "shipping_required": true,
-  "shipping_taxable": true,
-  "shipping_class": "",
-  "shipping_class_id": 0,
-  "reviews_allowed": true,
-  "average_rating": "0.00",
-  "rating_count": 0,
-  "related_ids": [
-    479,
-    387,
-    22,
-    463,
-    396
-  ],
-  "upsell_ids": [],
-  "cross_sell_ids": [],
-  "parent_id": 0,
-  "purchase_note": "",
-  "categories": [
-    {
-      "id": 9,
-      "name": "Clothing",
-      "slug": "clothing"
-    },
-    {
-      "id": 14,
-      "name": "T-shirts",
-      "slug": "t-shirts"
-    }
-  ],
-  "tags": [],
-  "images": [
-    {
-      "id": 792,
-      "date_created": "2017-03-23T14:01:13",
-      "date_created_gmt": "2017-03-23T20:01:13",
-      "date_modified": "2017-03-23T14:01:13",
-      "date_modified_gmt": "2017-03-23T20:01:13",
-      "src": "https://example.com/wp-content/uploads/2017/03/T_2_front-4.jpg",
-      "name": "",
-      "alt": ""
-    },
-    {
-      "id": 793,
-      "date_created": "2017-03-23T14:01:14",
-      "date_created_gmt": "2017-03-23T20:01:14",
-      "date_modified": "2017-03-23T14:01:14",
-      "date_modified_gmt": "2017-03-23T20:01:14",
-      "src": "https://example.com/wp-content/uploads/2017/03/T_2_back-2.jpg",
-      "name": "",
-      "alt": ""
-    }
-  ],
-  "attributes": [],
-  "default_attributes": [],
-  "variations": [],
-  "grouped_products": [],
-  "menu_order": 0,
-  "meta_data": [],
-  "_links": {
-    "self": [
-      {
-        "href": "https://example.com/wp-json/wc/v3/products/794"
-      }
-    ],
-    "collection": [
-      {
-        "href": "https://example.com/wp-json/wc/v3/products"
-      }
-    ]
-  }
-}
-```
-
-## Delete a product ##
-
-This API helps you delete a product.
-
-### HTTP request ###
-
-<div class="api-endpoint">
-	<div class="endpoint-data">
-		<i class="label label-delete">DELETE</i>
-		<h6>/wp-json/wc/v3/products/&lt;id&gt;</h6>
-	</div>
-</div>
-
-```shell
-curl -X DELETE https://example.com/wp-json/wc/v3/products/794?force=true \
-	-u consumer_key:consumer_secret
-```
-
-```javascript
-WooCommerce.delete("products/794", {
-  force: true
-})
-  .then((response) => {
-    console.log(response.data);
-  })
-  .catch((error) => {
-    console.log(error.response.data);
-  });
-```
-
-```php
-<?php print_r($woocommerce->delete('products/794', ['force' => true])); ?>
-```
-
-```python
-print(wcapi.delete("products/794", params={"force": True}).json())
-```
-
-```ruby
-woocommerce.delete("products/794", force: true).parsed_response
-```
-
-> JSON response example:
-
-```json
-{
-  "id": 794,
-  "name": "Premium Quality",
-  "slug": "premium-quality-19",
-  "permalink": "https://example.com/product/premium-quality-19/",
-  "date_created": "2017-03-23T17:01:14",
-  "date_created_gmt": "2017-03-23T20:01:14",
-  "date_modified": "2017-03-23T17:01:14",
-  "date_modified_gmt": "2017-03-23T20:01:14",
-  "type": "simple",
-  "status": "publish",
-  "featured": false,
-  "catalog_visibility": "visible",
-  "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
-  "short_description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>\n",
-  "sku": "",
-  "price": "24.54",
-  "regular_price": "24.54",
-  "sale_price": "",
-  "date_on_sale_from": null,
-  "date_on_sale_from_gmt": null,
-  "date_on_sale_to": null,
-  "date_on_sale_to_gmt": null,
-  "price_html": "<span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>24.54</span>",
-  "on_sale": false,
-  "purchasable": true,
-  "total_sales": 0,
-  "virtual": false,
-  "downloadable": false,
-  "downloads": [],
-  "download_limit": -1,
-  "download_expiry": -1,
-  "external_url": "",
-  "button_text": "",
-  "tax_status": "taxable",
-  "tax_class": "",
-  "manage_stock": false,
-  "stock_quantity": null,
-  "stock_status": "instock",
-  "backorders": "no",
-  "backorders_allowed": false,
-  "backordered": false,
-  "sold_individually": false,
-  "weight": "",
-  "dimensions": {
-    "length": "",
-    "width": "",
-    "height": ""
-  },
-  "shipping_required": true,
-  "shipping_taxable": true,
-  "shipping_class": "",
-  "shipping_class_id": 0,
-  "reviews_allowed": true,
-  "average_rating": "0.00",
-  "rating_count": 0,
-  "related_ids": [
-    479,
-    387,
-    22,
-    463,
-    396
-  ],
-  "upsell_ids": [],
-  "cross_sell_ids": [],
-  "parent_id": 0,
-  "purchase_note": "",
-  "categories": [
-    {
-      "id": 9,
-      "name": "Clothing",
-      "slug": "clothing"
-    },
-    {
-      "id": 14,
-      "name": "T-shirts",
-      "slug": "t-shirts"
-    }
-  ],
-  "tags": [],
-  "images": [
-    {
-      "id": 792,
-      "date_created": "2017-03-23T14:01:13",
-      "date_created_gmt": "2017-03-23T20:01:13",
-      "date_modified": "2017-03-23T14:01:13",
-      "date_modified_gmt": "2017-03-23T20:01:13",
-      "src": "https://example.com/wp-content/uploads/2017/03/T_2_front-4.jpg",
-      "name": "",
-      "alt": ""
-    },
-    {
-      "id": 793,
-      "date_created": "2017-03-23T14:01:14",
-      "date_created_gmt": "2017-03-23T20:01:14",
-      "date_modified": "2017-03-23T14:01:14",
-      "date_modified_gmt": "2017-03-23T20:01:14",
-      "src": "https://example.com/wp-content/uploads/2017/03/T_2_back-2.jpg",
-      "name": "",
-      "alt": ""
-    }
-  ],
-  "attributes": [],
-  "default_attributes": [],
-  "variations": [],
-  "grouped_products": [],
-  "menu_order": 0,
-  "meta_data": [],
-  "_links": {
-    "self": [
-      {
-        "href": "https://example.com/wp-json/wc/v3/products/794"
-      }
-    ],
-    "collection": [
-      {
-        "href": "https://example.com/wp-json/wc/v3/products"
-      }
-    ]
-  }
-}
-```
-
-#### Available parameters ####
-
-| Parameter | Type   | Description                                                               |
-|-----------|--------|---------------------------------------------------------------------------|
-| `force`   | string | Use `true` whether to permanently delete the product, Default is `false`. |
-
-## Batch update products ##
-
-This API helps you to batch create, update and delete multiple products.
-
-<aside class="notice">
-Note: By default it's limited to up to 100 objects to be created, updated or deleted. 
-</aside>
-
-### HTTP request ###
-
-<div class="api-endpoint">
-	<div class="endpoint-data">
-		<i class="label label-post">POST</i>
-		<h6>/wp-json/wc/v3/products/batch</h6>
-	</div>
-</div>
-
-```shell
-curl -X POST https://example.com/wp-json/wc/v3/products/batch \
-	-u consumer_key:consumer_secret \
-	-H "Content-Type: application/json" \
-	-d '{
-  "create": [
-    {
-      "name": "Woo Single #1",
-      "type": "simple",
-      "regular_price": "21.99",
-      "virtual": true,
-      "downloadable": true,
-      "downloads": [
-        {
-          "name": "Woo Single",
-          "file": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/cd_4_angle.jpg"
-        }
-      ],
-      "categories": [
-        {
-          "id": 11
-        },
-        {
-          "id": 13
-        }
-      ],
-      "images": [
-        {
-          "src": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/cd_4_angle.jpg"
-        }
-      ]
-    },
-    {
-      "name": "New Premium Quality",
-      "type": "simple",
-      "regular_price": "21.99",
-      "description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
-      "short_description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      "categories": [
-        {
-          "id": 9
-        },
-        {
-          "id": 14
-        }
-      ],
-      "images": [
-        {
-          "src": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_front.jpg"
-        },
-        {
-          "src": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_back.jpg"
-        }
-      ]
-    }
-  ],
-  "update": [
-    {
-      "id": 799,
-      "default_attributes": [
-        {
-          "id": 6,
+          "id": 14,
           "name": "Color",
-          "option": "Green"
+          "values": [
+            {
+              "id": 29,
+              "name": "White",
+              "color": "#FFFFFF",
+              "image": "https://ae01.alicdn.com/kf/Hb4b4737007a64698bac131828e08bc0aw/XIAOMI-Mijia-Handheld-Garment-Steamer-for-Clothes-Electric-Steam-Iron-High-Quality-Portable-Traveling-Clothes-Steamer.jpg_640x640.jpg",
+              "thumb": "https://ae01.alicdn.com/kf/Hb4b4737007a64698bac131828e08bc0aw/XIAOMI-Mijia-Handheld-Garment-Steamer-for-Clothes-Electric-Steam-Iron-High-Quality-Portable-Traveling-Clothes-Steamer.jpg_50x50.jpg",
+              "title": "White"
+            }
+          ]
         },
         {
-          "id": 0,
-          "name": "Size",
-          "option": "M"
-        }
-      ]
-    }
-  ],
-  "delete": [
-    794
-  ]
-}'
-```
-
-```javascript
-const data = {
-  create: [
-    {
-      name: "Woo Single #1",
-      type: "simple",
-      regular_price: "21.99",
-      virtual: true,
-      downloadable: true,
-      downloads: [
-        {
-          name: "Woo Single",
-          file: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/cd_4_angle.jpg"
-        }
-      ],
-      categories: [
-        {
-          id: 11
+          "id": 200007763,
+          "name": "Ships From",
+          "values": [
+            {
+              "id": 201336100,
+              "name": "China",
+              "color": null,
+              "image": null,
+              "thumb": null,
+              "title": "China"
+            },
+            {
+              "id": 201336103,
+              "name": "Russian Federation",
+              "color": null,
+              "image": null,
+              "thumb": null,
+              "title": "Russian Federation"
+            }
+          ]
         },
         {
-          id: 13
-        }
-      ],
-      images: [
-        {
-          src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/cd_4_angle.jpg"
-        }
-      ]
-    },
-    {
-      name: "New Premium Quality",
-      type: "simple",
-      regular_price: "21.99",
-      description: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
-      short_description: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      categories: [
-        {
-          id: 9
-        },
-        {
-          id: 14
-        }
-      ],
-      images: [
-        {
-          src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_front.jpg"
-        },
-        {
-          src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_back.jpg"
-        }
-      ]
-    }
-  ],
-  update: [
-    {
-      id: 799,
-      default_attributes: [
-        {
-          id: 6,
-          name: "Color",
-          option: "Green"
-        },
-        {
-          id: 0,
-          name: "Size",
-          option: "M"
-        }
-      ]
-    }
-  ],
-  delete: [
-    794
-  ]
-};
-
-WooCommerce.post("products/batch", data)
-  .then((response) => {
-    console.log(response.data);
-  })
-  .catch((error) => {
-    console.log(error.response.data);
-  });
-```
-
-```php
-<?php
-$data = [
-    'create' => [
-        [
-            'name' => 'Woo Single #1',
-            'type' => 'simple',
-            'regular_price' => '21.99',
-            'virtual' => true,
-            'downloadable' => true,
-            'downloads' => [
-                [
-                    'name' => 'Woo Single',
-                    'file' => 'http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/cd_4_angle.jpg'
-                ]
-            ],
-            'categories' => [
-                [
-                    'id' => 11
-                ],
-                [
-                    'id' => 13
-                ]
-            ],
-            'images' => [
-                [
-                    'src' => 'http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/cd_4_angle.jpg'
-                ]
-            ]
-        ],
-        [
-            'name' => 'New Premium Quality',
-            'type' => 'simple',
-            'regular_price' => '21.99',
-            'description' => 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.',
-            'short_description' => 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
-            'categories' => [
-                [
-                    'id' => 9
-                ],
-                [
-                    'id' => 14
-                ]
-            ],
-            'images' => [
-                [
-                    'src' => 'http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_front.jpg'
-                ],
-                [
-                    'src' => 'http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_back.jpg'
-                ]
-            ]
-        ]
-    ],
-    'update' => [
-        [
-            'id' => 799,
-            'default_attributes' => [
-                [
-                    'id' => 6,
-                    'name' => 'Color',
-                    'option' => 'Green'
-                ],
-                [
-                    'id' => 0,
-                    'name' => 'Size',
-                    'option' => 'M'
-                ]
-            ]
-        ]
-    ],
-    'delete' => [
-        794
-    ]
-];
-
-print_r($woocommerce->post('products/batch', $data));
-?>
-```
-
-```python
-data = {
-    "create": [
-        {
-            "name": "Woo Single #1",
-            "type": "simple",
-            "regular_price": "21.99",
-            "virtual": True,
-            "downloadable": True,
-            "downloads": [
-                {
-                    "name": "Woo Single",
-                    "file": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/cd_4_angle.jpg"
-                }
-            ],
-            "categories": [
-                {
-                    "id": 11
-                },
-                {
-                    "id": 13
-                }
-            ],
-            "images": [
-                {
-                    "src": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/cd_4_angle.jpg"
-                }
-            ]
-        },
-        {
-            "name": "New Premium Quality",
-            "type": "simple",
-            "regular_price": "21.99",
-            "description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
-            "short_description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-            "categories": [
-                {
-                    "id": 9
-                },
-                {
-                    "id": 14
-                }
-            ],
-            "images": [
-                {
-                    "src": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_front.jpg"
-                },
-                {
-                    "src": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_back.jpg"
-                }
-            ]
-        }
-    ],
-    "update": [
-        {
-            "id": 799,
-            "default_attributes": [
-                {
-                    "id": 6,
-                    "name": "Color,
-                    "option": "Green"
-                },
-                {
-                    "id": 0,
-                    "name": "Size",
-                    "option": "M"
-                }
-            ]
-        }
-    ],
-    "delete": [
-        794
-    ]
-}
-
-print(wcapi.post("products/batch", data).json())
-```
-
-```ruby
-data = {
-  create: [
-    {
-      name: "Woo Single #1",
-      type: "simple",
-      regular_price: "21.99",
-      virtual: true,
-      downloadable: true,
-      downloads: [
-        {
-          name: "Woo Single",
-          file: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/cd_4_angle.jpg"
-        }
-      ],
-      categories: [
-        {
-          id: 11
-        },
-        {
-          id: 13
-        }
-      ],
-      images: [
-        {
-          src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/cd_4_angle.jpg"
+          "id": 200009209,
+          "name": "Plug Type",
+          "values": [
+            {
+              "id": 200660849,
+              "name": "US",
+              "color": null,
+              "image": null,
+              "thumb": null,
+              "title": "US"
+            },
+            {
+              "id": 200660850,
+              "name": "EU",
+              "color": null,
+              "image": null,
+              "thumb": null,
+              "title": "EU"
+            }
+          ]
         }
       ]
     },
-    {
-      name: "New Premium Quality",
-      type: "simple",
-      regular_price: "21.99",
-      description: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
-      short_description: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      categories: [
-        {
-          id: 9
-        },
-        {
-          id: 14
-        }
-      ],
-      images: [
-        {
-          src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_front.jpg"
-        },
-        {
-          src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_back.jpg"
-        }
-      ]
-    }
-  ],
-  update: [
-    {
-      id: 799,
-      default_attributes: [
-        {
-          id: 6,
-          name: "Color,
-          option: "Green"
-        },
-        {
-          id: 0,
-          name: "Size",
-          option: "M"
-        }
-      ]
-    }
-  ],
-  delete: [
-    794
-  ]
-}
-
-woocommerce.post("products/batch", data).parsed_response
-```
-
-> JSON response example:
-
-```json
-{
-  "create": [
-    {
-      "id": 801,
-      "name": "Woo Single #1",
-      "slug": "woo-single-1-4",
-      "permalink": "https://example.com/product/woo-single-1-4/",
-      "date_created": "2017-03-23T17:35:43",
-      "date_created_gmt": "2017-03-23T20:35:43",
-      "date_modified": "2017-03-23T17:35:43",
-      "date_modified_gmt": "2017-03-23T20:35:43",
-      "type": "simple",
-      "status": "publish",
-      "featured": false,
-      "catalog_visibility": "visible",
-      "description": "",
-      "short_description": "",
-      "sku": "",
-      "price": "21.99",
-      "regular_price": "21.99",
-      "sale_price": "",
-      "date_on_sale_from": null,
-      "date_on_sale_from_gmt": null,
-      "date_on_sale_to": null,
-      "date_on_sale_to_gmt": null,
-      "price_html": "<span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>21.99</span>",
-      "on_sale": false,
-      "purchasable": true,
-      "total_sales": 0,
-      "virtual": true,
-      "downloadable": true,
-      "downloads": [
-        {
-          "id": 0,
-          "name": "Woo Single",
-          "file": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/cd_4_angle.jpg"
-        }
-      ],
-      "download_limit": -1,
-      "download_expiry": -1,
-      "external_url": "",
-      "button_text": "",
-      "tax_status": "taxable",
-      "tax_class": "",
-      "manage_stock": false,
-      "stock_quantity": null,
-      "stock_status": "instock",
-      "backorders": "no",
-      "backorders_allowed": false,
-      "backordered": false,
-      "sold_individually": false,
-      "weight": "",
-      "dimensions": {
-        "length": "",
-        "width": "",
-        "height": ""
+    "created_at": "2022-11-21T09:27:38.000000Z",
+    "updated_at": "2022-11-22T03:06:57.000000Z",
+    "shop": {
+      "id": 1,
+      "name": "AliExpress",
+      "url": "https://www.aliexpress.com",
+      "identifier": "aliexpress",
+      "country_code": "CN",
+      "currency_code": "USD",
+      "currency_symbol": "$",
+      "fx": "90.00"
+    },
+    "seller": {
+      "id": 522242,
+      "name": "Mi Eco-chain Store",
+      "vendor": "aliexpress",
+      "vendor_id": "1101489720",
+      "link": "https://www.aliexpress.com/store/1101489720",
+      "description": null,
+      "meta": {
+        "trusted": "97.3%",
+        "toprated": true,
+        "admin_seq": 241649285,
+        "followers": 20841,
+        "positives": 7589
       },
-      "shipping_required": false,
-      "shipping_taxable": true,
-      "shipping_class": "",
-      "shipping_class_id": 0,
-      "reviews_allowed": true,
-      "average_rating": "0.00",
-      "rating_count": 0,
-      "related_ids": [
-        588,
-        87,
-        573,
-        96,
-        329
-      ],
-      "upsell_ids": [],
-      "cross_sell_ids": [],
-      "parent_id": 0,
-      "purchase_note": "",
-      "categories": [
-        {
-          "id": 11,
-          "name": "Music",
-          "slug": "music"
+      "opened_at": "2020-04-16T00:00:00.000000Z"
+    },
+    "categories": [],
+    "specifications": [
+      {
+        "label": {
+          "id": 12,
+          "name": "Model Number"
         },
-        {
+        "value": {
+          "id": 6261154,
+          "name": "XIAOMI Mijia steaming iron"
+        }
+      },
+      {
+        "label": {
           "id": 13,
-          "name": "Singles",
-          "slug": "singles"
+          "name": "Brand Name"
+        },
+        "value": {
+          "id": 1401526,
+          "name": "XIAOMI"
         }
-      ],
-      "tags": [],
-      "images": [
-        {
-          "id": 800,
-          "date_created": "2017-03-23T14:35:43",
-          "date_created_gmt": "2017-03-23T20:35:43",
-          "date_modified": "2017-03-23T14:35:43",
-          "date_modified_gmt": "2017-03-23T20:35:43",
-          "src": "https://example.com/wp-content/uploads/2017/03/cd_4_angle.jpg",
-          "name": "",
-          "alt": ""
-        }
-      ],
-      "attributes": [],
-      "default_attributes": [],
-      "variations": [],
-      "grouped_products": [],
-      "menu_order": 0,
-      "meta_data": [],
-      "_links": {
-        "self": [
-          {
-            "href": "https://example.com/wp-json/wc/v3/products/801"
-          }
-        ],
-        "collection": [
-          {
-            "href": "https://example.com/wp-json/wc/v3/products"
-          }
-        ]
-      }
-    },
-    {
-      "id": 804,
-      "name": "New Premium Quality",
-      "slug": "new-premium-quality",
-      "permalink": "https://example.com/product/new-premium-quality/",
-      "date_created": "2017-03-23T17:35:48",
-      "date_created_gmt": "2017-03-23T20:35:48",
-      "date_modified": "2017-03-23T17:35:48",
-      "date_modified_gmt": "2017-03-23T20:35:48",
-      "type": "simple",
-      "status": "publish",
-      "featured": false,
-      "catalog_visibility": "visible",
-      "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
-      "short_description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>\n",
-      "sku": "",
-      "price": "21.99",
-      "regular_price": "21.99",
-      "sale_price": "",
-      "date_on_sale_from": null,
-      "date_on_sale_from_gmt": null,
-      "date_on_sale_to": null,
-      "date_on_sale_to_gmt": null,
-      "price_html": "<span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>21.99</span>",
-      "on_sale": false,
-      "purchasable": true,
-      "total_sales": 0,
-      "virtual": false,
-      "downloadable": false,
-      "downloads": [],
-      "download_limit": -1,
-      "download_expiry": -1,
-      "external_url": "",
-      "button_text": "",
-      "tax_status": "taxable",
-      "tax_class": "",
-      "manage_stock": false,
-      "stock_quantity": null,
-      "stock_status": "instock",
-      "backorders": "no",
-      "backorders_allowed": false,
-      "backordered": false,
-      "sold_individually": false,
-      "weight": "",
-      "dimensions": {
-        "length": "",
-        "width": "",
-        "height": ""
       },
-      "shipping_required": true,
-      "shipping_taxable": true,
-      "shipping_class": "",
-      "shipping_class_id": 0,
-      "reviews_allowed": true,
-      "average_rating": "0.00",
-      "rating_count": 0,
-      "related_ids": [
-        458,
-        56,
-        99,
-        34,
-        378
-      ],
-      "upsell_ids": [],
-      "cross_sell_ids": [],
-      "parent_id": 0,
-      "purchase_note": "",
-      "categories": [
-        {
-          "id": 9,
-          "name": "Clothing",
-          "slug": "clothing"
+      {
+        "label": {
+          "id": 20,
+          "name": "Feature"
         },
-        {
-          "id": 14,
-          "name": "T-shirts",
-          "slug": "t-shirts"
+        "value": {
+          "id": 6261156,
+          "name": "handheld garment steamer iron"
         }
-      ],
-      "tags": [],
-      "images": [
-        {
-          "id": 802,
-          "date_created": "2017-03-23T14:35:47",
-          "date_created_gmt": "2017-03-23T20:35:47",
-          "date_modified": "2017-03-23T14:35:47",
-          "date_modified_gmt": "2017-03-23T20:35:47",
-          "src": "https://example.com/wp-content/uploads/2017/03/T_2_front-5.jpg",
-          "name": "",
-          "alt": ""
-        },
-        {
-          "id": 803,
-          "date_created": "2017-03-23T14:35:48",
-          "date_created_gmt": "2017-03-23T20:35:48",
-          "date_modified": "2017-03-23T14:35:48",
-          "date_modified_gmt": "2017-03-23T20:35:48",
-          "src": "https://example.com/wp-content/uploads/2017/03/T_2_back-3.jpg",
-          "name": "",
-          "alt": ""
-        }
-      ],
-      "attributes": [],
-      "default_attributes": [],
-      "variations": [],
-      "grouped_products": [],
-      "menu_order": 0,
-      "meta_data": [],
-      "_links": {
-        "self": [
-          {
-            "href": "https://example.com/wp-json/wc/v3/products/804"
-          }
-        ],
-        "collection": [
-          {
-            "href": "https://example.com/wp-json/wc/v3/products"
-          }
-        ]
-      }
-    }
-  ],
-  "update": [
-    {
-      "id": 799,
-      "name": "Ship Your Idea",
-      "slug": "ship-your-idea-22",
-      "permalink": "https://example.com/product/ship-your-idea-22/",
-      "date_created": "2017-03-23T17:03:12",
-      "date_created_gmt": "2017-03-23T20:03:12",
-      "date_modified": "2017-03-23T17:03:12",
-      "date_modified_gmt": "2017-03-23T20:03:12",
-      "type": "variable",
-      "status": "publish",
-      "featured": false,
-      "catalog_visibility": "visible",
-      "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
-      "short_description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>\n",
-      "sku": "",
-      "price": "",
-      "regular_price": "",
-      "sale_price": "",
-      "date_on_sale_from": null,
-      "date_on_sale_from_gmt": null,
-      "date_on_sale_to": null,
-      "date_on_sale_to_gmt": null,
-      "price_html": "",
-      "on_sale": false,
-      "purchasable": false,
-      "total_sales": 0,
-      "virtual": false,
-      "downloadable": false,
-      "downloads": [],
-      "download_limit": -1,
-      "download_expiry": -1,
-      "external_url": "",
-      "button_text": "",
-      "tax_status": "taxable",
-      "tax_class": "",
-      "manage_stock": false,
-      "stock_quantity": null,
-      "stock_status": "instock",
-      "backorders": "no",
-      "backorders_allowed": false,
-      "backordered": false,
-      "sold_individually": false,
-      "weight": "",
-      "dimensions": {
-        "length": "",
-        "width": "",
-        "height": ""
       },
-      "shipping_required": true,
-      "shipping_taxable": true,
-      "shipping_class": "",
-      "shipping_class_id": 0,
-      "reviews_allowed": true,
-      "average_rating": "0.00",
-      "rating_count": 0,
-      "related_ids": [
-        414,
-        40,
-        34,
-        463,
-        15
-      ],
-      "upsell_ids": [],
-      "cross_sell_ids": [],
-      "parent_id": 0,
-      "purchase_note": "",
-      "categories": [
-        {
-          "id": 9,
-          "name": "Clothing",
-          "slug": "clothing"
+      {
+        "label": {
+          "id": 24,
+          "name": "Support"
         },
-        {
-          "id": 14,
-          "name": "T-shirts",
-          "slug": "t-shirts"
+        "value": {
+          "id": 1382444,
+          "name": "Yes"
         }
-      ],
-      "tags": [],
-      "images": [
-        {
-          "id": 795,
-          "date_created": "2017-03-23T14:03:08",
-          "date_created_gmt": "2017-03-23T20:03:08",
-          "date_modified": "2017-03-23T14:03:08",
-          "date_modified_gmt": "2017-03-23T20:03:08",
-          "src": "https://example.com/wp-content/uploads/2017/03/T_4_front-11.jpg",
-          "name": "",
-          "alt": ""
-        },
-        {
-          "id": 796,
-          "date_created": "2017-03-23T14:03:09",
-          "date_created_gmt": "2017-03-23T20:03:09",
-          "date_modified": "2017-03-23T14:03:09",
-          "date_modified_gmt": "2017-03-23T20:03:09",
-          "src": "https://example.com/wp-content/uploads/2017/03/T_4_back-10.jpg",
-          "name": "",
-          "alt": ""
-        },
-        {
-          "id": 797,
-          "date_created": "2017-03-23T14:03:10",
-          "date_created_gmt": "2017-03-23T20:03:10",
-          "date_modified": "2017-03-23T14:03:10",
-          "date_modified_gmt": "2017-03-23T20:03:10",
-          "src": "https://example.com/wp-content/uploads/2017/03/T_3_front-10.jpg",
-          "name": "",
-          "alt": ""
-        },
-        {
-          "id": 798,
-          "date_created": "2017-03-23T14:03:11",
-          "date_created_gmt": "2017-03-23T20:03:11",
-          "date_modified": "2017-03-23T14:03:11",
-          "date_modified_gmt": "2017-03-23T20:03:11",
-          "src": "https://example.com/wp-content/uploads/2017/03/T_3_back-10.jpg",
-          "name": "",
-          "alt": ""
-        }
-      ],
-      "attributes": [
-        {
-          "id": 6,
-          "name": "Color",
-          "position": 0,
-          "visible": false,
-          "variation": true,
-          "options": [
-            "Black",
-            "Green"
-          ]
-        },
-        {
-          "id": 0,
-          "name": "Size",
-          "position": 0,
-          "visible": true,
-          "variation": true,
-          "options": [
-            "S",
-            "M"
-          ]
-        }
-      ],
-      "default_attributes": [
-        {
-          "id": 6,
-          "name": "Color",
-          "option": "green"
-        },
-        {
-          "id": 0,
-          "name": "Size",
-          "option": "M"
-        }
-      ],
-      "variations": [],
-      "grouped_products": [],
-      "menu_order": 0,
-      "meta_data": [],
-      "_links": {
-        "self": [
-          {
-            "href": "https://example.com/wp-json/wc/v3/products/799"
-          }
-        ],
-        "collection": [
-          {
-            "href": "https://example.com/wp-json/wc/v3/products"
-          }
-        ]
-      }
-    }
-  ],
-  "delete": [
-    {
-      "id": 794,
-      "name": "Premium Quality",
-      "slug": "premium-quality-19",
-      "permalink": "https://example.com/product/premium-quality-19/",
-      "date_created": "2017-03-23T17:01:14",
-      "date_created_gmt": "2017-03-23T20:01:14",
-      "date_modified": "2017-03-23T17:01:14",
-      "date_modified_gmt": "2017-03-23T20:01:14",
-      "type": "simple",
-      "status": "publish",
-      "featured": false,
-      "catalog_visibility": "visible",
-      "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
-      "short_description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>\n",
-      "sku": "",
-      "price": "24.54",
-      "regular_price": "24.54",
-      "sale_price": "",
-      "date_on_sale_from": null,
-      "date_on_sale_from_gmt": null,
-      "date_on_sale_to": null,
-      "date_on_sale_to_gmt": null,
-      "price_html": "<span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>24.54</span>",
-      "on_sale": false,
-      "purchasable": true,
-      "total_sales": 0,
-      "virtual": false,
-      "downloadable": false,
-      "downloads": [],
-      "download_limit": -1,
-      "download_expiry": -1,
-      "external_url": "",
-      "button_text": "",
-      "tax_status": "taxable",
-      "tax_class": "",
-      "manage_stock": false,
-      "stock_quantity": null,
-      "stock_status": "instock",
-      "backorders": "no",
-      "backorders_allowed": false,
-      "backordered": false,
-      "sold_individually": false,
-      "weight": "",
-      "dimensions": {
-        "length": "",
-        "width": "",
-        "height": ""
       },
-      "shipping_required": true,
-      "shipping_taxable": true,
-      "shipping_class": "",
-      "shipping_class_id": 0,
-      "reviews_allowed": true,
-      "average_rating": "0.00",
-      "rating_count": 0,
-      "related_ids": [
-        369,
-        56,
-        378,
-        31,
-        22
-      ],
-      "upsell_ids": [],
-      "cross_sell_ids": [],
-      "parent_id": 0,
-      "purchase_note": "",
-      "categories": [
-        {
-          "id": 9,
-          "name": "Clothing",
-          "slug": "clothing"
+      {
+        "label": {
+          "id": 439,
+          "name": "Voltage (V)"
         },
-        {
-          "id": 14,
-          "name": "T-shirts",
-          "slug": "t-shirts"
+        "value": {
+          "id": 1391,
+          "name": "220V"
         }
-      ],
-      "tags": [],
-      "images": [
-        {
-          "id": 792,
-          "date_created": "2017-03-23T14:01:13",
-          "date_created_gmt": "2017-03-23T20:01:13",
-          "date_modified": "2017-03-23T14:01:13",
-          "date_modified_gmt": "2017-03-23T20:01:13",
-          "src": "https://example.com/wp-content/uploads/2017/03/T_2_front-4.jpg",
-          "name": "",
-          "alt": ""
+      },
+      {
+        "label": {
+          "id": 3158,
+          "name": "Temperature Gear"
         },
-        {
-          "id": 793,
-          "date_created": "2017-03-23T14:01:14",
-          "date_created_gmt": "2017-03-23T20:01:14",
-          "date_modified": "2017-03-23T14:01:14",
-          "date_modified_gmt": "2017-03-23T20:01:14",
-          "src": "https://example.com/wp-content/uploads/2017/03/T_2_back-2.jpg",
-          "name": "",
-          "alt": ""
+        "value": {
+          "id": 413207,
+          "name": "Two tranches thermostat"
         }
-      ],
-      "attributes": [],
-      "default_attributes": [],
-      "variations": [],
-      "grouped_products": [],
-      "menu_order": 0,
-      "meta_data": [],
-      "_links": {
-        "self": [
-          {
-            "href": "https://example.com/wp-json/wc/v3/products/794"
-          }
-        ],
-        "collection": [
-          {
-            "href": "https://example.com/wp-json/wc/v3/products"
-          }
-        ]
+      },
+      {
+        "label": {
+          "id": 3159,
+          "name": "Water Tank Capacity (l)"
+        },
+        "value": {
+          "id": 10076,
+          "name": "<0.8L"
+        }
+      },
+      {
+        "label": {
+          "id": 3160,
+          "name": "Supports Anti Dry Burning"
+        },
+        "value": {
+          "id": 1382444,
+          "name": "Yes"
+        }
+      },
+      {
+        "label": {
+          "id": 6190,
+          "name": "Steam Duration (Min)"
+        },
+        "value": {
+          "id": 133846,
+          "name": "60min"
+        }
+      },
+      {
+        "label": {
+          "id": 212542,
+          "name": "Certification"
+        },
+        "value": {
+          "id": 521424,
+          "name": "CE"
+        }
+      },
+      {
+        "label": {
+          "id": 212560,
+          "name": "color"
+        },
+        "value": {
+          "id": 6261155,
+          "name": "white color garment steamer"
+        }
+      },
+      {
+        "label": {
+          "id": 212643,
+          "name": "Classification"
+        },
+        "value": {
+          "id": 1404611,
+          "name": "Steam brush"
+        }
+      },
+      {
+        "label": {
+          "id": 212735,
+          "name": "Plug Type"
+        },
+        "value": {
+          "id": 6261157,
+          "name": "China Plug Type with different adaptor"
+        }
+      },
+      {
+        "label": {
+          "id": 212824,
+          "name": "Origin"
+        },
+        "value": {
+          "id": 1381952,
+          "name": "Mainland China"
+        }
+      },
+      {
+        "label": {
+          "id": 214519,
+          "name": "Power (W)"
+        },
+        "value": {
+          "id": 472504,
+          "name": "1200W"
+        }
       }
-    }
-  ]
+    ]
+  }
+}
+```
+
+## Fetch extended description of a product  ##
+
+This API helps you to retrieve extended description of a product by link.
+
+### HTTP request ###
+
+<div class="api-endpoint">
+	<div class="endpoint-data">
+		<i class="label label-post">POST</i>
+		<h6>/customer/fetch-product-description</h6>
+	</div>
+</div>
+
+
+> Example of retrieving extended description of product:
+
+```shell
+curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/fetch-product-description \
+	-H "Authorization: Bearer %token%" \
+	-H "Content-Type: application/json" \
+	-d '{
+    "url": "https://detail.1688.com/offer/675196975564.html",
+    "type": "body"
+}'
+```
+
+
+> JSON response example:
+
+```json
+{
+  "data": "<div id=\"offer-template-0\"></div><p><span style=\"color: #942828;\"><strong><span style=\"font-size: 16.0pt;font-family: simsun;\"><img src=\"https://cbu01.alicdn.com/img/ibank/O1CN01WCRyeS2N9s4dgI3s5_!!978309921-0-cib.jpg?__r__=1631584793830\" alt=\"111.jpg\" width=\"790\" height=\"136.20689655172416\"><br class=\"img-brk\"><br class=\"img-brk\"><img src=\"https://cbu01.alicdn.com/img/ibank/O1CN01m0tfy82N9s4iSITig_!!978309921-0-cib.jpg?__r__=1631584793831\" alt=\"2222.jpg\" width=\"790\" height=\"129.19791666666666\"><br class=\"img-brk\"><br class=\"img-brk\"><span style=\"color: #000000;\">Various customers and dealers are welcome to wholesale goods to make the same. According to customer requirements, the laser LOGO can be supported, supporting the sample, and supporting a generation. Large customers can directly dial the contact phone number to get preferential prices! If you have any questions on any product, you can also consult the customer service. Xiao Chen Qian religiously answered you.</span></span></strong></span></p><p><img src=\"https://cbu01.alicdn.com/img/ibank/2020/245/674/18657476542_323357090.jpg?__r__=1652520135198\" alt=\"WeChat picture_20200605143714.jpg\"><br class=\"img-brk\"><img src=\"https://cbu01.alicdn.com/img/ibank/2020/255/689/18581986552_323357090.jpg?__r__=1652520135199\" alt=\"WeChat picture_20200605143741.jpg\"><br class=\"img-brk\"><img src=\"https://cbu01.alicdn.com/img/ibank/2020/956/299/18581992659_323357090.jpg?__r__=1652520135199\" alt=\"WeChat picture_20200605222610.jpg\"><br class=\"img-brk\"><img src=\"https://cbu01.alicdn.com/img/ibank/2020/410/552/18519255014_323357090.jpg?__r__=1652520135199\" alt=\"WeChat picture_20200605143810.jpg\"></p><p><img src=\"https://cbu01.alicdn.com/img/ibank/2020/113/400/18582004311_323357090.jpg?__r__=1652520207795\" alt=\"WeChat picture_20200605143813.jpg\"><br class=\"img-brk\"><img src=\"https://cbu01.alicdn.com/img/ibank/2020/217/089/18581980712_323357090.jpg?__r__=1652520135199\" alt=\"WeChat picture_20200605143744.jpg\"><br class=\"img-brk\"><img src=\"https://cbu01.alicdn.com/img/ibank/2020/412/042/18519240214_323357090.jpg?__r__=1652520135199\" alt=\"WeChat picture_20200605143746.jpg\"><br class=\"img-brk\"><img src=\"https://cbu01.alicdn.com/img/ibank/2020/890/942/18519249098_323357090.jpg?__r__=1652520135199\" alt=\"WeChat picture_20200605143750.jpg\"><br class=\"img-brk\"><br class=\"img-brk\"></p><p><span style=\"color: #993300;\"><strong><span style=\"font-size: 16.0pt;font-family: simsun;\"><span style=\"font-size: 24.0pt;background-color: #808080;\"><span style=\"color: #000000;\">丨 Company profile/main product 丨（Company/main Products）</span></span><br><img src=\"https://cbu01.alicdn.com/img/ibank/O1CN01OZkj832N9s9iMiZtv_!!978309921-0-cib.jpg?__r__=1666582939646\" alt=\"Factor map\"><br class=\"img-brk\"><span style=\"font-size: 24.0pt;background-color: #808080;color: #000000;\">exhibition site</span><br><img src=\"https://cbu01.alicdn.com/img/ibank/2020/431/344/13726443134_323357090.jpg\" alt=\"undefined\" width=\"790\" height=\"443.96354166666663\"><br><img src=\"https://cbu01.alicdn.com/img/ibank/2020/558/095/13763590855_323357090.jpg\" alt=\"undefined\"><br><br><img src=\"https://cbu01.alicdn.com/img/ibank/2020/417/347/13809743714_323357090.jpg\" alt=\"undefined\" width=\"790\" height=\"180.91603053435114\"><br><span style=\"font-size: 24.0pt;\"><span style=\"background-color: #808080;\"></span><span style=\"background-color: #808080;\"><span style=\"color: #000000;\">Tips</span></span></span><br></span></strong></span></p><p><span style=\"color: #000000;\"><strong><span style=\"font-size: 15.0pt;\">Do not rush to use after getting the kitchen utensils. First clean it with vinegar or neutral cleaner to remove the residual polished wax in the manufacturing and the imprints left after contacting the product in the packaging and handling. Essence The products are shot in kind. Due to the factors of photography technology, lighting and display color rendering, the color or size of the picture may have some errors with the real object.</span></strong></span></p><p></p><p><span style=\"font-size: 24.0pt;background-color: #808080;\">Question answer</span></p><p></p><div><span style=\"background-color: #999999;font-size: 16.0pt;\">One: Are we factories?</span></div><p></p><p><span style=\"font-size: 12.0pt;\">Answer: We are a professional stainless steel tableware and stainless steel kitchenware manufacturers integrating product research and development, manufacturing and sales, and are located in Jieyang, known as the \"China Hardware Base\".</span></p><p></p><div><div><span style=\"font-size: 16.0pt;background-color: #999999;\">Two: Can the product be customized?</span></div><div><span style=\"font-size: 12.0pt;\">Answer: Yes, all our products can be customized, including printing words on cloth bags, printing words on the carton, laser engraving on the product, and custom -customized logo costs. Please consult customer service for specific costs.</span></div><div></div><div><span style=\"font-size: 16.0pt;background-color: #999999;\">Three: Is there a spot in the product?</span></div><div><span style=\"font-size: 12.0pt;\">Answer: 98%of the pages can be taken in stock. If the logo is not customized, it can be shipped within 72 hours. If the phenomenon of shortcoming after placing an order, we will inform you within 24 hours after your payment.</span></div><div></div><span style=\"font-size: 16.0pt;background-color: #999999;\">Four: How is the freight calculated?</span><p><span style=\"font-size: 12.0pt;\">Answer: Dear customers, after taking the order, please contact the customer service to inform the logistics you need to ship and confirm your order information to avoid delaying your precious time. If the shipping station is needed, we will send you the logistics you specified to the payment（The logistics company calculates the freight according to the actual weight volume.）Essence If you need to send a courier, we will account for the freight before you pay, so that you will pay for you! A small amount of samples or goods is generally sent through express delivery.</span></p><p></p><p><span style=\"background-color: #999999;font-size: 16.0pt;\">Four: Is the product environmentally friendly?</span></p></div><p></p><p><span style=\"font-size: 12.0pt;\">Answer: Our products use high -quality and environmentally friendly new stainless steel materials. It is non -toxic and heavy metal, which is environmentally friendly.</span></p><p></p><p><span style=\"color: #993300;\"><strong><span style=\"font-size: 16.0pt;font-family: simsun;\"><br class=\"img-brk\"><br class=\"img-brk\"><br></span></strong></span></p>"
 }
 ```
