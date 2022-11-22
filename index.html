@@ -394,43 +394,7 @@
                     <a href="#retrieve-buying-invoices" class="toc-h2 toc-link" data-title="Retrieve buying invoices">Retrieve buying invoices</a>
                   </li>
                   <li>
-                    <a href="#http-request" class="toc-h2 toc-link" data-title="HTTP request">HTTP request</a>
-                  </li>
-                  <li>
-                    <a href="#request" class="toc-h2 toc-link" data-title="Request">Request</a>
-                  </li>
-                  <li>
-                    <a href="#available-query-parameters" class="toc-h2 toc-link" data-title="Available query parameters">Available query parameters</a>
-                  </li>
-                  <li>
-                    <a href="#response" class="toc-h2 toc-link" data-title="Response">Response</a>
-                  </li>
-                  <li>
-                    <a href="#buyinvoices" class="toc-h2 toc-link" data-title="BuyInvoices">BuyInvoices</a>
-                  </li>
-                  <li>
-                    <a href="#buyinvoice" class="toc-h2 toc-link" data-title="BuyInvoice">BuyInvoice</a>
-                  </li>
-                  <li>
                     <a href="#retrieve-shipment-invoices" class="toc-h2 toc-link" data-title="Retrieve shipment invoices">Retrieve shipment invoices</a>
-                  </li>
-                  <li>
-                    <a href="#http-request-2" class="toc-h2 toc-link" data-title="HTTP request">HTTP request</a>
-                  </li>
-                  <li>
-                    <a href="#request-2" class="toc-h2 toc-link" data-title="Request">Request</a>
-                  </li>
-                  <li>
-                    <a href="#available-query-parameters-2" class="toc-h2 toc-link" data-title="Available query parameters">Available query parameters</a>
-                  </li>
-                  <li>
-                    <a href="#response-2" class="toc-h2 toc-link" data-title="Response">Response</a>
-                  </li>
-                  <li>
-                    <a href="#shipmentinvoice" class="toc-h2 toc-link" data-title="ShipmentInvoice">ShipmentInvoice</a>
-                  </li>
-                  <li>
-                    <a href="#shipmentinvoice-2" class="toc-h2 toc-link" data-title="ShipmentInvoice">ShipmentInvoice</a>
                   </li>
               </ul>
           </li>
@@ -3142,7 +3106,7 @@ may have a different status from another ByOrderItem in that order.</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h1 id='invoice'>Invoice</h1>
 <p>The Invoice API allows you to retrieve invoices.</p>
-<h3 id='retrieve-buying-invoices'>Retrieve buying invoices</h3>
+<h2 id='retrieve-buying-invoices'>Retrieve buying invoices</h2>
 <p>This API helps you to retrieve buying invoices.</p>
 <h3 id='http-request'>HTTP request</h3>
 <div class="api-endpoint">
@@ -3360,7 +3324,7 @@ may have a different status from another ByOrderItem in that order.</p>
     </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='retrieve-shipment-invoices'>Retrieve shipment invoices</h3>
+</span></code></pre></div><h2 id='retrieve-shipment-invoices'>Retrieve shipment invoices</h2>
 <p>This API helps you to retrieve shipment invoices.</p>
 <h3 id='http-request-2'>HTTP request</h3>
 <div class="api-endpoint">
@@ -3654,7 +3618,7 @@ and gives ability to pay multiple invoices at once.</p>
 </ul>
 
 <p>Type should be <code>buy-and-ship</code> if the given invoice is <code>BuyingInvoice</code>.
-Otherwise, it will be <code>ship-for-me</code> for <code>ShippingInvoice</code></p>
+Otherwise, it will be <code>ship-for-me</code> for <code>ShipmentInvoice</code></p>
 
 <blockquote>
 <p>Example of paying invoices:</p>
