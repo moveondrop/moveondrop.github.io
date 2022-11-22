@@ -1868,19 +1868,19 @@ may have a different status from another ByOrderItem in that order.</p>
 </ul>
 <h3 id='status-for-buyorderitem'>Status for BuyOrderItem</h3>
 <ul>
-<li>buy-pending: This BuyOrderItem still is in pending state, either customer hasn&#39;t paid the <code>BuyingInvoce</code> yet or OrderHandler hasn&#39;t started working on this item.</li>
-<li>buy-approved: This indicates, <code>OrderHandler</code> reviewed this item and assigned a <code>BuyingAgent</code> to it for further processing.</li>
-<li>buy-processing: This indicates, <code>BuyingAgent</code> started working on this OrderItem.</li>
-<li>buy-reject: Indicates, OrderHandler failed to assign a matching <code>BuyingAgent</code> to this OrderItem.</li>
-<li>buy-purchased: Indicates, <code>BuyingAgent</code> successfully purchased this BuyOrderItem.</li>
-<li>buy-not-purchased: Indicates, <code>BuyingAgent</code> failed to purchase this BuyOrderItem.</li>
-<li>handover-to-shipping: Indicates, <code>BuyingAgent</code> successfully handed over this BuyOrderItem to <code>ShippingAgent</code>.</li>
-<li>arrived-at-warehouse: Indicates, the BuyOrderItem successfully arrived at <code>ShippingAgent</code> warehouse. At this stage, a corresponding <code>ShipmentItem</code> is created at MoveOn end</li>
-<li>preparing-for-transport: <code>ShippingAgent</code> prepared the <code>ShipmentItem</code> for transport.</li>
-<li>handover-to-airline: The <code>ShipmentItem</code> is handed over to airline for <code>Air</code> shipment if <code>shipping_type</code> of chosen warehouse category is <code>air</code>.</li>
-<li>arrived-at-destination-airport: The <code>ShipmentItem</code> is arrived at destination airport.</li>
-<li>customs-released: The <code>ShipmentItem</code> get clearance from customs.</li>
-<li>received-by-moveon: Indicates that, MoveOn received this <code>ShipmentItem</code>. Once MoveOn recalculate the weight/quantity for this item, an <code>ShippingInvoice</code> get created.</li>
+<li><strong>buy-pending</strong>: This BuyOrderItem still is in pending state, either customer hasn&#39;t paid the <code>BuyingInvoce</code> yet or OrderHandler hasn&#39;t started working on this item.</li>
+<li><strong>buy-approved</strong>: This indicates, <code>OrderHandler</code> reviewed this item and assigned a <code>BuyingAgent</code> to it for further processing.</li>
+<li><strong>buy-processing</strong>: This indicates, <code>BuyingAgent</code> started working on this OrderItem.</li>
+<li><strong>buy-reject</strong>: Indicates, OrderHandler failed to assign a matching <code>BuyingAgent</code> to this OrderItem.</li>
+<li><strong>buy-purchased</strong>: Indicates, <code>BuyingAgent</code> successfully purchased this BuyOrderItem.</li>
+<li><strong>buy-not-purchased</strong>: Indicates, <code>BuyingAgent</code> failed to purchase this BuyOrderItem.</li>
+<li><strong>handover-to-shipping</strong>: Indicates, <code>BuyingAgent</code> successfully handed over this BuyOrderItem to <code>ShippingAgent</code>.</li>
+<li><strong>arrived-at-warehouse</strong>: Indicates, the BuyOrderItem successfully arrived at <code>ShippingAgent</code> warehouse. At this stage, a corresponding <code>ShipmentItem</code> is created at MoveOn end</li>
+<li><strong>preparing-for-transport</strong>: <code>ShippingAgent</code> prepared the <code>ShipmentItem</code> for transport.</li>
+<li><strong>handover-to-airline</strong>: The <code>ShipmentItem</code> is handed over to airline for <code>Air</code> shipment if <code>shipping_type</code> of chosen warehouse category is <code>air</code>.</li>
+<li><strong>arrived-at-destination-airport</strong>: The <code>ShipmentItem</code> is arrived at destination airport.</li>
+<li><strong>customs-released</strong>: The <code>ShipmentItem</code> get clearance from customs.</li>
+<li><strong>received-by-moveon</strong>: Indicates that, MoveOn received this <code>ShipmentItem</code>. Once MoveOn recalculate the weight/quantity for this item, an <code>ShippingInvoice</code> get created.</li>
 </ul>
 
 <p>Once the customer paid the <code>ShippingInvoice</code>, he can create delivery request for the <code>ShipmentItem</code>.</p>
@@ -1912,7 +1912,7 @@ may have a different status from another ByOrderItem in that order.</p>
 <tr>
 <td><code>products</code></td>
 <td>array</td>
-<td>List of products</td>
+<td>List of Product</td>
 </tr>
 <tr>
 <td><code>address</code></td>
@@ -2084,7 +2084,7 @@ may have a different status from another ByOrderItem in that order.</p>
 <h3 id='http-request-2'>HTTP request</h3>
 <div class="api-endpoint">
     <div class="endpoint-data">
-        <i class="label label-post">POST</i>
+        <i class="label label-post">GET</i>
         <h6>/customer/buy-ship/orders/multiple</h6>
     </div>
 </div>
@@ -2172,7 +2172,981 @@ may have a different status from another ByOrderItem in that order.</p>
 <div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?filters[]<span class="o">=</span>my_order <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
-</code></pre></div><h1 id='category'>Category</h1>
+</code></pre></div>
+<blockquote>
+<p>JSON response example:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5825</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"order_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BNV2221585760"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-and-ship"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-11-21T23:31:14.000000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"oauth_client_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">58</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"invoices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"buyProducts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7515</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"order_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5825</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"store_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"offer_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"product_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PB112221930007"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stainless steel oil spoon PP wheat filter oily oil spoon filtering spoon spoon hot pot leakage germ soup separation spoon"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://cbu01.alicdn.com/img/ibank/O1CN01cSNXlq2N9s8Lu1vr8_!!978309921-0-cib.jpg"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://detail.1688.com/offer/675196975564.html"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"vendor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1688"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"vid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"675196975564"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"shipping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M*************"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"agent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M*************"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"广州市白云区。西槎路同雅东街59号。同德仓A5</span><span class="se">\n</span><span class="s2">Baiyun District, Guangzhou City. 59 Tong Ya Dong Street, Xicha Road. Tongdecang A5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"shipping_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"air"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"unit_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kg"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Laptops"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"category_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"aw_category_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6402</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1400</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"commission"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"note"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"aw_cat_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6402</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"fx"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"ag_comm"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"mv_comm"</span><span class="p">:</span><span class="w"> </span><span class="mf">16.5</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-pending"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status_label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pending"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"itemMetas"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">68535</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"sku_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c03be97038ed72ea18ec4dc7be132e36"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"buy_order_item_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7515</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c03be97038ed72ea18ec4dc7be132e36"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"qty"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"weight"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"fx"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"productPrice"</span><span class="p">:</span><span class="w"> </span><span class="mi">160</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"medium"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Beige"</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">],</span><span class="w">
+          </span><span class="nl">"issues"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"campaignTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"charges"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"is_product_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"dispute_number"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7516</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"order_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5825</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"store_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"offer_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"product_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PB112221560008"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"XIAOMI Mijia Handheld Garment Steamer for Clothes Electric Steam Iron High Quality Portable Traveling Clothes Steamer"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://ae01.alicdn.com/kf/Hedb73ff2ad254ba3b0d27ae6d6a5a6455/XIAOMI-Mijia-Handheld-Garment-Steamer-for-Clothes-Electric-Steam-Iron-High-Quality-Portable-Traveling-Clothes-Steamer.jpg"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.aliexpress.com/item/1005002952248539.html"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"vendor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"aliexpress"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"vid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1005002952248539"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"shipping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M*************"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"agent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M*************"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"广州市白云区。西槎路同雅东街59号。同德仓A5</span><span class="se">\n</span><span class="s2">Baiyun District, Guangzhou City. 59 Tong Ya Dong Street, Xicha Road. Tongdecang A5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"shipping_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"air"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"unit_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kg"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Laptops"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"category_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"aw_category_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6402</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1400</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"commission"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"note"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"aw_cat_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6402</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"fx"</span><span class="p">:</span><span class="w"> </span><span class="mi">112</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"ag_comm"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"mv_comm"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-pending"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status_label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pending"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"itemMetas"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">68536</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"sku_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12000026289211983"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"buy_order_item_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7516</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12000026289211983"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"qty"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"weight"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"fx"</span><span class="p">:</span><span class="w"> </span><span class="mi">112</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"productPrice"</span><span class="p">:</span><span class="w"> </span><span class="mi">2240</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"Plug Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"Ships From"</span><span class="p">:</span><span class="w"> </span><span class="s2">"China"</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">],</span><span class="w">
+          </span><span class="nl">"issues"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"campaignTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"charges"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"is_product_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"dispute_number"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"buyInvoice"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3189</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"order_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5825</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NV22215"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">2400</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"paid_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.00"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"refunded_amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"instructions"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"invoice_to"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"partial-paid"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"paid_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status_label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Partial paid"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"settled_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_overpaid"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-11-21T23:31:14.000000Z"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"addresses"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"billing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1611</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test address update"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0000000000000"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bangladesh"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"district"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dhaka"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dhaka"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"district"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"area"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">199</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agargoan"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Agargoan"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">1216</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"area"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test address"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">1213</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_shipping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_billing"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"shipping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1611</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test address update"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0000000000000"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bangladesh"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"district"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dhaka"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dhaka"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"district"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"area"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">199</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agargoan"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Agargoan"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">1216</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"area"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test address"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">1213</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_shipping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_billing"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5824</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"order_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BNV2221448681"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-and-ship"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-11-21T16:02:55.000000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"oauth_client_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">58</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"invoices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"buyProducts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7513</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"order_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5824</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"store_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"offer_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"product_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PB112221830005"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stainless steel oil spoon PP wheat filter oily oil spoon filtering spoon spoon hot pot leakage germ soup separation spoon"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://cbu01.alicdn.com/img/ibank/O1CN01cSNXlq2N9s8Lu1vr8_!!978309921-0-cib.jpg"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://detail.1688.com/offer/675196975564.html"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"vendor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1688"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"vid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"675196975564"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"shipping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M*************"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"agent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M*************"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"广州市白云区。西槎路同雅东街59号。同德仓A5</span><span class="se">\n</span><span class="s2">Baiyun District, Guangzhou City. 59 Tong Ya Dong Street, Xicha Road. Tongdecang A5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"shipping_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"air"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"unit_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kg"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Laptops"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"category_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"aw_category_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6402</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1400</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"commission"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"note"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"aw_cat_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6402</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"fx"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"ag_comm"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"mv_comm"</span><span class="p">:</span><span class="w"> </span><span class="mf">16.5</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-pending"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status_label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pending"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"itemMetas"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">68533</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"sku_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c03be97038ed72ea18ec4dc7be132e36"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"buy_order_item_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7513</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c03be97038ed72ea18ec4dc7be132e36"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"qty"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"weight"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"fx"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"productPrice"</span><span class="p">:</span><span class="w"> </span><span class="mi">160</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"medium"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Beige"</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">],</span><span class="w">
+          </span><span class="nl">"issues"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"campaignTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"charges"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"is_product_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"dispute_number"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7514</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"order_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5824</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"store_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"offer_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"product_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PB112221510006"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"XIAOMI Mijia Handheld Garment Steamer for Clothes Electric Steam Iron High Quality Portable Traveling Clothes Steamer"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://ae01.alicdn.com/kf/Hedb73ff2ad254ba3b0d27ae6d6a5a6455/XIAOMI-Mijia-Handheld-Garment-Steamer-for-Clothes-Electric-Steam-Iron-High-Quality-Portable-Traveling-Clothes-Steamer.jpg"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.aliexpress.com/item/1005002952248539.html"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"vendor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"aliexpress"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"vid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1005002952248539"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"shipping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M*************"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"agent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M*************"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"广州市白云区。西槎路同雅东街59号。同德仓A5</span><span class="se">\n</span><span class="s2">Baiyun District, Guangzhou City. 59 Tong Ya Dong Street, Xicha Road. Tongdecang A5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"shipping_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"air"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"unit_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kg"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Laptops"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"category_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"aw_category_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6402</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1400</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"commission"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"note"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"aw_cat_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6402</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"fx"</span><span class="p">:</span><span class="w"> </span><span class="mi">112</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"ag_comm"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"mv_comm"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-pending"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status_label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pending"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"itemMetas"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">68534</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"sku_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12000026289211983"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"buy_order_item_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7514</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12000026289211983"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"qty"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"weight"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"fx"</span><span class="p">:</span><span class="w"> </span><span class="mi">112</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"productPrice"</span><span class="p">:</span><span class="w"> </span><span class="mi">2240</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"Plug Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"Ships From"</span><span class="p">:</span><span class="w"> </span><span class="s2">"China"</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">],</span><span class="w">
+          </span><span class="nl">"issues"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"campaignTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"charges"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"is_product_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"dispute_number"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"buyInvoice"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3188</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"order_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5824</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NV22214"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">2400</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"paid_amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"refunded_amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"instructions"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"invoice_to"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unpaid"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"paid_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status_label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Unpaid"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"settled_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_overpaid"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-11-21T16:02:55.000000Z"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"addresses"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"billing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1606</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abdul korim"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01712121633"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bangladesh"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"district"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"district"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"area"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">65</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">9360</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"upazila"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">6700</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_shipping"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_billing"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"shipping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1606</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abdul korim"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01712121633"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bangladesh"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"district"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"district"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"area"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">65</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">9360</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"upazila"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">6700</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_shipping"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_billing"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5823</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"order_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BNV2221432416"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-and-ship"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-11-21T16:02:03.000000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"oauth_client_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">58</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"invoices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"buyProducts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7512</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"order_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5823</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"store_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"offer_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"product_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PB112221940004"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stainless steel oil spoon PP wheat filter oily oil spoon filtering spoon spoon hot pot leakage germ soup separation spoon"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://cbu01.alicdn.com/img/ibank/O1CN01cSNXlq2N9s8Lu1vr8_!!978309921-0-cib.jpg"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://detail.1688.com/offer/675196975564.html"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"vendor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1688"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"vid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"675196975564"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"shipping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M*************"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"agent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M*************"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"广州市白云区。西槎路同雅东街59号。同德仓A5</span><span class="se">\n</span><span class="s2">Baiyun District, Guangzhou City. 59 Tong Ya Dong Street, Xicha Road. Tongdecang A5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"shipping_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"air"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"unit_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kg"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Laptops"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"category_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"aw_category_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6402</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1400</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"commission"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"note"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"aw_cat_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6402</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"fx"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"ag_comm"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"mv_comm"</span><span class="p">:</span><span class="w"> </span><span class="mf">16.5</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-pending"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status_label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pending"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"itemMetas"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">68532</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"sku_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c03be97038ed72ea18ec4dc7be132e36"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"buy_order_item_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7512</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c03be97038ed72ea18ec4dc7be132e36"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"qty"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"weight"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"fx"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"productPrice"</span><span class="p">:</span><span class="w"> </span><span class="mi">160</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"medium"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Beige"</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">],</span><span class="w">
+          </span><span class="nl">"issues"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"campaignTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"charges"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"is_product_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"dispute_number"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"buyInvoice"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"addresses"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"billing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1606</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abdul korim"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01712121633"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bangladesh"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"district"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"district"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"area"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">65</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">9360</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"upazila"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">6700</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_shipping"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_billing"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"shipping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1606</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abdul korim"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01712121633"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bangladesh"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"district"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"district"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"area"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">65</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">9360</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"upazila"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">6700</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_shipping"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_billing"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5822</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"order_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BNV2221132293"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-and-ship"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-11-21T15:58:14.000000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"oauth_client_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">58</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"invoices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"buyProducts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7511</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"order_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5822</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"store_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"offer_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"product_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PB112221870003"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stainless steel oil spoon PP wheat filter oily oil spoon filtering spoon spoon hot pot leakage germ soup separation spoon"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://cbu01.alicdn.com/img/ibank/O1CN01cSNXlq2N9s8Lu1vr8_!!978309921-0-cib.jpg"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://detail.1688.com/offer/675196975564.html"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"vendor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1688"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"vid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"675196975564"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"shipping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M*************"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"agent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M*************"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"广州市白云区。西槎路同雅东街59号。同德仓A5</span><span class="se">\n</span><span class="s2">Baiyun District, Guangzhou City. 59 Tong Ya Dong Street, Xicha Road. Tongdecang A5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"shipping_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"air"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"unit_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kg"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Laptops"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"category_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"aw_category_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6402</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1400</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"commission"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"note"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"aw_cat_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6402</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"fx"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"ag_comm"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"mv_comm"</span><span class="p">:</span><span class="w"> </span><span class="mf">16.5</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-pending"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status_label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pending"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"itemMetas"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">68531</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"sku_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c03be97038ed72ea18ec4dc7be132e36"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"buy_order_item_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7511</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c03be97038ed72ea18ec4dc7be132e36"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"qty"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"weight"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"fx"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"productPrice"</span><span class="p">:</span><span class="w"> </span><span class="mi">160</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"medium"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Beige"</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">],</span><span class="w">
+          </span><span class="nl">"issues"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"campaignTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"charges"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"is_product_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"dispute_number"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"buyInvoice"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3187</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"order_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5822</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NV22213"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">160</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"paid_amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"refunded_amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"instructions"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"invoice_to"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unpaid"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"paid_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status_label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Unpaid"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"settled_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_overpaid"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-11-21T15:58:14.000000Z"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"addresses"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"billing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1606</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abdul korim"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01712121633"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bangladesh"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"district"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"district"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"area"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">65</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">9360</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"upazila"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">6700</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_shipping"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_billing"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"shipping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1606</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abdul korim"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01712121633"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bangladesh"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"district"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"district"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"area"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">65</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">9360</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"upazila"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">6700</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_shipping"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_billing"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5821</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"order_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BNV2221760612"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-and-ship"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-11-21T15:56:20.000000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"oauth_client_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">58</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"invoices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"buyProducts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7510</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"order_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5821</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"store_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"offer_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"product_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PB112221240002"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stainless steel oil spoon PP wheat filter oily oil spoon filtering spoon spoon hot pot leakage germ soup separation spoon"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://cbu01.alicdn.com/img/ibank/O1CN01cSNXlq2N9s8Lu1vr8_!!978309921-0-cib.jpg"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://detail.1688.com/offer/675196975564.html"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"vendor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1688"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"vid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"675196975564"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"shipping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M*************"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"agent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M*************"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"广州市白云区。西槎路同雅东街59号。同德仓A5</span><span class="se">\n</span><span class="s2">Baiyun District, Guangzhou City. 59 Tong Ya Dong Street, Xicha Road. Tongdecang A5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"shipping_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"air"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"unit_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kg"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Laptops"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"category_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"aw_category_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6402</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1400</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"commission"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"note"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"aw_cat_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6402</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"fx"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"ag_comm"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"mv_comm"</span><span class="p">:</span><span class="w"> </span><span class="mf">16.5</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-pending"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status_label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pending"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"itemMetas"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">68530</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"sku_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c03be97038ed72ea18ec4dc7be132e36"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"buy_order_item_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7510</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"qty"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"weight"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"fx"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"productPrice"</span><span class="p">:</span><span class="w"> </span><span class="mi">160</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"medium"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Beige"</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">],</span><span class="w">
+          </span><span class="nl">"issues"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"campaignTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"charges"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"is_product_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"dispute_number"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"buyInvoice"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3186</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"order_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5821</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NV22212"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">160</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"paid_amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"refunded_amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"instructions"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"invoice_to"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unpaid"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"paid_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status_label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Unpaid"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"settled_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_overpaid"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-11-21T15:56:20.000000Z"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"addresses"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"billing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1606</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abdul korim"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01712121633"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bangladesh"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"district"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"district"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"area"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">65</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">9360</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"upazila"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">6700</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_shipping"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_billing"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"shipping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1606</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abdul korim"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01712121633"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bangladesh"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"district"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"district"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"area"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">65</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">9360</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"upazila"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">6700</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_shipping"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_billing"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5820</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"order_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BNV2221848319"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-and-ship"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-11-21T15:53:54.000000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"oauth_client_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">58</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"invoices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"buyProducts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7509</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"order_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5820</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"store_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"offer_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"product_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PB11222160001"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stainless steel oil spoon PP wheat filter oily oil spoon filtering spoon spoon hot pot leakage germ soup separation spoon"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://cbu01.alicdn.com/img/ibank/O1CN01cSNXlq2N9s8Lu1vr8_!!978309921-0-cib.jpg"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://detail.1688.com/offer/675196975564.html"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"vendor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1688"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"vid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"675196975564"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"shipping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M*************"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"agent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M*************"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"warehouse_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"广州市白云区。西槎路同雅东街59号。同德仓A5</span><span class="se">\n</span><span class="s2">Baiyun District, Guangzhou City. 59 Tong Ya Dong Street, Xicha Road. Tongdecang A5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"shipping_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"air"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"unit_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kg"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Laptops"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"category_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"aw_category_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6402</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1400</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"commission"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"note"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"aw_cat_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6402</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"fx"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"ag_comm"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"mv_comm"</span><span class="p">:</span><span class="w"> </span><span class="mf">16.5</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-pending"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status_label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pending"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"itemMetas"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">68529</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"sku_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c03be97038ed72ea18ec4dc7be132e36"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"buy_order_item_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7509</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"qty"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"weight"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"fx"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"productPrice"</span><span class="p">:</span><span class="w"> </span><span class="mi">160</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">],</span><span class="w">
+          </span><span class="nl">"issues"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"campaignTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"charges"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"is_product_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"dispute_number"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"buyInvoice"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3185</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"order_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5820</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NV22211"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">160</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"paid_amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"refunded_amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"instructions"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"invoice_to"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unpaid"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"paid_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status_label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Unpaid"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"settled_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_overpaid"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-11-21T15:53:54.000000Z"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"addresses"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"billing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1606</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abdul korim"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01712121633"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bangladesh"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"district"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"district"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"area"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">65</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">9360</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"upazila"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">6700</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_shipping"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_billing"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"shipping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1606</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abdul korim"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01712121633"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bangladesh"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"district"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bagerhat"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"district"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"area"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">65</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"parent_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chitalmari"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">9360</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"upazila"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">6700</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_shipping"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_default_billing"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"first"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?page=1"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"last"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?page=1"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"prev"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"next"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"current_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"last_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&amp;laquo; Previous"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?page=1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Next &amp;raquo;"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"per_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h1 id='category'>Category</h1>
 <p>The Category API allows you to retrieve categories and associated warehouse categories.</p>
 <h3 id='retrieve-buying-invoices'>Retrieve buying invoices</h3>
 <p>This API helps you to retrieve buying invoices.</p>
