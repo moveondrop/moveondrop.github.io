@@ -78,7 +78,7 @@ This API helps you to retrieve areas under a district.
 <div class="api-endpoint">
 	<div class="endpoint-data">
 		<i class="label label-post">GET</i>
-		<h6>/location</h6>
+		<h6>/location?parent=:parentId</h6>
 	</div>
 </div>
 
