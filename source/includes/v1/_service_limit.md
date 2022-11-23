@@ -27,15 +27,15 @@ This API helps you to retrieve the service limit.
 
 ### ServiceLimit ###
 
-| Attribute           | Type    | Description                                                |
-|---------------------|---------|------------------------------------------------------------|
-| `id`                | integer | Id of the service limit.                                   |
-| `expired_at`        | integer | Expired time for this service limit .                      |
-| `service_type`      | enum    | Indicates for which service, this limit is applicable for. |
-| `limitation_type`   | enum    | Indicates weather customer have limit or not.              |
-| `interval_type`     | enum    | Indicates the interval type for this limit.                |
-| `interval_duration` | integer | Indicates the number of interval this limit is applicable. |
-| `available_limit`   | integer | Indicates the remaining quota for this service limit.      |
+| Attribute           | Type     | Description                                                |
+|---------------------|----------|------------------------------------------------------------|
+| `id`                | integer  | Id of the service limit.                                   |
+| `expired_at`        | datetime | Expired time for this service limit .                      |
+| `service_type`      | enum     | Indicates for which service, this limit is applicable.     |
+| `limitation_type`   | enum     | Indicates weather customer have limit or not.              |
+| `interval_type`     | enum     | Indicates the interval type for this limit.                |
+| `interval_duration` | integer  | Indicates the number of interval this limit is applicable. |
+| `available_limit`   | integer  | Indicates the remaining quota for this service limit.      |
 
 ### Example ###
 
