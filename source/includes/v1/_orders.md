@@ -252,8 +252,7 @@ curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/
             "category": "Laptops",
             "category_id": 3,
             "aw_category_id": 6402,
-            "rate": 1400,
-            "commission": 10
+            "rate": 140
           },
           "note": null,
           "meta": null,
@@ -309,8 +308,7 @@ curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/
             "category": "Laptops",
             "category_id": 3,
             "aw_category_id": 6402,
-            "rate": 1400,
-            "commission": 10
+            "rate": 1400
           },
           "note": null,
           "meta": null,
@@ -449,8 +447,7 @@ curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/
             "category": "Laptops",
             "category_id": 3,
             "aw_category_id": 6402,
-            "rate": 1400,
-            "commission": 10
+            "rate": 1400
           },
           "note": null,
           "meta": null,
@@ -506,8 +503,7 @@ curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/
             "category": "Laptops",
             "category_id": 3,
             "aw_category_id": 6402,
-            "rate": 1400,
-            "commission": 10
+            "rate": 1400
           },
           "note": null,
           "meta": null,
@@ -646,8 +642,7 @@ curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/
             "category": "Laptops",
             "category_id": 3,
             "aw_category_id": 6402,
-            "rate": 1400,
-            "commission": 10
+            "rate": 1400
           },
           "note": null,
           "meta": null,
@@ -769,8 +764,7 @@ curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/
             "category": "Laptops",
             "category_id": 3,
             "aw_category_id": 6402,
-            "rate": 1400,
-            "commission": 10
+            "rate": 1400
           },
           "note": null,
           "meta": null,
@@ -909,8 +903,7 @@ curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/
             "category": "Laptops",
             "category_id": 3,
             "aw_category_id": 6402,
-            "rate": 1400,
-            "commission": 10
+            "rate": 1400
           },
           "note": null,
           "meta": null,
@@ -1049,8 +1042,7 @@ curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/
             "category": "Laptops",
             "category_id": 3,
             "aw_category_id": 6402,
-            "rate": 1400,
-            "commission": 10
+            "rate": 1400
           },
           "note": null,
           "meta": null,

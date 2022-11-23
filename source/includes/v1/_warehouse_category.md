@@ -167,15 +167,13 @@ curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/calculate-
       "is_customs_included": false,
       "is_active": true,
       "t_and_c": null,
-      "commission": 10,
       "categoryPriceSlots": [
         {
           "id": 3830,
           "aw_category_id": 6402,
           "rate_per_unit": 1400,
           "min_amount": "1.00",
-          "max_amount": "3.00",
-          "commission": null
+          "max_amount": "3.00"
         }
       ],
       "warehouse": {
