@@ -2125,7 +2125,7 @@ may have a different status from another ByOrderItem in an order.</p>
 <blockquote>
 <p>Example of retrieving orders:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?filters[]<span class="o">=</span>my_order <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?filters[]<span class="o">=</span>my_order <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 </code></pre></div>
