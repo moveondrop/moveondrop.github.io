@@ -210,7 +210,7 @@ This API helps you to retrieve the orders.
 > Example of retrieving orders:
 
 ```shell
-curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?filters[]=my_order \
+curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?filters[]=my_order \
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json"
 ```
