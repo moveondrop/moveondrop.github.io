@@ -40,7 +40,7 @@ to MoveOn's `/web/oauth/authorize` route like so:
  
     return redirect('BASE_URL/web/oauth/authorize?'.$query);
 ```
-#Approving The Request
+##Approving The Request
 
 When receiving authorization request, drop user could see a login screen of MoveOn authorization Server.
 Drop user need to log in to the authorization server by using the same credential that has been used to access the MoveOnDrop Dashboard.
@@ -77,7 +77,7 @@ The expires_in attribute contains the number of seconds until the access token e
 | `refresh_token`       | string  | Refresh token to refresh the access token in future |
 | `expires_in`          | integer | The number seconds until the access token expires   |
 
-# Refreshing Tokens
+## Refreshing Tokens
 MoveOn issues short-lived access token, drop user will need to refresh their access token via refresh token 
 that was provided to them when the access token was issued.
 
