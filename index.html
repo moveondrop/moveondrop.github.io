@@ -321,18 +321,16 @@
                   <li>
                     <a href="#available-query-parameters" class="toc-h2 toc-link" data-title="Available query parameters">Available query parameters</a>
                   </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#approving-the-request" class="toc-h1 toc-link" data-title="Approving The Request">Approving The Request</a>
-              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#approving-the-request" class="toc-h2 toc-link" data-title="Approving The Request">Approving The Request</a>
+                  </li>
                   <li>
                     <a href="#converting-authorization-codes-to-access-tokens" class="toc-h2 toc-link" data-title="Converting Authorization Codes To Access Tokens">Converting Authorization Codes To Access Tokens</a>
                   </li>
+                  <li>
+                    <a href="#refreshing-tokens" class="toc-h2 toc-link" data-title="Refreshing Tokens">Refreshing Tokens</a>
+                  </li>
               </ul>
-          </li>
-          <li>
-            <a href="#refreshing-tokens" class="toc-h1 toc-link" data-title="Refreshing Tokens">Refreshing Tokens</a>
           </li>
           <li>
             <a href="#service-limit" class="toc-h1 toc-link" data-title="Service Limit">Service Limit</a>
@@ -463,7 +461,7 @@
 <br/>
 These are the steps that can be followed to accomplish a successful MoveOnDrop integration. <br/><br/>
 1) Create an account by visiting the URL <code>https://app.moveondrop.com/auth/register</code>. For Sandbox the URL will be <code>https://staging.moveon-drop-dashboard.pages.dev/auth/register</code>. <br/>
-2) Once registration has been done, drop user needs to Log in to the dashboard. <br/>
+2) Once the registration has been done, drop user needs to Log in to the dashboard. <br/>
 3) Drop user will find a <code>Add a website</code> button in <code>Websites</code> sections of the dashboard. <br/>
 4) Then drop user needs to create a new website by giving <code>website name</code> and <code>redirect url</code> as input. <br/> MoveOn will send an authorization code to this <code>redirect url</code> after approving the authorization request. The detail of the authorization flow can be found in the Authentication section of this API doc. <br/></p>
 <h3 id='base-url-39-s-for-moveondrop-platform'>Base URL&#39;s for MoveOnDrop Platform</h3>
@@ -539,7 +537,7 @@ to MoveOn&#39;s <code>/web/oauth/authorize</code> route like so:</p>
     ]);
 
     return redirect('BASE_URL/web/oauth/authorize?'.$query);
-</code></pre></div><h1 id='approving-the-request'>Approving The Request</h1>
+</code></pre></div><h2 id='approving-the-request'>Approving The Request</h2>
 <p>When receiving authorization request, drop user could see a login screen of MoveOn authorization Server.
 Drop user need to log in to the authorization server by using the same credential that has been used to access the MoveOnDrop Dashboard.
 After login to the authorization server it&#39;s possible to approve or deny the authorization request. 
@@ -587,7 +585,7 @@ The expires_in attribute contains the number of seconds until the access token e
 <td>The number seconds until the access token expires</td>
 </tr>
 </tbody></table>
-<h1 id='refreshing-tokens'>Refreshing Tokens</h1>
+<h2 id='refreshing-tokens'>Refreshing Tokens</h2>
 <p>MoveOn issues short-lived access token, drop user will need to refresh their access token via refresh token 
 that was provided to them when the access token was issued.</p>
 
