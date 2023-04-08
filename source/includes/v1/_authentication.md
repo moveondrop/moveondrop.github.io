@@ -84,15 +84,15 @@ that was provided to them when the access token was issued.
 Example code to refresh the access token by using refresh token
 
 ```phpt
-$response = Http::asForm()->post('`BASE_URL`/web/oauth/token', [
-'grant_type'    => 'refresh_token',
-'refresh_token' => 'the-refresh-token',
-'client_id'     => 'website client-id',
-'client_secret' => 'website secret',
-'scope'         => '',
-]);
-
-return $response->json();
+  $response = Http::asForm()->post('`BASE_URL`/web/oauth/token', [
+      'grant_type'    => 'refresh_token',
+      'refresh_token' => 'the-refresh-token',
+      'client_id'     => 'website client-id',
+      'client_secret' => 'website secret',
+      'scope'         => '',
+  ]);
+  
+  return $response->json();
 ```
 
 
