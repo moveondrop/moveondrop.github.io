@@ -7,6 +7,7 @@ language_tabs:
 
 includes:
 - v1/_introduction
+- v1/_authentication
 - v1/_service_limit
 - v1/_location
 - v1/_product

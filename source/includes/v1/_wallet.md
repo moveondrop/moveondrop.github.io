@@ -32,7 +32,7 @@ This API helps you to retrieve your personal wallet balance.
 > Example of retrieving wallet balance:
 
 ```shell
-curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/wallet/balance \
+curl -X GET BASE_URL/api/v1/customer/wallet/balance \
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json"
 ```

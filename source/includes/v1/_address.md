@@ -19,7 +19,7 @@ This API helps you to retrieve all addresses.
 > Example of retrieving all addresses:
 
 ```shell
-curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/profile/address \
+curl -X POST BASE_URL/api/v1/customer/profile/address \
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json"
 ```
@@ -77,7 +77,7 @@ This API helps you to retrieve default addresses.
 > Example of retrieving default addresses:
 
 ```shell
-curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/profile/address/default \
+curl -X POST BASE_URL/api/v1/customer/profile/address/default \
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json"
 ```
@@ -176,7 +176,7 @@ This API helps you to store a new address.
 > Example of store an address:
 
 ```shell
-curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/profile/address \
+curl -X POST BASE_URL/api/v1/customer/profile/address \
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json" \
 	-d '{
@@ -246,7 +246,7 @@ This API helps you to update an existing address.
 > Example of updating an existing address:
 
 ```shell
-curl -X PUT https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/profile/address/1610\
+curl -X PUT BASE_URL/api/v1/customer/profile/address/1610\
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json" \
 	-d '{
@@ -282,7 +282,7 @@ This API helps you to delete an existing address.
 > Example of deleting an existing address:
 
 ```shell
-curl -X DELETE https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/profile/address/1610\
+curl -X DELETE BASE_URL/api/v1/customer/profile/address/1610\
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json"
 ```

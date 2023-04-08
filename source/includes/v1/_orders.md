@@ -104,7 +104,7 @@ This API helps you to create a new order.
 > Example of create an order:
 
 ```shell
-curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders-by-products \
+curl -X POST BASE_URL/api/v1/customer/buy-ship/orders-by-products \
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json" \
 	-d '{
@@ -210,7 +210,7 @@ This API helps you to retrieve the orders.
 > Example of retrieving orders:
 
 ```shell
-curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?filters[]=my_order \
+curl -X GET BASE_URL/api/v1/customer/buy-ship/orders/multiple?filters[]=my_order \
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json"
 ```
@@ -1149,8 +1149,8 @@ curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/o
     }
   ],
   "links": {
-    "first": "https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?page=1",
-    "last": "https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?page=1",
+    "first": "BASE_URL/api/v1/customer/buy-ship/orders/multiple?page=1",
+    "last": "BASE_URL/api/v1/customer/buy-ship/orders/multiple?page=1",
     "prev": null,
     "next": null
   },
@@ -1165,7 +1165,7 @@ curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/o
         "active": false
       },
       {
-        "url": "https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?page=1",
+        "url": "BASE_URL/api/v1/customer/buy-ship/orders/multiple?page=1",
         "label": "1",
         "active": true
       },
@@ -1175,7 +1175,7 @@ curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/o
         "active": false
       }
     ],
-    "path": "https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple",
+    "path": "BASE_URL/api/v1/customer/buy-ship/orders/multiple",
     "per_page": 15,
     "to": 6,
     "total": 6

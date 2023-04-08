@@ -46,7 +46,7 @@ This API helps you to retrieve categories.
 > Example of retrieving categories:
 
 ```shell
-curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/category-search?q=laptop \
+curl -X GET BASE_URL/api/v1/customer/category-search?q=laptop \
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json"
 ```
@@ -147,7 +147,7 @@ This API helps you to retrieve related warehouse categories for a category.
 > Example of retrieving shipping categories:
 
 ```shell
-curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/calculate-shipment-cost?unit_type=kg&shipping_type=air&category_id=3&p_origin=CN \
+curl -X GET BASE_URL/api/v1/customer/calculate-shipment-cost?unit_type=kg&shipping_type=air&category_id=3&p_origin=CN \
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json"
 ```

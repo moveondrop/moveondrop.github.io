@@ -51,7 +51,7 @@ This API helps you to retrieve buying invoices.
 > Example of retrieving buying invoices:
 
 ```shell
-curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/invoices \
+curl -X GET BASE_URL/api/v1/customer/buy-ship/invoices \
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json"
 ```
@@ -143,8 +143,8 @@ curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/i
     }
   ],
   "links": {
-    "first": "https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/invoices?page=1",
-    "last": "https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/invoices?page=1",
+    "first": "BASE_URL/api/v1/customer/buy-ship/invoices?page=1",
+    "last": "BASE_URL/api/v1/customer/buy-ship/invoices?page=1",
     "prev": null,
     "next": null
   },
@@ -159,7 +159,7 @@ curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/i
         "active": false
       },
       {
-        "url": "https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/invoices?page=1",
+        "url": "BASE_URL/api/v1/customer/buy-ship/invoices?page=1",
         "label": "1",
         "active": true
       },
@@ -169,7 +169,7 @@ curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/i
         "active": false
       }
     ],
-    "path": "https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/invoices",
+    "path": "BASE_URL/api/v1/customer/buy-ship/invoices",
     "per_page": 10,
     "to": 5,
     "total": 5
@@ -226,7 +226,7 @@ This API helps you to retrieve shipment invoices.
 > Example of retrieving shipment invoices:
 
 ```shell
-curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/invoices\
+curl -X GET BASE_URL/api/v1/customer/invoices\
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json"
 ```

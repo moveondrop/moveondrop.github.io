@@ -40,7 +40,7 @@ This API helps you to retrieve available gateways for payment.
 > Example of retrieving payment gateways:
 
 ```shell
-curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/payment/gateways \
+curl -X GET BASE_URL/api/v1/payment/gateways \
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json"
 ```
@@ -104,7 +104,7 @@ Otherwise, it will be `ship-for-me` for `ShipmentInvoice`
 > Example of paying invoices:
 
 ```shell
-curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/payment/5/pay \
+curl -X GET BASE_URL/api/v1/payment/5/pay \
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json"
 		-d '{

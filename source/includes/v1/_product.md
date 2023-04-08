@@ -19,7 +19,7 @@ This API helps you to retrieve product details by link.
 > Example of retrieving product details:
 
 ```shell
-curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/external/fetch-product \
+curl -X POST BASE_URL/api/v1/customer/external/fetch-product \
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json" \
 	-d '{
@@ -427,7 +427,7 @@ This API helps you to retrieve extended description for a product by link.
 > Example of retrieving extended description of product:
 
 ```shell
-curl -X POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/fetch-product-description \
+curl -X POST BASE_URL/api/v1/customer/fetch-product-description \
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json" \
 	-d '{

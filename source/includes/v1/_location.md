@@ -21,7 +21,7 @@ This API helps you to retrieve all the districts.
 > Example of retrieving all districts:
 
 ```shell
-curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/location \
+curl -X GET BASE_URL/api/v1/location \
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json"
 ```
@@ -86,7 +86,7 @@ This API helps you to retrieve areas under a district.
 > Example of retrieving areas under a district:
 
 ```shell
-curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/location?parent=13 \
+curl -X GET BASE_URL/api/v1/location?parent=13 \
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json"
 ```

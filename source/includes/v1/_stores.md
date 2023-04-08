@@ -38,7 +38,7 @@ This API helps you to retrieve store information.
 > Example of retrieve stores:
 
 ```shell
-curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/exclusive/store-rates \
+curl -X GET BASE_URL/api/v1/customer/exclusive/store-rates \
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json"
 ```

@@ -59,7 +59,7 @@ Customers can still fetch 262 products.
 > Example of retrieving service limit
 
 ```shell
-curl -X GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/service-quota\
+curl -X GET BASE_URL/api/v1/customer/service-quota\
 	-H "Authorization: Bearer %token%" \
 	-H "Content-Type: application/json"
 ```
