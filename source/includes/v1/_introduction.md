@@ -3,7 +3,7 @@
 In this section, drop user will find how to get onboarded with MoveOnDrop platform.
 
 
-The boarding started with the process of creating an account to MoveOnDrop Dashboard and adding a website (The consumer of Drop Service).
+The boarding started with the process of creating an account to MoveOnDrop Dashboard and adding a website (The consumer of the Drop Service).
 <br/>
 <br/>
 These are the steps that can be followed to accomplish a successful MoveOnDrop integration. <br/><br/>
