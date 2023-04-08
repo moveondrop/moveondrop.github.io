@@ -302,6 +302,39 @@
         </div>
       <ul id="toc" class="toc-list-h1">
           <li>
+            <a href="#onboard" class="toc-h1 toc-link" data-title="Onboard">Onboard</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#base-url-39-s-for-moveondrop-platform" class="toc-h2 toc-link" data-title="Base URL's for MoveOnDrop Platform">Base URL's for MoveOnDrop Platform</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#http-request" class="toc-h2 toc-link" data-title="HTTP request">HTTP request</a>
+                  </li>
+                  <li>
+                    <a href="#request" class="toc-h2 toc-link" data-title="Request">Request</a>
+                  </li>
+                  <li>
+                    <a href="#available-query-parameters" class="toc-h2 toc-link" data-title="Available query parameters">Available query parameters</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#approving-the-request" class="toc-h1 toc-link" data-title="Approving The Request">Approving The Request</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#converting-authorization-codes-to-access-tokens" class="toc-h2 toc-link" data-title="Converting Authorization Codes To Access Tokens">Converting Authorization Codes To Access Tokens</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#refreshing-tokens" class="toc-h1 toc-link" data-title="Refreshing Tokens">Refreshing Tokens</a>
+          </li>
+          <li>
             <a href="#service-limit" class="toc-h1 toc-link" data-title="Service Limit">Service Limit</a>
               <ul class="toc-list-h2">
                   <li>
@@ -422,7 +455,180 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id='service-limit'>Service Limit</h1>
+        <h1 id='onboard'>Onboard</h1>
+<p>In this section, drop user will find how to get onboarded with MoveOnDrop platform.</p>
+
+<p>MoveOnDrop boarding started with the process of creating an account to MoveOnDrop Dashboard and adding a website (The consumer of MoveOnDrop Service).
+These are the steps that can be followed to accomplish a successful MoveOnDrop integration.
+1) Create an account by visiting the URL <code>https://app.moveondrop.com/auth/register</code>. For Sandbox the URL will be <code>https://staging.moveon-drop-dashboard.pages.dev/auth/register</code>.
+2) Once registration has been done, drop user needs to Log in to the dashboard.
+3) Drop user will find a <code>Add a website</code> button in <code>Websites</code> sections of the dashboard.
+4) Then drop user needs to create a new website by giving <code>website name</code> and <code>redirect url</code> as input.
+  2) MoveOn will send an authorization code to this <code>redirect url</code> after approving the authorization request. The detail of the authorization flow can be found in the Authentication section of this API doc.</p>
+<h3 id='base-url-39-s-for-moveondrop-platform'>Base URL&#39;s for MoveOnDrop Platform</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Sandbox</th>
+<th>Production</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>BASE_URL</code></td>
+<td><code>https://api.sandbox.moveon.work</code></td>
+<td><code>https://moveon.com.bd</code></td>
+</tr>
+<tr>
+<td><code>Authorization server login</code></td>
+<td><code>https://api.sandbox.moveon.work/web/login</code></td>
+<td><code>https://moveon.com.bd/web/login</code></td>
+</tr>
+<tr>
+<td><code>MoveOnDrop Dashboard</code></td>
+<td><code>https://staging.moveon-drop-dashboard.pages.dev</code></td>
+<td><code>https://app.moveondrop.com</code></td>
+</tr>
+</tbody></table>
+<h1 id='authentication'>Authentication</h1>
+<p>The Authentication API allows you to create and refresh access token.
+Access token is required to access the MoveOn API.</p>
+
+<p>Once a website has been added at MoveOnDrop Dashboard,
+drop user may use the corresponding client ID and secret for that website
+to request an authorization code from MoveOn.</p>
+
+<p>First, the consuming application should make a redirect request
+to MoveOn&#39;s <code>/web/oauth/authorize</code> route like so:</p>
+<h3 id='http-request'>HTTP request</h3>
+<div class="api-endpoint">
+    <div class="endpoint-data">
+        <i class="label label-post">GET</i>
+        <h6>/web/oauth/authorize</h6>
+    </div>
+</div>
+<h3 id='request'>Request</h3><h3 id='available-query-parameters'>Available query parameters</h3>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>client_id</code></td>
+<td>string</td>
+<td>Client Id of the website</td>
+</tr>
+<tr>
+<td><code>redirect_uri</code></td>
+<td>string</td>
+<td>Redirect URL of the website</td>
+</tr>
+<tr>
+<td><code>response_type</code></td>
+<td>string(default value: code)</td>
+<td>Response type you&#39;re expecting. Keep the value to &#39;code&#39; by default</td>
+</tr>
+</tbody></table>
+<div class="highlight"><pre class="highlight plaintext"><code>    $query = http_build_query([
+        'client_id'     =&gt; 'client-id',
+        'redirect_uri'  =&gt; 'https://consumer-website.com/callback',
+        'response_type' =&gt; 'code',
+        'scope'         =&gt; ''
+    ]);
+
+    return redirect('BASE_URL/web/oauth/authorize?'.$query);
+</code></pre></div><h1 id='approving-the-request'>Approving The Request</h1>
+<p>When receiving authorization request, drop user could see a login screen of MoveOn authorization Server.
+Drop user need to log in to the authorization server by using the same credential that has been used to access the MoveOnDrop Dashboard.
+After login to the authorization server it&#39;s possible to approve or deny the authorization request. 
+If the drop user approve the request, they will be redirected back to the redirect_uri that was specified in authorization request parameter.
+The redirect_uri must match the redirect URL that was specified when the website was created at MoveOnDrop Dashboard.</p>
+<h2 id='converting-authorization-codes-to-access-tokens'>Converting Authorization Codes To Access Tokens</h2>
+<p>If the drop user approves the authorization request, they will be redirected back to the consuming application. 
+An authorization code can be found in the query parameter of the redirected path.
+Then the drop user should issue a POST request to MoveOn to request an access token. 
+The request should include the authorization code that was issued by 
+MoveOn when the drop user approved the authorization request:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>    $response = Http::asForm()-&gt;post('BASE_URL/web/oauth/token', [
+        'grant_type'    =&gt; 'authorization_code',
+        'client_id'     =&gt; 'Website client-id',
+        'client_secret' =&gt; 'Website secret',
+        'redirect_uri'  =&gt; 'https://consumer-website.com/callback',
+        'code'          =&gt; $request-&gt;code, // authorization code found in redirected path
+    ]);
+
+    return $response-&gt;json();
+</code></pre></div>
+<p>This <code>/web/oauth/token</code> route will return a JSON response containing access_token, refresh_token, and expires_in attributes.
+The expires_in attribute contains the number of seconds until the access token expires.</p>
+
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>access_token</code></td>
+<td>string</td>
+<td>Bearer token to access the MoveOn API</td>
+</tr>
+<tr>
+<td><code>refresh_token</code></td>
+<td>string</td>
+<td>Refresh token to refresh the access token in future</td>
+</tr>
+<tr>
+<td><code>expires_in</code></td>
+<td>integer</td>
+<td>The number seconds until the access token expires</td>
+</tr>
+</tbody></table>
+<h1 id='refreshing-tokens'>Refreshing Tokens</h1>
+<p>MoveOn issues short-lived access token, drop user will need to refresh their access token via refresh token 
+that was provided to them when the access token was issued.</p>
+
+<p>Example code to refresh the access token by using refresh token</p>
+<div class="highlight"><pre class="highlight plaintext"><code>$response = Http::asForm()-&gt;post('`BASE_URL`/web/oauth/token', [
+'grant_type'    =&gt; 'refresh_token',
+'refresh_token' =&gt; 'the-refresh-token',
+'client_id'     =&gt; 'website client-id',
+'client_secret' =&gt; 'website secret',
+'scope'         =&gt; '',
+]);
+
+return $response-&gt;json();
+</code></pre></div>
+<p>This <code>/web/oauth/token</code> route will return a JSON response containing following attributes.</p>
+
+<p>access_token, refresh_token, and expires_in attributes. The expires_in attribute contains the number of seconds until the access token expires.</p>
+
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>access_token</code></td>
+<td>string</td>
+<td>Bearer token to access the MoveOn API</td>
+</tr>
+<tr>
+<td><code>refresh_token</code></td>
+<td>string</td>
+<td>Refresh token to refresh the access token in future</td>
+</tr>
+<tr>
+<td><code>expires_in</code></td>
+<td>integer</td>
+<td>The number seconds until the access token expires</td>
+</tr>
+</tbody></table>
+<h1 id='service-limit'>Service Limit</h1>
 <p>The <code>Service Limit</code> API allows you to retrieve the service limits for product&#39;s APIs.</p>
 <h2 id='retrieve-service-quota-limit'>Retrieve service quota limit</h2>
 <p>This API helps you to retrieve the service limit.</p>
@@ -511,7 +717,7 @@ Customers can still fetch 262 products.</p>
 <blockquote>
 <p>Example of retrieving service limit</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/service-quota<span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET BASE_URL/api/v1/customer/service-quota<span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 </code></pre></div>
@@ -549,7 +755,7 @@ Customers can still fetch 262 products.</p>
 <blockquote>
 <p>Example of retrieving all districts:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET https://moveon-api-server.sbox.ali2bd.net/api/v1/location <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET BASE_URL/api/v1/location <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 </code></pre></div>
@@ -611,7 +817,7 @@ Customers can still fetch 262 products.</p>
 <blockquote>
 <p>Example of retrieving areas under a district:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET https://moveon-api-server.sbox.ali2bd.net/api/v1/location?parent<span class="o">=</span>13 <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET BASE_URL/api/v1/location?parent<span class="o">=</span>13 <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 </code></pre></div>
@@ -661,7 +867,7 @@ Customers can still fetch 262 products.</p>
 <blockquote>
 <p>Example of retrieving product details:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/external/fetch-product <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST BASE_URL/api/v1/customer/external/fetch-product <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
     <span class="nt">-d</span> <span class="s1">'{
@@ -1061,7 +1267,7 @@ Customers can still fetch 262 products.</p>
 <blockquote>
 <p>Example of retrieving extended description of product:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/fetch-product-description <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST BASE_URL/api/v1/customer/fetch-product-description <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
     <span class="nt">-d</span> <span class="s1">'{
@@ -1148,7 +1354,7 @@ Customers can still fetch 262 products.</p>
 <blockquote>
 <p>Example of retrieve stores:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/exclusive/store-rates <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET BASE_URL/api/v1/customer/exclusive/store-rates <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 </code></pre></div>
@@ -1294,7 +1500,7 @@ Customers can still fetch 262 products.</p>
 <blockquote>
 <p>Example of retrieving categories:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/category-search?q<span class="o">=</span>laptop <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET BASE_URL/api/v1/customer/category-search?q<span class="o">=</span>laptop <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 </code></pre></div>
@@ -1458,7 +1664,7 @@ Customers can still fetch 262 products.</p>
 <blockquote>
 <p>Example of retrieving shipping categories:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/calculate-shipment-cost?unit_type<span class="o">=</span>kg&amp;shipping_type<span class="o">=</span>air&amp;category_id<span class="o">=</span>3&amp;p_origin<span class="o">=</span>CN <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET BASE_URL/api/v1/customer/calculate-shipment-cost?unit_type<span class="o">=</span>kg&amp;shipping_type<span class="o">=</span>air&amp;category_id<span class="o">=</span>3&amp;p_origin<span class="o">=</span>CN <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 </code></pre></div>
@@ -1523,7 +1729,7 @@ Customers can still fetch 262 products.</p>
 <blockquote>
 <p>Example of retrieving all addresses:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/profile/address <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST BASE_URL/api/v1/customer/profile/address <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 </code></pre></div>
@@ -1573,7 +1779,7 @@ Customers can still fetch 262 products.</p>
 <blockquote>
 <p>Example of retrieving default addresses:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/profile/address/default <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST BASE_URL/api/v1/customer/profile/address/default <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 </code></pre></div>
@@ -1703,7 +1909,7 @@ Customers can still fetch 262 products.</p>
 <blockquote>
 <p>Example of store an address:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/profile/address <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST BASE_URL/api/v1/customer/profile/address <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
     <span class="nt">-d</span> <span class="s1">'{
@@ -1763,7 +1969,7 @@ Customers can still fetch 262 products.</p>
 <blockquote>
 <p>Example of updating an existing address:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> PUT https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/profile/address/1610<span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> PUT BASE_URL/api/v1/customer/profile/address/1610<span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
     <span class="nt">-d</span> <span class="s1">'{
@@ -1790,7 +1996,7 @@ Customers can still fetch 262 products.</p>
 <blockquote>
 <p>Example of deleting an existing address:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> DELETE https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/profile/address/1610<span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> DELETE BASE_URL/api/v1/customer/profile/address/1610<span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 </code></pre></div>
@@ -1982,7 +2188,7 @@ may have a different status from another ByOrderItem in an order.</p>
 <blockquote>
 <p>Example of create an order:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders-by-products <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST BASE_URL/api/v1/customer/buy-ship/orders-by-products <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
     <span class="nt">-d</span> <span class="s1">'{
@@ -2125,7 +2331,7 @@ may have a different status from another ByOrderItem in an order.</p>
 <blockquote>
 <p>Example of retrieving orders:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?filters[]<span class="o">=</span>my_order <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET BASE_URL/api/v1/customer/buy-ship/orders/multiple?filters[]<span class="o">=</span>my_order <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 </code></pre></div>
@@ -3062,8 +3268,8 @@ may have a different status from another ByOrderItem in an order.</p>
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
   </span><span class="nl">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"first"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?page=1"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"last"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?page=1"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"first"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BASE_URL/api/v1/customer/buy-ship/orders/multiple?page=1"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"last"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BASE_URL/api/v1/customer/buy-ship/orders/multiple?page=1"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"prev"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
     </span><span class="nl">"next"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
   </span><span class="p">},</span><span class="w">
@@ -3078,7 +3284,7 @@ may have a different status from another ByOrderItem in an order.</p>
         </span><span class="nl">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple?page=1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BASE_URL/api/v1/customer/buy-ship/orders/multiple?page=1"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
       </span><span class="p">},</span><span class="w">
@@ -3088,7 +3294,7 @@ may have a different status from another ByOrderItem in an order.</p>
         </span><span class="nl">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
-    </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/orders/multiple"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BASE_URL/api/v1/customer/buy-ship/orders/multiple"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"per_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
     </span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
     </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="w">
@@ -3191,7 +3397,7 @@ may have a different status from another ByOrderItem in an order.</p>
 <blockquote>
 <p>Example of retrieving buying invoices:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/invoices <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET BASE_URL/api/v1/customer/buy-ship/invoices <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 </code></pre></div>
@@ -3282,8 +3488,8 @@ may have a different status from another ByOrderItem in an order.</p>
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
   </span><span class="nl">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"first"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/invoices?page=1"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"last"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/invoices?page=1"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"first"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BASE_URL/api/v1/customer/buy-ship/invoices?page=1"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"last"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BASE_URL/api/v1/customer/buy-ship/invoices?page=1"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"prev"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
     </span><span class="nl">"next"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
   </span><span class="p">},</span><span class="w">
@@ -3298,7 +3504,7 @@ may have a different status from another ByOrderItem in an order.</p>
         </span><span class="nl">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/invoices?page=1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BASE_URL/api/v1/customer/buy-ship/invoices?page=1"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
       </span><span class="p">},</span><span class="w">
@@ -3308,7 +3514,7 @@ may have a different status from another ByOrderItem in an order.</p>
         </span><span class="nl">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
-    </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/buy-ship/invoices"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BASE_URL/api/v1/customer/buy-ship/invoices"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"per_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
     </span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
     </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
@@ -3409,7 +3615,7 @@ may have a different status from another ByOrderItem in an order.</p>
 <blockquote>
 <p>Example of retrieving shipment invoices:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/invoices<span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET BASE_URL/api/v1/customer/invoices<span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 </code></pre></div><h1 id='wallet'>Wallet</h1>
@@ -3456,7 +3662,7 @@ may have a different status from another ByOrderItem in an order.</p>
 <blockquote>
 <p>Example of retrieving wallet balance:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET https://moveon-api-server.sbox.ali2bd.net/api/v1/customer/wallet/balance <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET BASE_URL/api/v1/customer/wallet/balance <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 </code></pre></div>
@@ -3533,7 +3739,7 @@ and gives ability to pay multiple invoices at once.</p>
 <blockquote>
 <p>Example of retrieving payment gateways:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET https://moveon-api-server.sbox.ali2bd.net/api/v1/payment/gateways <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET BASE_URL/api/v1/payment/gateways <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 </code></pre></div>
@@ -3613,7 +3819,7 @@ Otherwise, it will be <code>ship-for-me</code> for <code>ShipmentInvoice</code><
 <blockquote>
 <p>Example of paying invoices:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET https://moveon-api-server.sbox.ali2bd.net/api/v1/payment/5/pay <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET BASE_URL/api/v1/payment/5/pay <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer %token%"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
         <span class="nt">-d</span> <span class="s1">'{
