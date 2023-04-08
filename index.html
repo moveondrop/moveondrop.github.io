@@ -593,15 +593,15 @@ The expires_in attribute contains the number of seconds until the access token e
 that was provided to them when the access token was issued.</p>
 
 <p>Example code to refresh the access token by using refresh token</p>
-<div class="highlight"><pre class="highlight plaintext"><code>$response = Http::asForm()-&gt;post('`BASE_URL`/web/oauth/token', [
-'grant_type'    =&gt; 'refresh_token',
-'refresh_token' =&gt; 'the-refresh-token',
-'client_id'     =&gt; 'website client-id',
-'client_secret' =&gt; 'website secret',
-'scope'         =&gt; '',
-]);
+<div class="highlight"><pre class="highlight plaintext"><code>  $response = Http::asForm()-&gt;post('`BASE_URL`/web/oauth/token', [
+      'grant_type'    =&gt; 'refresh_token',
+      'refresh_token' =&gt; 'the-refresh-token',
+      'client_id'     =&gt; 'website client-id',
+      'client_secret' =&gt; 'website secret',
+      'scope'         =&gt; '',
+  ]);
 
-return $response-&gt;json();
+  return $response-&gt;json();
 </code></pre></div>
 <p>This <code>/web/oauth/token</code> route will return a JSON response containing following attributes.</p>
 
