@@ -58,7 +58,7 @@ The request should include the authorization code that was issued by
 MoveOn when the drop user approved the authorization request:
 
 ```phpt
-    $response = Http::asForm()->post('BASE_URL/web/oauth/token', [
+    $response = Http::asForm()->post('BASE_URL/api/v1/oauth/token', [
         'grant_type'    => 'authorization_code',
         'client_id'     => 'Website client-id',
         'client_secret' => 'Website secret',
@@ -68,7 +68,7 @@ MoveOn when the drop user approved the authorization request:
  
     return $response->json();
 ```
-This `/web/oauth/token` route will return a JSON response containing access_token, refresh_token, and expires_in attributes.
+This `/api/v1/oauth/token` route will return a JSON response containing access_token, refresh_token, and expires_in attributes.
 The expires_in attribute contains the number of seconds until the access token expires.
 
 | Attribute             | Type    | Description                                         |
@@ -84,7 +84,7 @@ that was provided to them when the access token was issued.
 Example code to refresh the access token by using refresh token
 
 ```phpt
-  $response = Http::asForm()->post('`BASE_URL`/web/oauth/token', [
+  $response = Http::asForm()->post('`BASE_URL`/api/v1/oauth/token', [
       'grant_type'    => 'refresh_token',
       'refresh_token' => 'the-refresh-token',
       'client_id'     => 'website client-id',
@@ -96,7 +96,7 @@ Example code to refresh the access token by using refresh token
 ```
 
 
-This `/web/oauth/token` route will return a JSON response containing following attributes.
+This `/api/v1/oauth/token` route will return a JSON response containing following attributes.
 
 access_token, refresh_token, and expires_in attributes. The expires_in attribute contains the number of seconds until the access token expires.
 
