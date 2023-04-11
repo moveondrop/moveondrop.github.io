@@ -549,7 +549,7 @@ An authorization code can be found in the query parameter of the redirected path
 Then the drop user should issue a POST request to MoveOn to request an access token. 
 The request should include the authorization code that was issued by 
 MoveOn when the drop user approved the authorization request:</p>
-<div class="highlight"><pre class="highlight plaintext"><code>    $response = Http::asForm()-&gt;post('BASE_URL/web/oauth/token', [
+<div class="highlight"><pre class="highlight plaintext"><code>    $response = Http::asForm()-&gt;post('BASE_URL/api/v1/oauth/token', [
         'grant_type'    =&gt; 'authorization_code',
         'client_id'     =&gt; 'Website client-id',
         'client_secret' =&gt; 'Website secret',
@@ -559,7 +559,7 @@ MoveOn when the drop user approved the authorization request:</p>
 
     return $response-&gt;json();
 </code></pre></div>
-<p>This <code>/web/oauth/token</code> route will return a JSON response containing access_token, refresh_token, and expires_in attributes.
+<p>This <code>/api/v1/oauth/token</code> route will return a JSON response containing access_token, refresh_token, and expires_in attributes.
 The expires_in attribute contains the number of seconds until the access token expires.</p>
 
 <table><thead>
@@ -590,7 +590,7 @@ The expires_in attribute contains the number of seconds until the access token e
 that was provided to them when the access token was issued.</p>
 
 <p>Example code to refresh the access token by using refresh token</p>
-<div class="highlight"><pre class="highlight plaintext"><code>  $response = Http::asForm()-&gt;post('`BASE_URL`/web/oauth/token', [
+<div class="highlight"><pre class="highlight plaintext"><code>  $response = Http::asForm()-&gt;post('`BASE_URL`/api/v1/oauth/token', [
       'grant_type'    =&gt; 'refresh_token',
       'refresh_token' =&gt; 'the-refresh-token',
       'client_id'     =&gt; 'website client-id',
@@ -600,7 +600,7 @@ that was provided to them when the access token was issued.</p>
 
   return $response-&gt;json();
 </code></pre></div>
-<p>This <code>/web/oauth/token</code> route will return a JSON response containing following attributes.</p>
+<p>This <code>/api/v1/oauth/token</code> route will return a JSON response containing following attributes.</p>
 
 <p>access_token, refresh_token, and expires_in attributes. The expires_in attribute contains the number of seconds until the access token expires.</p>
 
